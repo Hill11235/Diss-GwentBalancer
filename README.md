@@ -13,7 +13,7 @@ TO DO
 * Have a preset deck for each class in a csv.
 * Think about the flow, logic, and events in each game and how to encode these.
 * Think about how to present options for search.
-* Think about how to create a basic CLI.
+* Think about how to create a basic CLI. (have optional boolean arg in game class that prints the board at the end of each round?)
 
 Card Ranges
 * Close combat
@@ -37,3 +37,5 @@ Weather conditions
 * Fog - strength of both players ranged cards set to one.
 * Rain - strength of both players siege cards set to one.
 * Clear weather - clears any weather effects on board.
+
+Start with 10 cards and get to mulligan up to 2

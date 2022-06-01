@@ -1,20 +1,23 @@
 class Card:
 
-    def __init__(self, name, faction, ability, row, strength, hero=False):
+    def __init__(self, name, faction, row, strength):
         self.name = name
         self.faction = faction
-        self.ability = ability
         self.row = row
         self.strength = strength
-        self.hero = hero
+        self.hero = False
+        self.horn = False
 
-    def get_strength(self):
+    def get_active_strength(self):
         return self.strength
+
+    def place_card(self):
+        pass
+
+    def destroy(self):
+        # add to graveyard (player attribute)
+        # Remove from row in board (board attribute)
+        pass
 
     def get_name(self):
         return self.name
-
-    def destroy(self):
-        a = 1
-        # add to graveyard (player attribute)
-        # Remove from row in board (board attribute)

@@ -38,6 +38,12 @@ class Card:
     def place_card(self):
         pass
 
+    def get_row(self):
+        return [self.row]
+
+    def get_targets(self):
+        return None
+
     def destroy(self, board, player, decoy=False):
         # Remove from row in board (board attribute)
         board.rows[self.row].remove(self)

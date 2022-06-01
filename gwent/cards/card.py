@@ -38,10 +38,13 @@ class Card:
     def place_card(self):
         pass
 
-    def destroy(self):
-        # add to graveyard (player attribute)
+    def destroy(self, board, player, decoy=False):
         # Remove from row in board (board attribute)
-        pass
+        board.rows[self.row].remove(self)
+
+        # add to graveyard if not a decoy card (player attribute)
+        if not decoy:
+            player.graveyard.append(self)
 
     def get_name(self):
         return self.name

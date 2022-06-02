@@ -22,9 +22,9 @@ class UnitCard(Card):
             self.row = rows[0]
 
         board.rows[self.row].append(self)
-        self.battlecry()
+        self.battlecry(player, board, opponent_board)
 
-    def battlecry(self, player):
+    def battlecry(self, player, board, opponent_board):
         # calls any abilities when a card is played, overridden in subclasses
         pass
 

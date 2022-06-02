@@ -16,6 +16,18 @@ class UnitCard(Card):
             return [0, 1]
         return [self.row]
 
+    def place_card(self, board, rows):
+        if self.agile:
+            # TODO think about how to best make call on where to place an agile card
+            self.row = rows[0]
+
+        board.rows[self.row].append(self)
+        self.battlecry()
+
+    def battlecry(self):
+        # calls any abilities when a card is played, overridden in subclasses
+        pass
+
     def get_active_strength(self, board):
         horn_buff = self.get_horn_buff(board)
         morale_buff = self.get_morale_buff(board)
@@ -43,3 +55,16 @@ class UnitCard(Card):
             if isinstance(card, UnitCard) and card.morale_boost:
                 morale += 1
         return morale
+
+    def get_current_status(self, board=None):
+        current_status = {
+            "name": self.name,
+            "faction": self.faction,
+            "row": self.get_row(),
+            "strength": self.strength,
+            "hero": self.hero
+        }
+        if board is not None:
+            current_status["active_strength"] = self.get_active_strength(board)
+
+        return current_status

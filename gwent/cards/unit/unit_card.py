@@ -1,7 +1,7 @@
 from gwent.cards.card import Card
-from gwent.cards.unit.horn_card import HornCard
+from gwent.cards.unit.horn_unit_card import HornUnitCard
 
-
+# TODO add tightbond card
 class UnitCard(Card):
 
     def __init__(self, name, faction, row, strength, hero, agile):
@@ -33,7 +33,7 @@ class UnitCard(Card):
         horn = 1
 
         for card in board.rows[self.row]:
-            if isinstance(card, HornCard):
+            if isinstance(card, HornUnitCard):
                 horn *= 2
 
         return horn

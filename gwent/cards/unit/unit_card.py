@@ -1,11 +1,12 @@
 from gwent.cards.card import Card
 from gwent.cards.unit.horn_unit_card import HornUnitCard
+from gwent.cards.special.weather_card import WeatherCard
 
 
 class UnitCard(Card):
 
     def __init__(self, name, faction, row, strength, hero, agile):
-        super().__init__(self, name, faction, row, strength)
+        super().__init__(name, faction, row, strength)
         self.hero = hero
         self.agile = agile
         self.morale_boost = False
@@ -16,18 +17,15 @@ class UnitCard(Card):
         return [self.row]
 
     def get_active_strength(self, board):
-        modifier = self.get_strength_modifier(self, board)
+        horn_buff = self.get_horn_buff(board)
+        morale_buff = self.get_morale_buff(board)
 
         if self.hero:
             return self.strength
+        elif any(isinstance(card, WeatherCard) for card in board.rows[self.row]):
+            return (1 + morale_buff) * horn_buff
         else:
-            pass
-        pass
-
-    def get_strength_modifier(self, board):
-        # check for morale boosts and horns
-
-        return 1
+            return (self.strength + morale_buff) * horn_buff
 
     def get_horn_buff(self, board):
         horn = 1

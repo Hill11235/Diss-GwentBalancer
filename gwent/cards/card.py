@@ -32,7 +32,7 @@ class Card:
         self.hero = False
         self.horn = False
 
-    def get_active_strength(self):
+    def get_active_strength(self, board):
         return self.strength
 
     def place_card(self):

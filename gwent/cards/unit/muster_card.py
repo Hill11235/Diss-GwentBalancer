@@ -3,5 +3,8 @@ from gwent.cards.unit.unit_card import UnitCard
 
 class MusterCard(UnitCard):
 
-    def __init__(self, name, faction, row, strength, hero, agile):
-        super().__init__(name, faction, row, strength, hero, agile)
+    def battlecry(self, board, rows, player, opponent, opponent_board):
+        for card in player.deck:
+            if card.name == self.name:
+                player.deck.remove(card)
+                card.place_card(board, rows, player, opponent, opponent_board)

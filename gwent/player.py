@@ -1,3 +1,6 @@
+import random
+
+
 class Player:
 
     def __init__(self, name, faction):
@@ -18,6 +21,11 @@ class Player:
     # TODO mulligan method
     # TODO draw card method
     # TODO get JSON data method
+
+    def draw_card(self):
+        random_card_index = random.randint(0, len(self.deck) - 1)
+        drawn_card = self.deck.pop(random_card_index)
+        self.hand.append(drawn_card)
 
     def pass_round(self):
         self.passed = True

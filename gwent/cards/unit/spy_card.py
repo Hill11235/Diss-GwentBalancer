@@ -3,5 +3,10 @@ from gwent.cards.unit.unit_card import UnitCard
 
 class SpyCard(UnitCard):
 
-    def __init__(self, name, faction, row, strength, hero, agile):
-        super().__init__(name, faction, row, strength, hero, agile)
+    def battlecry(self, player):
+        player.draw_card()
+        player.draw_card()
+
+    def place_card(self, board, rows, player, opponent, opponent_board):
+        opponent_board.rows[self.row].append(self)
+        self.battlecry(player)

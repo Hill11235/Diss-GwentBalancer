@@ -35,7 +35,7 @@ class Card:
     def get_active_strength(self, board):
         return self.strength
 
-    def place_card(self):
+    def place_card(self, board, rows, player, opponent, opponent_board):
         pass
 
     def get_row(self):

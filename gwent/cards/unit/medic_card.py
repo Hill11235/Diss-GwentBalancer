@@ -11,5 +11,5 @@ class MedicCard(UnitCard):
         else:
             return None
 
-    def battlecry(self, board, player, opponent, opponent_board):
+    def battlecry(self, board, player, opponent, opponent_board, target):
         pass

@@ -16,15 +16,15 @@ class UnitCard(Card):
             return [0, 1]
         return [self.row]
 
-    def place_card(self, board, player, opponent, opponent_board):
+    def place_card(self, board, player, opponent, opponent_board, target):
         if self.agile:
             # TODO think about how to best make call on where to place an agile card
-            self.row = self.get_row()[0]
+            self.row = target
 
         board.rows[self.row].append(self)
-        self.battlecry(board, player, opponent, opponent_board)
+        self.battlecry(board, player, opponent, opponent_board, target)
 
-    def battlecry(self, board, player, opponent, opponent_board):
+    def battlecry(self, board, player, opponent, opponent_board, target):
         # calls any abilities when a card is played, overridden in subclasses
         pass
 

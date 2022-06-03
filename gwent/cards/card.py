@@ -36,13 +36,14 @@ class Card:
         return self.strength
 
     # TODO consider if card needs to be removed from hand when placed
-    def place_card(self, board, player, opponent, opponent_board, target):
+    # TODO Refactor to reduce number of arguments
+    def place_card(self, board, player, opponent, opponent_board, row, target):
         pass
 
     def get_row(self):
         return [self.row]
 
-    def get_targets(self, player):
+    def get_targets(self, player, board):
         return None
 
     def destroy(self, board, player, decoy=False):

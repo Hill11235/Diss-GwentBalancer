@@ -19,7 +19,6 @@ class Player:
     # TODO general getter methods
     # TODO think about how to add initial decks
     # TODO mulligan method
-    # TODO draw card method
     # TODO get JSON data method
 
     def draw_card(self):

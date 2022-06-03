@@ -3,5 +3,12 @@ from gwent.cards.card import Card
 
 class SpecialCard(Card):
 
-    def __init__(self, name, faction, row, strength):
-        super().__init__(self, name, faction, row, strength)
+    def place_card(self, board, player, opponent, opponent_board, target):
+        board.rows[self.row].append(self)
+        self.battlecry(board, player, opponent, opponent_board, target)
+
+    def battlecry(self, board, player, opponent, opponent_board, target):
+        pass
+
+    def get_active_strength(self, board):
+        return 0

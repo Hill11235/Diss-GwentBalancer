@@ -1,4 +1,5 @@
 import csv
+import random
 from gwent.cards import *
 
 constructor_dic = {
@@ -25,6 +26,10 @@ class Deck:
     deck = []
 
     def __init__(self, file_path, faction, size, seed):
+        self.file_path = file_path
+        self.faction = faction
+        self.size = size
+        random.seed(seed)
         self.read_card_information(file_path)
         self.create_deck(faction, size, seed)
 
@@ -35,3 +40,6 @@ class Deck:
     def create_deck(self, faction, size, seed):
         # create a deck list based on the faction, deck size, and random seed information provided
         x = 3
+
+    def get_deck(self):
+        return self.deck

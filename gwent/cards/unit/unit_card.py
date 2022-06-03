@@ -18,10 +18,7 @@ class UnitCard(Card):
         return [self.row]
 
     def place_card(self, board, player, opponent, opponent_board, row, target):
-        if self.agile:
-            # TODO think about how to best make call on where to place an agile card
-            self.row = target
-
+        self.row = row
         board.rows[self.row].append(self)
         self.battlecry(board, player, opponent, opponent_board, row, target)
 

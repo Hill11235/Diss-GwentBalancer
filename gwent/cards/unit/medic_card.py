@@ -14,8 +14,7 @@ class MedicCard(UnitCard):
     def battlecry(self, board, player, opponent, opponent_board, row, target):
         targets = self.get_targets(player, board)
 
-        # TODO think about if args need to be refactored so that target is not an int?
-        if targets.__contains__(target) and target.hero is False and isinstance(target, UnitCard):
+        if target in targets and target.hero is False and isinstance(target, UnitCard):
             chosen_card = target
             chosen_card.place_card(board, player, opponent, opponent_board, row, target)
             player.graveyard.remove(chosen_card)

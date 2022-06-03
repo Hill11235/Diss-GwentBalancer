@@ -36,7 +36,7 @@ class Card:
         return self.strength
 
     # TODO consider if card needs to be removed from hand when placed
-    # TODO Refactor to reduce number of arguments
+    # TODO Refactor to reduce number of arguments (add boards as an attribute of player?)
     def place_card(self, board, player, opponent, opponent_board, row, target):
         pass
 

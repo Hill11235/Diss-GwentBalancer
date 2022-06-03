@@ -15,8 +15,10 @@ class DecoyCard(SpecialCard):
         return targets
 
     def place_card(self, board, player, opponent, opponent_board, row, target):
-        # need to think about how to get target card and selection to work in this case
-        # once card is selected then add decoy to its row
-        # add target card to player's hand
-        # destroy target card with decoy setting toggled
-        pass
+        targets = self.get_targets(player, board)
+
+        if target in targets and target.hero is False and isinstance(target, UnitCard):
+            self.row = target.row
+            player.hand.append(target)
+            target.destroy(board, player, decoy=True)
+            board.rows[self.row].append(self)

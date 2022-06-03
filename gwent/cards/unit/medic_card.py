@@ -12,4 +12,11 @@ class MedicCard(UnitCard):
             return None
 
     def battlecry(self, board, player, opponent, opponent_board, target):
-        pass
+        targets = self.get_targets(player)
+        chosen_card = None
+
+        # TODO think about if args need to be refactored so that target is not an int?
+        if targets is not None and targets[target].hero is False and isinstance(targets[target], UnitCard):
+            chosen_card = targets[target]
+            chosen_card.place_card(board, player, opponent, opponent_board, target)
+            player.graveyard.remove(chosen_card)

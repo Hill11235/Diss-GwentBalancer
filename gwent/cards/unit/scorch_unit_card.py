@@ -5,7 +5,7 @@ SCORCH_LIMIT = 10
 
 class ScorchUnitCard(UnitCard):
 
-    def battlecry(self, board, rows, player, opponent, opponent_board):
+    def battlecry(self, board, player, opponent, opponent_board):
         max_strength = 0
         total_strength = 0
 

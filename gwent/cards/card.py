@@ -35,13 +35,13 @@ class Card:
     def get_active_strength(self, board):
         return self.strength
 
-    def place_card(self, board, rows, player, opponent, opponent_board):
+    def place_card(self, board, player, opponent, opponent_board):
         pass
 
     def get_row(self):
         return [self.row]
 
-    def get_targets(self):
+    def get_targets(self, player):
         return None
 
     def destroy(self, board, player, decoy=False):

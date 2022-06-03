@@ -16,15 +16,15 @@ class UnitCard(Card):
             return [0, 1]
         return [self.row]
 
-    def place_card(self, board, rows, player, opponent, opponent_board):
+    def place_card(self, board, player, opponent, opponent_board):
         if self.agile:
             # TODO think about how to best make call on where to place an agile card
-            self.row = rows[0]
+            self.row = self.get_row()[0]
 
         board.rows[self.row].append(self)
-        self.battlecry(board, rows, player, opponent, opponent_board)
+        self.battlecry(board, player, opponent, opponent_board)
 
-    def battlecry(self, board, rows, player, opponent, opponent_board):
+    def battlecry(self, board, player, opponent, opponent_board):
         # calls any abilities when a card is played, overridden in subclasses
         pass
 
@@ -49,6 +49,7 @@ class UnitCard(Card):
         return horn
 
     def get_morale_buff(self, board):
+        # TODO check that the -1 behaves correctly
         morale = -1 if self.morale_boost else 0
 
         for card in board.rows[self.row]:

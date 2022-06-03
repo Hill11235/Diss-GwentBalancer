@@ -1,5 +1,6 @@
 from gwent.cards.card import Card
 from gwent.cards.unit.horn_unit_card import HornUnitCard
+from gwent.cards.special.horn_special_card import HornSpecialCard
 from gwent.cards.special.weather_card import WeatherCard
 
 
@@ -43,7 +44,7 @@ class UnitCard(Card):
         horn = 1
 
         for card in board.rows[self.row]:
-            if isinstance(card, HornUnitCard):
+            if isinstance(card, HornUnitCard) or isinstance(card, HornSpecialCard):
                 horn *= 2
 
         return horn

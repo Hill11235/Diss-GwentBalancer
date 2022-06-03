@@ -35,6 +35,7 @@ class Card:
     def get_active_strength(self, board):
         return self.strength
 
+    # TODO consider if card needs to be removed from hand when placed
     def place_card(self, board, player, opponent, opponent_board, target):
         pass
 

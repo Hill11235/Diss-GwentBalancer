@@ -6,8 +6,8 @@ from gwent.cards.special.weather_card import WeatherCard
 
 class UnitCard(Card):
 
-    def __init__(self, name, faction, row, strength, hero, agile):
-        super().__init__(name, faction, row, strength)
+    def __init__(self, card_id, name, faction, row, strength, hero, agile):
+        super().__init__(card_id, name, faction, row, strength)
         self.hero = hero
         self.agile = agile
         self.morale_boost = False

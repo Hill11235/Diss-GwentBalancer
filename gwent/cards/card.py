@@ -24,7 +24,8 @@ class Card:
     TODO add methods once complete
     """
 
-    def __init__(self, name, faction, row, strength):
+    def __init__(self, card_id, name, faction, row, strength):
+        self.card_id = card_id
         self.name = name
         self.faction = faction
         self.row = row

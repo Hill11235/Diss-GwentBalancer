@@ -1,6 +1,7 @@
 import os
 import csv
 import random
+import copy
 from gwent.cards import *
 
 constructor_dic = {
@@ -21,6 +22,7 @@ constructor_dic = {
     'commanders_horn_card': HornSpecialCard,
 }
 
+
 # TODO potentially split into reader and deck classes?
 class Deck:
 
@@ -33,7 +35,7 @@ class Deck:
         self.deck = []
 
         self.read_card_information()
-        self.create_deck()
+        self.create_deck(faction, size)
 
     def read_card_information(self):
         # read in csv file provided and create and store cards in list
@@ -63,10 +65,19 @@ class Deck:
                             )
                             self.all_cards.append(new_card)
 
-
     def create_deck(self, faction, size):
         # create a deck list based on the faction, deck size, and random seed information provided
-        x = 3
+        card_list = copy.deepcopy(self.all_cards)
+        applicable_cards = self.get_relevant_cards(card_list, faction)
+        self.deck = random.sample(applicable_cards, size)
+
+    def get_relevant_cards(self, cards, faction):
+        relevant_cards = []
+        for c in cards:
+            if c.faction in [faction, 'neutral']:
+                relevant_cards.append(c)
+
+        return relevant_cards
 
     def get_deck(self):
         return self.deck

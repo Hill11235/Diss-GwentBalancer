@@ -31,6 +31,8 @@ class Card:
         self.row = row
         self.strength = strength
         self.hero = False
+        self.agile = False
+        self.morale_boost = False
         self.horn = False
 
     def get_active_strength(self, board):
@@ -57,3 +59,19 @@ class Card:
 
     def get_name(self):
         return self.name
+
+    def get_data(self, board):
+        card_data = {
+            'card_id': self.card_id,
+            'name': self.name,
+            'faction': self.faction,
+            'row': self.row,
+            'strength': self.strength,
+            'effective_strength': self.get_active_strength(board),
+            'hero': self.hero,
+            'agile': self.agile,
+            'morale_boost': self.morale_boost,
+            'horn': self.horn
+        }
+
+        return card_data

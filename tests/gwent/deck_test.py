@@ -4,8 +4,8 @@ from gwent.deck import Deck
 
 class DeckTest(unittest.TestCase):
 
-    def check_faction(self):
-        file_name = "card_data.csv"
+    def test_faction(self):
+        file_name = "data/card_data.csv"
         faction = "Nilfgaardian"
         size = 22
         seed = 123
@@ -15,8 +15,8 @@ class DeckTest(unittest.TestCase):
         for card in nilf_deck.deck:
             self.assertIn(card.faction, [faction, "neutral"])
 
-    def check_deck_length(self):
-        file_name = "card_data.csv"
+    def test_deck_length(self):
+        file_name = "data/card_data.csv"
         faction = "Monster"
         size = 22
         seed = 123

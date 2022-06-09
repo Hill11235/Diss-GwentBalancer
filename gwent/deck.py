@@ -39,31 +39,32 @@ class Deck:
 
     def read_card_information(self):
         # read in csv file provided and create and store cards in list
-        with open(os.path.join("./gwent/data/", self.file_path)) as file:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+
+        with open(os.path.join(dir_path, self.file_path), encoding='utf-8-sig') as file:
             card_data = csv.DictReader(file)
             for cards in card_data:
-                if cards[self.faction] != "":
-                    for i in range(cards['Quantity']):
-                        if cards['power'] == -1:
-                            new_card = constructor_dic[cards['ability']](
-                                cards['id'],
-                                cards['name'],
-                                cards['faction'],
-                                cards['type'],
-                                cards['power']
-                            )
-                            self.all_cards.append(new_card)
-                        else:
-                            new_card = constructor_dic[cards['ability'].split(',')[0]](
-                                cards['id'],
-                                cards['name'],
-                                cards['faction'],
-                                cards['type'],
-                                cards['power'],
-                                'hero' in cards['ability'].split(','),
-                                'agile' in cards['ability'].split(',')
-                            )
-                            self.all_cards.append(new_card)
+                for i in range(int(cards['Quantity'])):
+                    if int(cards['power']) == -1:
+                        new_card = constructor_dic[cards['ability']](
+                            cards['card_id'],
+                            cards['name'],
+                            cards['faction'],
+                            int(cards['type']),
+                            int(cards['power'])
+                        )
+                        self.all_cards.append(new_card)
+                    else:
+                        new_card = constructor_dic[cards['ability'].split(',')[0]](
+                            cards['card_id'],
+                            cards['name'],
+                            cards['faction'],
+                            int(cards['type']),
+                            int(cards['power']),
+                            'hero' in cards['ability'].split(','),
+                            'agile' in cards['ability'].split(',')
+                        )
+                        self.all_cards.append(new_card)
 
     def create_deck(self, faction, size):
         # create a deck list based on the faction, deck size, and random seed information provided

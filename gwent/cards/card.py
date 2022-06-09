@@ -24,14 +24,14 @@ class Card:
     TODO add methods once complete
     """
 
-    def __init__(self, card_id, name, faction, row, strength):
+    def __init__(self, card_id, name, faction, row, strength, hero, agile):
         self.card_id = card_id
         self.name = name
         self.faction = faction
         self.row = row
         self.strength = strength
-        self.hero = False
-        self.agile = False
+        self.hero = hero
+        self.agile = agile
         self.morale_boost = False
         self.horn = False
         self.horn_special = False

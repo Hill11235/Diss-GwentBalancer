@@ -46,26 +46,16 @@ class Deck:
             card_data = csv.DictReader(file)
             for cards in card_data:
                 for i in range(int(cards['Quantity'])):
-                    if int(cards['power']) == -1:
-                        new_card = constructor_dic[cards['ability']](
-                            cards['card_id'],
-                            cards['name'],
-                            cards['faction'],
-                            int(cards['type']),
-                            int(cards['power'])
-                        )
-                        self.all_cards.append(new_card)
-                    else:
-                        new_card = constructor_dic[cards['ability'].split(',')[0]](
-                            cards['card_id'],
-                            cards['name'],
-                            cards['faction'],
-                            int(cards['type']),
-                            int(cards['power']),
-                            'hero' in cards['ability'].split(','),
-                            'agile' in cards['ability'].split(',')
-                        )
-                        self.all_cards.append(new_card)
+                    new_card = constructor_dic[cards['ability'].split(',')[0]](
+                        cards['card_id'],
+                        cards['name'],
+                        cards['faction'],
+                        int(cards['type']),
+                        int(cards['power']),
+                        'hero' in cards['ability'].split(','),
+                        'agile' in cards['ability'].split(',')
+                    )
+                    self.all_cards.append(new_card)
 
     def create_deck(self, faction, size):
         # create a deck list based on the faction, deck size, and random seed information provided

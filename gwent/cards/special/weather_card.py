@@ -3,8 +3,8 @@ from gwent.cards.special.special_card import SpecialCard
 
 class WeatherCard(SpecialCard):
 
-    def __init__(self, card_id, name, faction, row, strength):
-        super().__init__(card_id, name, faction, row, strength)
+    def __init__(self, card_id, name, faction, row, strength, hero, agile):
+        super().__init__(card_id, name, faction, row, strength, hero, agile)
         self.weather = True
 
     def place_card(self, board, player, opponent, opponent_board, row, target):

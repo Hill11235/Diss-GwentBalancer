@@ -3,12 +3,6 @@ from gwent.cards.card import Card
 
 class UnitCard(Card):
 
-    def __init__(self, card_id, name, faction, row, strength, hero, agile):
-        super().__init__(card_id, name, faction, row, strength)
-        self.hero = hero
-        self.agile = agile
-        self.morale_boost = False
-
     def get_row(self):
         if self.agile:
             return [0, 1]

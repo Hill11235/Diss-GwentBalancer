@@ -1,6 +1,4 @@
 from gwent.cards.card import Card
-from gwent.cards.special.horn_special_card import HornSpecialCard
-from gwent.cards.special.weather_card import WeatherCard
 
 
 class UnitCard(Card):
@@ -31,7 +29,7 @@ class UnitCard(Card):
 
         if self.hero:
             return self.strength
-        elif any(isinstance(card, WeatherCard) for card in board.rows[self.row]):
+        elif any(card.weather for card in board.rows[self.row]):
             return (1 + morale_buff) * horn_buff
         else:
             return (self.strength + morale_buff) * horn_buff
@@ -40,7 +38,7 @@ class UnitCard(Card):
         horn = 1
 
         for card in board.rows[self.row]:
-            if self.horn or isinstance(card, HornSpecialCard):
+            if card.horn or card.horn_special:
                 horn *= 2
 
         return horn

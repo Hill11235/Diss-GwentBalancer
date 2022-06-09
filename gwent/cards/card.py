@@ -34,6 +34,8 @@ class Card:
         self.agile = False
         self.morale_boost = False
         self.horn = False
+        self.horn_special = False
+        self.weather = False
 
     def get_active_strength(self, board):
         return self.strength
@@ -71,7 +73,9 @@ class Card:
             'hero': self.hero,
             'agile': self.agile,
             'morale_boost': self.morale_boost,
-            'horn': self.horn
+            'horn': self.horn,
+            'horn_special': self.horn_special,
+            'weather': self.weather
         }
 
         return card_data

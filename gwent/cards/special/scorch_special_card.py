@@ -1,5 +1,4 @@
 from gwent.cards.special.special_card import SpecialCard
-from gwent.cards.unit.unit_card import UnitCard
 
 
 class ScorchSpecialCard(SpecialCard):
@@ -14,12 +13,12 @@ class ScorchSpecialCard(SpecialCard):
             for row in b.rows:
                 for card in row:
                     card_strength = card.get_active_strength(b)
-                    if not card.hero and card_strength > max_strength and isinstance(card, UnitCard):
+                    if not card.hero and card_strength > max_strength and card.unit:
                         max_strength = card_strength
 
         for b in [board, opponent_board]:
             for row in b.rows:
                 for card in row:
                     card_strength = card.get_active_strength(b)
-                    if not card.hero and card_strength == max_strength and isinstance(card, UnitCard):
+                    if not card.hero and card_strength == max_strength and card.unit:
                         card.destroy(b, b.player)

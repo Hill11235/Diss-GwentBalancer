@@ -1,5 +1,4 @@
 from gwent.cards.special.special_card import SpecialCard
-from gwent.cards.unit.unit_card import UnitCard
 
 
 class DecoyCard(SpecialCard):
@@ -9,7 +8,7 @@ class DecoyCard(SpecialCard):
 
         for row in board.rows:
             for card in row:
-                if card.hero is False and isinstance(card, UnitCard):
+                if card.hero is False and card.unit:
                     targets.append(card)
 
         return targets
@@ -17,7 +16,7 @@ class DecoyCard(SpecialCard):
     def place_card(self, board, player, opponent, opponent_board, row, target):
         targets = self.get_targets(player, board)
 
-        if target in targets and target.hero is False and isinstance(target, UnitCard):
+        if target in targets and target.hero is False and target.unit:
             self.row = target.row
             player.hand.append(target)
             target.destroy(board, player, decoy=True)

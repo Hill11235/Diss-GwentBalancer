@@ -18,5 +18,5 @@ class ScorchUnitCard(UnitCard):
 
         if total_strength >= SCORCH_LIMIT:
             for card in opponent_board.rows[self.row]:
-                if card.get_active_strength(board) == max_strength and card.hero is False and isinstance(card, UnitCard):
+                if card.get_active_strength(board) == max_strength and card.hero is False and card.unit:
                     card.destroy(board, player)

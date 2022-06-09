@@ -36,6 +36,7 @@ class Card:
         self.horn = False
         self.horn_special = False
         self.weather = False
+        self.unit = True
 
     def get_active_strength(self, board):
         return self.strength

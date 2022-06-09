@@ -41,7 +41,6 @@ class Deck:
         # read in csv file provided and create and store cards in list
         dir_path = os.path.dirname(os.path.realpath(__file__))
 
-        # TODO adjust card class such that there is one constructor and everything takes hero and agile bool args
         with open(os.path.join(dir_path, self.file_path), encoding='utf-8-sig') as file:
             card_data = csv.DictReader(file)
             for cards in card_data:

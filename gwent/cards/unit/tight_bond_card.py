@@ -1,5 +1,4 @@
 from gwent.cards.unit.unit_card import UnitCard
-from gwent.cards.special.weather_card import WeatherCard
 
 
 class TightBondCard(UnitCard):
@@ -13,7 +12,7 @@ class TightBondCard(UnitCard):
             if card.name == self.name:
                 num_comrades += 1
 
-        if any(isinstance(card, WeatherCard) for card in board.rows[self.row]):
+        if any(card.weather for card in board.rows[self.row]):
             return (num_comrades + morale_buff) * horn_buff
         else:
             return ((self.strength * num_comrades) + morale_buff) * horn_buff

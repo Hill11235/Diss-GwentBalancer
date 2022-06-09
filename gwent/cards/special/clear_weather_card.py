@@ -1,5 +1,4 @@
 from gwent.cards.special.special_card import SpecialCard
-from gwent.cards.special.weather_card import WeatherCard
 
 
 class ClearWeatherCard(SpecialCard):
@@ -11,5 +10,5 @@ class ClearWeatherCard(SpecialCard):
         for b in [board, opponent_board]:
             for row in b.rows:
                 for card in row:
-                    if isinstance(card, WeatherCard):
+                    if card.weather:
                         card.destroy(b, b.player)

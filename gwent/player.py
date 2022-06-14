@@ -18,8 +18,12 @@ class Player:
 
     # TODO general getter methods
     # TODO think about how to add initial decks
-    # TODO mulligan method
     # TODO get JSON data method
+
+    def set_deck_and_hand(self):
+        # set deck based on deck class
+        # set hand by calling draw_card 10 times
+        pass
 
     def draw_card(self):
         random_card_index = random.randint(0, len(self.deck) - 1)

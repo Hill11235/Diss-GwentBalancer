@@ -3,7 +3,7 @@ import random
 
 class Player:
 
-    def __init__(self, name, faction):
+    def __init__(self, name, faction, deck):
         self.name = name
         self.faction = faction
 
@@ -12,7 +12,7 @@ class Player:
         self.lives = 2
         self.mulligan = 0
 
-        self.deck = []
+        self.deck = deck
         self.graveyard = []
         self.hand = []
 

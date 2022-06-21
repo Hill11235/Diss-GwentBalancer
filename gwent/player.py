@@ -12,18 +12,18 @@ class Player:
         self.lives = 2
         self.mulligan = 0
 
-        self.deck = deck
-        self.graveyard = []
         self.hand = []
+        self.deck = deck
+        self.set_hand()
+        self.graveyard = []
 
     # TODO general getter methods
     # TODO think about how to add initial decks
     # TODO get JSON data method
 
-    def set_deck_and_hand(self):
-        # set deck based on deck class
-        # set hand by calling draw_card 10 times
-        pass
+    def set_hand(self):
+        for i in range(10):
+            self.draw_card()
 
     def draw_card(self):
         random_card_index = random.randint(0, len(self.deck) - 1)

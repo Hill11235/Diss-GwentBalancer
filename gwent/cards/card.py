@@ -63,14 +63,13 @@ class Card:
     def get_name(self):
         return self.name
 
-    def get_data(self, board):
+    def get_data(self):
         card_data = {
             'card_id': self.card_id,
             'name': self.name,
             'faction': self.faction,
             'row': self.row,
             'strength': self.strength,
-            'effective_strength': self.get_active_strength(board),
             'hero': self.hero,
             'agile': self.agile,
             'morale_boost': self.morale_boost,

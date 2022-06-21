@@ -8,17 +8,13 @@ class Player:
         self.faction = faction
 
         self.passed = False
-        self.ready = False
         self.lives = 2
-        self.mulligan = 0
 
         self.hand = []
         self.deck = deck
         self.set_hand()
         self.graveyard = []
 
-    # TODO general getter methods
-    # TODO think about how to add initial decks
     # TODO get JSON data method
 
     def set_hand(self):

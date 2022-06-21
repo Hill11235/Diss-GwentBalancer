@@ -72,10 +72,10 @@ class Deck:
         with open(os.path.join(dir_path, deck_list_path), encoding='utf-8-sig') as file:
             card_data = csv.DictReader(file)
             for cards in card_data:
-                monster_deck.append(self.get_card_by_id(cards['monster']))
-                nilf_deck.append(self.get_card_by_id(cards['nilfgaardian']))
-                northern_deck.append(self.get_card_by_id(cards['northern']))
-                scoiatael_deck.append(self.get_card_by_id(cards['scoiatael']))
+                monster_deck.append(self.get_card_by_id(cards['monster'])) if cards['monster'] != "" else None
+                nilf_deck.append(self.get_card_by_id(cards['nilfgaardian'])) if cards['nilfgaardian'] != "" else None
+                northern_deck.append(self.get_card_by_id(cards['northern'])) if cards['northern'] != "" else None
+                scoiatael_deck.append(self.get_card_by_id(cards['scoiatael'])) if cards['scoiatael'] != "" else None
 
         return monster_deck, nilf_deck, northern_deck, scoiatael_deck
 

@@ -62,6 +62,23 @@ class Deck:
         applicable_cards = self.get_faction_cards(card_list, faction)
         self.deck = random.sample(applicable_cards, size)
 
+    def create_deck_using_list(self, deck_list_path):
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        monster_deck = []
+        nilf_deck = []
+        northern_deck = []
+        scoiatael_deck = []
+
+        with open(os.path.join(dir_path, deck_list_path), encoding='utf-8-sig') as file:
+            card_data = csv.DictReader(file)
+            for cards in card_data:
+                monster_deck.append(self.get_card_by_id(cards['monster']))
+                nilf_deck.append(self.get_card_by_id(cards['nilfgaardian']))
+                northern_deck.append(self.get_card_by_id(cards['northern']))
+                scoiatael_deck.append(self.get_card_by_id(cards['scoiatael']))
+
+        return monster_deck, nilf_deck, northern_deck, scoiatael_deck
+
     def get_faction_cards(self, cards, faction):
         relevant_cards = []
         for c in cards:
@@ -69,6 +86,12 @@ class Deck:
                 relevant_cards.append(c)
 
         return relevant_cards
+
+    def get_card_by_id(self, card_id):
+        card_list = copy.deepcopy(self.all_cards)
+        for c in card_list:
+            if c.card_id == card_id:
+                return c
 
     def get_deck(self):
         return self.deck

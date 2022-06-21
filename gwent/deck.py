@@ -59,10 +59,10 @@ class Deck:
     def create_deck(self, faction, size):
         # create a deck list based on the faction, deck size, and random seed information provided
         card_list = copy.deepcopy(self.all_cards)
-        applicable_cards = self.get_relevant_cards(card_list, faction)
+        applicable_cards = self.get_faction_cards(card_list, faction)
         self.deck = random.sample(applicable_cards, size)
 
-    def get_relevant_cards(self, cards, faction):
+    def get_faction_cards(self, cards, faction):
         relevant_cards = []
         for c in cards:
             if c.faction in [faction, 'neutral']:

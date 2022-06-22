@@ -8,5 +8,6 @@ class WeatherCard(SpecialCard):
         self.weather = True
 
     def place_card(self, board, player, opponent, opponent_board, row, target):
+        player.remove_card_from_hand(self.card_id)
         for b in [board, opponent_board]:
             b.rows[self.row].append(self)

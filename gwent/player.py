@@ -24,6 +24,15 @@ class Player:
         drawn_card = self.deck.pop(random_card_index)
         self.hand.append(drawn_card)
 
+    def remove_card_from_hand(self, card_ident):
+        i = 0
+        for cards in self.hand:
+            if cards.card_id == card_ident:
+                return self.hand.pop(i)
+            i += 1
+
+        return None
+
     def pass_round(self):
         self.passed = True
 

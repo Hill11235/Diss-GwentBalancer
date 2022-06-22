@@ -9,6 +9,7 @@ class SpyCard(UnitCard):
 
     def place_card(self, board, player, opponent, opponent_board, row, target):
         opponent_board.rows[self.row].append(self)
+        player.remove_card_from_hand(self.card_id)
         self.battlecry(board, player, opponent, opponent_board, row, target)
 
     def deep_copy(self):

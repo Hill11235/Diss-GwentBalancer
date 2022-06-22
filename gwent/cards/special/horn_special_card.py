@@ -11,4 +11,5 @@ class HornSpecialCard(SpecialCard):
 
     def place_card(self, board, player, opponent, opponent_board, row, target):
         self.row = target
+        player.remove_card_from_hand(self.card_id)
         board.rows[self.row].append(self)

@@ -5,6 +5,7 @@ class ScorchSpecialCard(SpecialCard):
 
     def place_card(self, board, player, opponent, opponent_board, row, target):
         self.battlecry(board, player, opponent, opponent_board, row, target)
+        player.remove_card_from_hand(self.card_id)
 
     def battlecry(self, board, player, opponent, opponent_board, row, target):
         max_strength = 0

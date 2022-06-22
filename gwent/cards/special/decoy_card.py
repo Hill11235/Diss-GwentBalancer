@@ -15,6 +15,7 @@ class DecoyCard(SpecialCard):
 
     def place_card(self, board, player, opponent, opponent_board, row, target):
         targets = self.get_targets(player, board)
+        player.remove_card_from_hand(self.card_id)
 
         if target in targets and target.hero is False and target.unit:
             self.row = target.row

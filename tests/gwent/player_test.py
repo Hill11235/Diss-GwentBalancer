@@ -48,3 +48,13 @@ class PlayerTest(unittest.TestCase):
         self.assertEqual(len(player_dict), 8)
         self.assertEqual(player_dict.get("faction"), "Monster")
         self.assertEqual(player_dict.get("hand size"), 10)
+
+    def test_remove_card_from_hand(self):
+        removed_card = self.player2.remove_card_from_hand("kayran")
+        self.assertEqual(removed_card.card_id, "kayran")
+
+        self.assertEqual(len(self.player2.hand), 9)
+        for cards in self.player2.hand:
+            self.assertNotEqual(cards.card_id, "kayran")
+
+        self.assertIsNone(self.player2.remove_card_from_hand("apple"))

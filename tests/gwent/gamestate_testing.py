@@ -25,29 +25,59 @@ class GameStateTest(unittest.TestCase):
         for row in self.board1.rows:
             self.assertEqual(len(row), 0)
 
-    def test_clear_board(self):
-        pass
-
     def test_set_score(self):
-        # test that scores can be added in GameState
-        pass
+        self.game.set_scores()
+        self.assertEqual(self.game.scores, [0, 0])
 
     def test_lives_update(self):
-        # call set scores and then check that each player's lives are decremented as expected as it's a draw
-        pass
+        self.game.set_scores()
+        self.game.update_lives()
+
+        self.assertEqual(self.player1.lives, 1)
+        self.assertEqual(self.player2.lives, 1)
+
+        self.game.scores.append(1)
+        self.game.scores.append(3)
+        self.game.update_lives()
+
+        self.assertEqual(self.player1.lives, 0)
+        self.assertEqual(self.player2.lives, 1)
 
     def test_set_player_turn(self):
-        # manually adjust scores in game state and then test the order for the three different scenarios
-        pass
+        self.assertIn(self.game.starter, [0, 1])
+        self.game.scores.append(1)
+        self.game.scores.append(3)
+        self.game.set_player_turn()
+        self.assertEqual(self.game.starter, 1)
+
+        self.game.scores.append(7)
+        self.game.scores.append(3)
+        self.game.set_player_turn()
+        self.assertEqual(self.game.starter, 0)
+
+        self.game.scores.append(3)
+        self.game.scores.append(3)
+        self.game.set_player_turn()
+        self.assertIn(self.game.starter, [0, 1])
 
     def test_get_num_options(self):
-        # test there are eleven options to begin with
-        pass
+        self.assertEqual(self.game.get_num_options(self.player1), 11)
+        self.assertEqual(self.game.get_num_options(self.player2), 11)
 
     def test_check_game_complete(self):
-        # check incomplete at start, manually override lives and test complete
-        pass
+        self.assertFalse(self.game.check_game_complete())
+        self.player1.lives = 0
+        self.assertTrue(self.game.check_game_complete())
 
     def test_alternate_player(self):
-        # manually override passed for each player and check that the active player alternates properly
+        initial_turn = self.game.starter
+        self.game.alternate_player()
+        updated_turn = (initial_turn + 1) % 2
+        self.assertEqual(self.game.starter, updated_turn)
+
+        self.player1.passed = True
+        self.game.alternate_player()
+        self.assertEqual(self.game.starter, 1)
+
+    def test_get_game_data(self):
         pass

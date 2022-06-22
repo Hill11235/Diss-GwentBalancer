@@ -41,8 +41,7 @@ class Card:
     def get_active_strength(self, board):
         return self.strength
 
-    # TODO consider if card needs to be removed from hand when placed
-    # TODO Refactor to reduce number of arguments (add boards as an attribute of player?)
+    # TODO Refactor to reduce number of arguments (remove player args and get these via boards?)
     def place_card(self, board, player, opponent, opponent_board, row, target):
         pass
 
@@ -59,9 +58,6 @@ class Card:
         # add to graveyard if not a decoy card (player attribute)
         if not decoy:
             player.graveyard.append(self)
-
-    def get_name(self):
-        return self.name
 
     def get_data(self):
         card_data = {

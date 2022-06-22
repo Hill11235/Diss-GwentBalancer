@@ -106,8 +106,8 @@ class GameState:
             self.starter = 0
 
     def set_scores(self):
-        self.scores.append(self.board1.score)
-        self.scores.append(self.board2.score)
+        self.scores.append(sum(self.board1.score()))
+        self.scores.append(sum(self.board2.score()))
 
     def update_lives(self):
         p1_score = self.scores[len(self.scores) - 2]

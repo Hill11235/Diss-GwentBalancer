@@ -1,7 +1,6 @@
 class Board:
 
-    def __init__(self, game, player):
-        self.game = game
+    def __init__(self, player):
         self.player = player
         self.rows = [[], [], []]
 

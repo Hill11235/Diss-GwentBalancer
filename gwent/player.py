@@ -15,8 +15,6 @@ class Player:
         self.set_hand()
         self.graveyard = []
 
-    # TODO get JSON data method
-
     def set_hand(self):
         for i in range(10):
             self.draw_card()
@@ -37,5 +35,25 @@ class Player:
         return self.lives
 
     def get_player_data(self):
-        # get name, lives, hand size, faction, passed etc as JSON/dictionary
-        pass
+        hand_dict = {}
+        for cards in self.hand:
+            card_dict = cards.get_data()
+            hand_dict[cards.card_id] = card_dict
+
+        graveyard_dict = {}
+        for cards in self.graveyard:
+            card_dict = cards.get_data()
+            graveyard_dict[cards.card_id] = card_dict
+
+        player_data = {
+            "name": self.name,
+            "faction": self.faction,
+            "lives": self.lives,
+            "hand size": len(self.hand),
+            "hand": hand_dict,
+            "graveyard size": len(self.graveyard),
+            "graveyard": graveyard_dict,
+            "size of deck": len(self.deck)
+        }
+
+        return player_data

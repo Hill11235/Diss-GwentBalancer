@@ -13,7 +13,7 @@ class GameState:
         self.starter = random.randint(0, 1)
         self.scores = []
 
-    def game_loop(self, verbose=False):
+    def game_loop(self):
         print("Starting player is ", self.player_list[self.starter])
         round_counter = 0
         turn_count = 0

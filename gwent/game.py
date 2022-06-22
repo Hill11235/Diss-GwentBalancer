@@ -123,5 +123,10 @@ class GameState:
             self.player1.lose_round()
 
     def get_game_data(self):
-        # get final game data
-        pass
+        game_dict = {
+            "score": self.scores,
+            "player1": self.player1.get_player_data(),
+            "player2": self.player2.get_player_data()
+        }
+
+        return game_dict

@@ -80,4 +80,13 @@ class GameStateTest(unittest.TestCase):
         self.assertEqual(self.game.starter, 1)
 
     def test_get_game_data(self):
-        pass
+        game_dict = self.game.get_game_data()
+        self.assertEqual(len(game_dict), 3)
+        self.assertEqual(game_dict.get('score'), [])
+
+        self.game.scores.append(7)
+        self.game.scores.append(3)
+
+        game_dict = self.game.get_game_data()
+        self.assertEqual(len(game_dict), 3)
+        self.assertEqual(game_dict.get('score'), [7, 3])

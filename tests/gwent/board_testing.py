@@ -1,5 +1,6 @@
 import unittest
 from gwent import *
+from gwent.cards import *
 
 
 class BoardTest(unittest.TestCase):
@@ -20,10 +21,40 @@ class BoardTest(unittest.TestCase):
         self.board2 = Board(self.player2)
 
     def test_score(self):
-        pass
+        self.assertEqual(self.board1.score(), [0, 0, 0])
+        self.assertEqual(self.board2.score(), [0, 0, 0])
+
+        card1 = UnitCard("1", "dummy1", "Monster", 0, 8, False, False)
+        card2 = UnitCard("2", "dummy2", "Northern", 1, 5, True, False)
+
+        card1.place_card(self.board1, self.player1, self.player2, self.board2, card1.row, None)
+        card2.place_card(self.board2, self.player2, self.player1, self.board1, card2.row, None)
+        self.assertEqual(self.board1.score(), [8, 0, 0])
+        self.assertEqual(self.board2.score(), [0, 5, 0])
 
     def test_clear_board(self):
-        pass
+        card1 = UnitCard("1", "dummy1", "Monster", 0, 8, False, False)
+        card2 = UnitCard("2", "dummy2", "Northern", 1, 5, True, False)
+
+        card1.place_card(self.board1, self.player1, self.player2, self.board2, card1.row, None)
+        card2.place_card(self.board2, self.player2, self.player1, self.board1, card2.row, None)
+        self.assertEqual(self.board1.score(), [8, 0, 0])
+        self.assertEqual(self.board2.score(), [0, 5, 0])
+
+        self.board1.clear_board()
+        self.board2.clear_board()
+
+        self.assertEqual(self.board1.score(), [0, 0, 0])
+        self.assertEqual(self.board2.score(), [0, 0, 0])
+
+        self.assertEqual(len(self.player1.graveyard), 1)
+        self.assertEqual(len(self.player2.graveyard), 1)
 
     def test_get_data(self):
-        pass
+        card1 = UnitCard("1", "dummy1", "Monster", 0, 8, False, False)
+        card2 = UnitCard("2", "dummy2", "Northern", 1, 5, True, False)
+
+        card1.place_card(self.board1, self.player1, self.player2, self.board2, card1.row, None)
+        card2.place_card(self.board2, self.player2, self.player1, self.board1, card2.row, None)
+
+        self.assertEqual(self.board1.get_data().get('total_score'), [8, 0, 0])

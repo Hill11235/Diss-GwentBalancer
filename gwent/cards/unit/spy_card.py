@@ -11,13 +11,3 @@ class SpyCard(UnitCard):
         opponent_board.rows[self.row].append(self)
         player.remove_card_from_hand(self.card_id)
         self.battlecry(board, player, opponent, opponent_board, row, target)
-
-    def deep_copy(self):
-        copy = SpyCard(self.card_id,
-                       self.name,
-                       self.faction,
-                       self.row,
-                       self.strength,
-                       self.hero,
-                       self.agile)
-        return copy

@@ -21,6 +21,7 @@ class UnitCard(Card):
     def get_active_strength(self, board):
         horn_buff = self.get_horn_buff(board)
         morale_buff = self.get_morale_buff(board)
+        horn_buff = horn_buff / 2 if self.horn else horn_buff
 
         if self.hero:
             return self.strength
@@ -39,7 +40,6 @@ class UnitCard(Card):
         return horn
 
     def get_morale_buff(self, board):
-        # TODO check that the -1 behaves correctly
         morale = -1 if self.morale_boost else 0
 
         for card in board.rows[self.row]:

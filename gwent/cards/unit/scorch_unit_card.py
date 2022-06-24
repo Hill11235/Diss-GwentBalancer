@@ -10,13 +10,13 @@ class ScorchUnitCard(UnitCard):
         total_strength = 0
 
         for card in opponent_board.rows[self.row]:
-            card_strength = card.get_active_strength(board)
+            card_strength = card.get_active_strength(opponent_board)
             total_strength += card_strength
 
-            if not card.hero and card_strength > max_strength:
+            if not card.hero and card.unit and card_strength > max_strength:
                 max_strength = card_strength
 
         if total_strength >= SCORCH_LIMIT:
             for card in opponent_board.rows[self.row]:
-                if card.get_active_strength(board) == max_strength and card.hero is False and card.unit:
-                    card.destroy(board, player)
+                if card.get_active_strength(opponent_board) == max_strength and card.hero is False and card.unit:
+                    card.destroy(opponent_board, opponent)

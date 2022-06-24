@@ -52,3 +52,11 @@ class TestMedicCard(TestCase):
         self.assertTrue(self.board1.rows[0].__contains__(self.unitCard))
         self.assertFalse(self.player1.graveyard.__contains__(self.med2))
         self.assertFalse(self.player1.graveyard.__contains__(self.unitCard))
+
+    def test_medic_with_empty_graveyard(self):
+        self.player1.hand.append(self.med1)
+        self.med1.place_card(self.board1, self.player1, None, None, 1, None)
+        self.assertTrue(self.board1.rows[1].__contains__(self.med1))
+        self.assertEqual(len(self.board1.rows[0]), 0)
+        self.assertEqual(len(self.board1.rows[1]), 1)
+        self.assertEqual(len(self.board1.rows[2]), 0)

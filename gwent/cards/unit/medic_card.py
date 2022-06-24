@@ -1,3 +1,4 @@
+import random
 from gwent.cards.unit.unit_card import UnitCard
 
 
@@ -16,5 +17,14 @@ class MedicCard(UnitCard):
 
         if target in targets and target.hero is False and target.unit:
             chosen_card = target
-            chosen_card.place_card(board, player, opponent, opponent_board, row, target)
             player.graveyard.remove(chosen_card)
+
+            chosen_row = random.choice(chosen_card.get_row())
+            chosen_targets = chosen_card.get_targets(player, board)
+
+            if chosen_targets is not None:
+                chosen_target = random.choice(chosen_targets)
+            else:
+                chosen_target = None
+
+            chosen_card.place_card(board, player, opponent, opponent_board, chosen_row, chosen_target)

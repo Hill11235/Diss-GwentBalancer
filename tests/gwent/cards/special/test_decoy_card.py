@@ -42,3 +42,9 @@ class TestDecoyCard(TestCase):
         self.assertTrue(self.board1.rows[0].__contains__(self.decoy))
         self.assertFalse(self.player1.graveyard.__contains__(self.unitCard1))
         self.assertFalse(self.player1.hand.__contains__(self.decoy))
+
+    def test_decoy_alone(self):
+        self.assertEqual(len(self.player1.hand), 10)
+        self.decoy.place_card(self.board1, self.player1, None, None, 0, None)
+        self.assertTrue(self.board1.rows[0].__contains__(self.decoy))
+        self.assertEqual(len(self.player1.hand), 10)

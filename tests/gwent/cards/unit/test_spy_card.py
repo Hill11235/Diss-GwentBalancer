@@ -44,5 +44,16 @@ class TestSpyCard(TestCase):
         self.assertEqual(len(self.player1.hand), hand_size_before + 2)
 
     def test_dummy_switch(self):
-        # TODO add test which uses a dummy to pick up spy and replay
-        pass
+        decoy = DecoyCard("5", "dec", "Northern", 0, -1, False, False)
+
+        self.board1.rows[0].append(self.spy)
+        decoy.place_card(self.board1, self.player1, self.player2, self.board2, self.spy.row, self.spy)
+
+        self.assertTrue(self.board1.rows[0].__contains__(decoy))
+        self.assertFalse(self.board1.rows[0].__contains__(self.spy))
+        self.assertTrue(self.player1.hand.__contains__(self.spy))
+
+        self.spy.place_card(self.board1, self.player1, self.player2, self.board2, self.spy.row, None)
+        self.assertEqual(len(self.player1.hand), 12)
+        self.assertTrue(self.board2.rows[0].__contains__(self.spy))
+

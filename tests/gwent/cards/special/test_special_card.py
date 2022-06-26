@@ -34,7 +34,6 @@ class TestSpecialCard(TestCase):
         self.assertFalse(self.player1.hand.__contains__(self.spec1))
         self.assertFalse(self.player1.hand.__contains__(self.spec2))
         self.assertFalse(self.player1.hand.__contains__(self.decoy))
-        print(self.board1.get_data())
         self.assertEqual(len(self.board1.rows[0]), 3)
 
     def test_get_active_strength(self):

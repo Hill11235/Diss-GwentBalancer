@@ -65,6 +65,37 @@ class TestScorchUnitCard(TestCase):
 
         self.assertTrue(self.board2.rows[0].__contains__(self.unitCard2))
 
+    def test_scorch_row(self):
+        self.unitCard3 = UnitCard("5", "dummy5", "Monster", 0, 11, False, False)
+
+        self.board2.rows[0].append(self.unitCard1)
+        self.board2.rows[0].append(self.unitCard2)
+        self.board2.rows[0].append(self.unitCard3)
+
+        self.scorchio.scorch_row(self.board2, self.board2.rows[0], 11)
+
+        self.assertEqual(len(self.board2.rows[0]), 1)
+        self.assertTrue(self.board2.rows[0].__contains__(self.unitCard2))
+        self.assertFalse(self.board2.rows[0].__contains__(self.unitCard1))
+        self.assertFalse(self.board2.rows[0].__contains__(self.unitCard3))
+        self.assertTrue(self.player2.graveyard.__contains__(self.unitCard1))
+        self.assertTrue(self.player2.graveyard.__contains__(self.unitCard3))
+
     def test_weather_combo(self):
-        # TODO test that scorch works in combination with a weather card properly.
-        pass
+        frost = WeatherCard("11", "dummyWeather", "Neutral", 0, -1, False, False)
+
+        self.board2.rows[0].append(self.unitHero)
+        self.board2.rows[0].append(self.unitCard1)
+        self.board2.rows[0].append(self.unitCard2)
+        self.board2.rows[0].append(self.unitCard3)
+
+        self.assertTrue(self.board2.rows[0].__contains__(self.unitCard2))
+
+        frost.place_card(self.board1, self.player1, self.player2, self.board2, 0, None)
+
+        self.scorchio.place_card(self.board1, self.player1, self.player2, self.board2, self.scorchio.row, None)
+
+        self.assertTrue(self.board2.rows[0].__contains__(self.unitHero))
+        self.assertFalse(self.board2.rows[0].__contains__(self.unitCard1))
+        self.assertFalse(self.board2.rows[0].__contains__(self.unitCard2))
+        self.assertFalse(self.board2.rows[0].__contains__(self.unitCard3))

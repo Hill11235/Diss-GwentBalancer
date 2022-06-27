@@ -14,14 +14,15 @@ class GameState:
         self.scores = []
 
     def game_loop(self):
-        print("Starting player is ", self.player_list[self.starter])
+        first_player = self.player_list[self.starter]
+        print("Starting player is ", first_player.name, ", faction: ", first_player.faction)
         round_counter = 0
         turn_count = 0
 
         while not self.check_game_complete():
             print("Round ",  round_counter)
 
-            while not self.player1.passed and not self.player2.passed:
+            while not self.player1.passed or not self.player2.passed:
                 active_player = self.player_list[self.starter]
                 number_options = self.get_num_options(active_player)
                 print("There are ", number_options, " choices")
@@ -33,7 +34,7 @@ class GameState:
                 else:
                     chosen_card = active_player.hand[choice - 1]
                     rows = chosen_card.get_row()
-                    targets = chosen_card.get_targets()
+                    targets = chosen_card.get_targets(self.player_list[self.starter], self.board_list[self.starter])
                     chosen_target = 0
 
                     if len(rows) > 1:
@@ -46,7 +47,8 @@ class GameState:
                         print("There are ", len(targets), " targets")
                         for i in range(len(targets)):
                             print(i, ": ", targets[i])
-                        chosen_target = int(input("Please choose one of the available targets:"))
+                        target_index = int(input("Please choose one of the available targets:"))
+                        chosen_target = targets[target_index]
 
                     chosen_card.place_card(self.board_list[self.starter],
                                            active_player,
@@ -93,7 +95,7 @@ class GameState:
 
         print("0: pass")
         for i in range(1, options):
-            print(i, ": ", active_player.hand[i - 1])
+            print(i, ": ", active_player.hand[i - 1].get_data())
 
     def set_player_turn(self):
         index = len(self.scores) - 1

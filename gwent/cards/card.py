@@ -41,7 +41,6 @@ class Card:
     def get_active_strength(self, board):
         return self.strength
 
-    # TODO Refactor to reduce number of arguments (remove player args and get these via boards?)
     def place_card(self, board, opponent_board, row, target):
         pass
 

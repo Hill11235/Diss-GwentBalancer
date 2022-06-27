@@ -12,7 +12,7 @@ class CardTest(unittest.TestCase):
         self.assertEqual(self.card.get_active_strength(None), 8)
 
     def test_get_row(self):
-        self.assertEqual(self.card.get_row(), [0])
+        self.assertEqual(self.card.get_row(None), [0])
 
     def test_get_targets(self):
         self.assertIsNone(self.card.get_targets(None, None))

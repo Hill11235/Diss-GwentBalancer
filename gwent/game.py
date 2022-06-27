@@ -33,13 +33,15 @@ class GameState:
                     active_player.pass_round()
                 else:
                     chosen_card = active_player.hand[choice - 1]
-                    rows = chosen_card.get_row()
+                    rows = chosen_card.get_row(self.board_list[self.starter])
                     targets = chosen_card.get_targets(self.player_list[self.starter], self.board_list[self.starter])
-                    chosen_target = 0
+                    chosen_target = None
 
                     if len(rows) > 1:
                         print("Available rows: ", rows)
                         chosen_row = int(input("Please choose one of the available rows:"))
+                    elif len(rows) == 0:
+                        chosen_row = -1
                     else:
                         chosen_row = rows[0]
 

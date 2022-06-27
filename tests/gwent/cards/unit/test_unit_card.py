@@ -23,8 +23,8 @@ class TestUnitCard(TestCase):
         self.board1 = Board(self.player1)
 
     def test_get_row(self):
-        self.assertEqual(self.unitCard.get_row(), [0])
-        self.assertEqual(self.unitHero.get_row(), [0, 1])
+        self.assertEqual(self.unitCard.get_row(self.board1), [0])
+        self.assertEqual(self.unitHero.get_row(self.board1), [0, 1])
 
     def test_place_card(self):
         self.player1.hand.append(self.unitCard)

@@ -3,7 +3,7 @@ from gwent.cards.card import Card
 
 class UnitCard(Card):
 
-    def get_row(self):
+    def get_row(self, board):
         if self.agile:
             return [0, 1]
         return [self.row]

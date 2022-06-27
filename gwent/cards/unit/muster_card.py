@@ -9,13 +9,13 @@ class MusterCard(UnitCard):
         for card in player.deck:
             if card.name == self.name and card.card_id not in explored:
                 explored.append(card.card_id)
-                card.place_card(board, player, opponent, opponent_board, card.get_row()[0], target)
+                card.place_card(board, player, opponent, opponent_board, card.get_row(board)[0], target)
 
         player.deck = [card for card in player.deck if not card.name == self.name]
 
         for card in player.hand:
             if card.name == self.name and card.card_id not in explored:
                 explored.append(card.card_id)
-                card.place_card(board, player, opponent, opponent_board, card.get_row()[0], target)
+                card.place_card(board, player, opponent, opponent_board, card.get_row(board)[0], target)
 
         player.hand = [card for card in player.hand if not card.name == self.name]

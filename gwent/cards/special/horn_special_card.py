@@ -8,15 +8,14 @@ class HornSpecialCard(SpecialCard):
         self.horn_special = True
 
     def place_card(self, board, player, opponent, opponent_board, row, target):
-        self.row = target
+        self.row = row
         player.remove_card_from_hand(self.card_id)
-        targets = self.get_targets(player, board)
+        possible_rows = self.get_row(board)
 
-        if target in targets:
+        if row in possible_rows:
             board.rows[self.row].append(self)
 
-    def get_targets(self, player, board):
-        # return all rows in board where there isn't already a special horn card present
+    def get_row(self, board):
         targets = []
 
         for i in range(len(board.rows)):

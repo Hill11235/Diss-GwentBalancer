@@ -24,17 +24,13 @@ class FullGameKnownDecksTest(unittest.TestCase):
         self.board3 = Board(self.playerNorth)
         self.board4 = Board(self.playerScoi)
 
-    @mock.patch('module_under_test.input', create=True)
-    def test_monster_vs_northern(self, mocked_input):
-        mocked_input.side_effect = ['', '', '']
-        game = GameState(self.board2, self.board3)
-        game.starter = 0
+    #@mock.patch('FullGameKnownDecksTest.input', create=True)
+    #def test_monster_vs_northern(self, mocked_input):
+    #    mocked_input.side_effect = ['', '', '']
+    #    game = GameState(self.board2, self.board3)
+    #    game.starter = 0
 
-        game.game_loop()
-        dicto = game.get_game_data()
-
-        # run assertions on dictionary
-
+        #game.game_loop()
 
     def test_monster_vs_scoiatael(self):
         pass

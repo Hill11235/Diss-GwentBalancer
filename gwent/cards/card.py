@@ -45,7 +45,7 @@ class Card:
     def place_card(self, board, player, opponent, opponent_board, row, target):
         pass
 
-    def get_row(self):
+    def get_row(self, board):
         return [self.row]
 
     def get_targets(self, player, board):

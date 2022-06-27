@@ -19,7 +19,7 @@ class MedicCard(UnitCard):
             chosen_card = target
             player.graveyard.remove(chosen_card)
 
-            chosen_row = random.choice(chosen_card.get_row())
+            chosen_row = random.choice(chosen_card.get_row(board))
             chosen_targets = chosen_card.get_targets(player, board)
 
             if chosen_targets is not None:

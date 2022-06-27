@@ -93,7 +93,7 @@ class DeckTest(unittest.TestCase):
         size = 22
         seed = 123
 
-        card_ids = ["arachas", "arachas", "arachas",
+        card_ids = ["arachas1", "arachas2", "arachas3",
                     "kayran", "leshen", "werewolf",
                     "frightener", "harpy", "earth_elemental", "griffin"]
 

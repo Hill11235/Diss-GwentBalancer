@@ -23,6 +23,7 @@ class FullGameKnownDecksTest(unittest.TestCase):
         self.board2 = Board(self.playerMonster)
         self.board3 = Board(self.playerNorth)
         self.board4 = Board(self.playerScoi)
+        # TODO set hand order so that input can be fed correctly
 
     #@mock.patch('FullGameKnownDecksTest.input', create=True)
     #def test_monster_vs_northern(self, mocked_input):

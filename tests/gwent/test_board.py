@@ -50,6 +50,26 @@ class BoardTest(unittest.TestCase):
         self.assertEqual(len(self.player1.graveyard), 1)
         self.assertEqual(len(self.player2.graveyard), 1)
 
+    def test_arachas_muster_clear(self):
+        muster1 = MusterCard("arachas1", "Arachas", "Monster", 0, 4, False, False)
+        muster2 = MusterCard("arachas2", "Arachas", "Monster", 0, 4, False, False)
+        muster3 = MusterCard("arachas3", "Arachas", "Monster", 0, 4, False, False)
+
+        self.player1.hand.append(muster1)
+        self.player1.hand.append(muster2)
+        self.player1.hand.append(muster3)
+
+        muster1.place_card(self.board1, self.player1, self.player2, self.board2, 0, None)
+        self.assertTrue(self.board1.rows[0].__contains__(muster1))
+        self.assertTrue(self.board1.rows[0].__contains__(muster2))
+        self.assertTrue(self.board1.rows[0].__contains__(muster3))
+        self.assertEqual(len(self.board1.rows[0]), 3)
+
+        self.board1.clear_board()
+        self.assertFalse(self.board1.rows[0].__contains__(muster1))
+        self.assertFalse(self.board1.rows[0].__contains__(muster2))
+        self.assertFalse(self.board1.rows[0].__contains__(muster3))
+
     def test_get_data(self):
         card1 = UnitCard("1", "dummy1", "Monster", 0, 8, False, False)
         card2 = UnitCard("2", "dummy2", "Northern", 1, 5, True, False)

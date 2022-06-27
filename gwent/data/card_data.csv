@@ -41,12 +41,16 @@ eithne,Eithne,10,hero,scoiatael,1,1
 havekar_healer,Havekar Healer,0,medic,scoiatael,1,3
 riordain,Riordain,1,,scoiatael,1,1
 toruviel,Toruviel,2,,scoiatael,1,1
-elven_skirmisher,Elven Skirmisher,2,muster,scoiatael,1,3
-dwarven_skirmisher,Dwarven Skirmisher,3,muster,scoiatael,0,3
+elven_skirmisher1,Elven Skirmisher,2,muster,scoiatael,1,1
+elven_skirmisher2,Elven Skirmisher,2,muster,scoiatael,1,1
+elven_skirmisher,Elven Skirmisher,2,muster,scoiatael,1,1
+dwarven_skirmisher3,Dwarven Skirmisher,3,muster,scoiatael,0,3
 ciaran_aep_easnillien,Ciaran aep Easnillien,3,agile,scoiatael,1,1
 vrihedd_brigade_recruit,Vrihedd Brigade Recruit,4,,scoiatael,1,1
 dol_blathanna_archer,Dol Blathanna Archer,4,,scoiatael,1,1
-havekar_smuggler,Havekar Smuggler,5,muster,scoiatael,0,3
+havekar_smuggler1,Havekar Smuggler,5,muster,scoiatael,0,1
+havekar_smuggler2,Havekar Smuggler,5,muster,scoiatael,0,1
+havekar_smuggler3,Havekar Smuggler,5,muster,scoiatael,0,1
 mahakaman_defender,Mahakaman Defender,5,,scoiatael,0,5
 vrihedd_brigade_veteran,Vrihedd Brigade Veteran,5,agile,scoiatael,0,2
 dennis_cranmer,Dennis Cranmer,6,,scoiatael,0,1
@@ -60,8 +64,12 @@ kayran,Kayran,8,"morale_boost,hero,agile",monster,1,1
 leshen,Leshen,10,hero,monster,1,1
 imlerith,Imlerith,10,hero,monster,0,1
 draug,Draug,10,hero,monster,0,1
-ghoul,Ghoul,1,muster,monster,0,3
-nekker,Nekker,2,muster,monster,0,3
+ghoul1,Ghoul,1,muster,monster,0,1
+ghoul2,Ghoul,1,muster,monster,0,1
+ghoul3,Ghoul,1,muster,monster,0,1
+nekker1,Nekker,2,muster,monster,0,1
+nekker2,Nekker,2,muster,monster,0,1
+nekker3,Nekker,2,muster,monster,0,1
 wyvern,Wyvern,2,,monster,1,1
 foglet,Foglet,2,,monster,0,1
 celaeno_harpy,Celaeno Harpy,2,agile,monster,1,1
@@ -74,7 +82,9 @@ vampire_fleder,Vampire,4,muster,monster,0,1
 vampire_garkain,Vampire,4,muster,monster,0,1
 vampire_ekimmara,Vampire,4,muster,monster,0,1
 vampire_katakan,Vampire,4,muster,monster,0,1
-arachas,Arachas,4,muster,monster,0,3
+arachas1,Arachas,4,muster,monster,0,1
+arachas2,Arachas,4,muster,monster,0,1
+arachas3,Arachas,4,muster,monster,0,1
 botchling,Botchling,4,,monster,0,1
 forktail,Forktail,5,,monster,0,1
 plague_maiden,Plague Maiden,5,,monster,0,1

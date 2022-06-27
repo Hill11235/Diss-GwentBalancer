@@ -27,7 +27,7 @@ class GameState:
                 number_options = self.get_num_options(active_player)
                 print("There are ", number_options, " choices")
                 self.print_options()
-                choice = int(input("Please choose one of the above options."))
+                choice = int(input("Please choose one of the above options: "))
 
                 if choice == 0:
                     active_player.pass_round()
@@ -39,7 +39,7 @@ class GameState:
 
                     if len(rows) > 1:
                         print("Available rows: ", rows)
-                        chosen_row = int(input("Please choose one of the available rows:"))
+                        chosen_row = int(input("Please choose one of the available rows: "))
                     elif len(rows) == 0:
                         chosen_row = -1
                     else:
@@ -49,7 +49,7 @@ class GameState:
                         print("There are ", len(targets), " targets")
                         for i in range(len(targets)):
                             print(i, ": ", targets[i])
-                        target_index = int(input("Please choose one of the available targets:"))
+                        target_index = int(input("Please choose one of the available targets: "))
                         chosen_target = targets[target_index]
 
                     chosen_card.place_card(self.board_list[self.starter],
@@ -59,13 +59,16 @@ class GameState:
                                            chosen_row,
                                            chosen_target)
 
+                print(self.board1.get_data())
+                print(self.board2.get_data())
+
                 turn_count += 1
                 self.alternate_player()
 
             self.end_of_round()
             round_counter += 1
 
-        print("Winner is: ")
+        self.print_final_result()
 
     def end_of_round(self):
         self.set_scores()
@@ -75,6 +78,15 @@ class GameState:
         self.board2.clear_board()
         self.player1.reset_round()
         self.player2.reset_round()
+
+    def print_final_result(self):
+        print("Final score: ", self.scores)
+        if self.player1.lives <= 0 and self.player2.lives <= 0:
+            print("Draw")
+        elif self.player1.lives > self.player2.lives:
+            print(self.player1.name, " wins, playing ", self.player1.faction, " faction")
+        else:
+            print(self.player2.name, " wins, playing ", self.player2.faction, " faction")
 
     def alternate_player(self):
         if not self.player1.passed and not self.player2.passed:

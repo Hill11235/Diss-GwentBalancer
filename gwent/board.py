@@ -11,7 +11,8 @@ class Board:
     def clear_board(self):
         for row in self.rows:
             for card in row:
-                card.destroy(self, self.player)
+                self.player.graveyard.append(card)
+            row.clear()
 
     def get_data(self):
         board = {'total_score': self.score()}

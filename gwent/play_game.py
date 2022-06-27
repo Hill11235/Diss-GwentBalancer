@@ -22,6 +22,7 @@ class TestGame:
         board3 = Board(playerNorth)
 
         game = GameState(board2, board3)
+        game.starter = 0
 
         game.game_loop()
 

@@ -57,3 +57,15 @@ class TestSpyCard(TestCase):
         self.assertEqual(len(self.player1.hand), 12)
         self.assertTrue(self.board2.rows[0].__contains__(self.spy))
 
+    def test_deck_empty(self):
+        # test that spy doesn't crash game if the player's deck is empty
+        self.player1.hand.clear()
+        self.player1.deck.clear()
+        self.assertEqual(len(self.player1.hand), 0)
+        self.assertEqual(len(self.player1.deck), 0)
+
+        self.player1.hand.append(self.spy)
+        self.spy.place_card(self.board1, self.player1, self.player2, self.board2, self.spy.row, None)
+        self.assertTrue(self.board2.rows[self.spy.row].__contains__(self.spy))
+        self.assertEqual(len(self.player1.hand), 0)
+        self.assertEqual(len(self.player1.deck), 0)

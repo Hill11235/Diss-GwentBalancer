@@ -59,8 +59,8 @@ class GameState:
                                            chosen_row,
                                            chosen_target)
 
-                print(self.board1.get_data())
-                print(self.board2.get_data())
+                print("First player's board: ", self.board1.get_data())
+                print("Second player's board: ", self.board2.get_data())
 
                 turn_count += 1
                 self.alternate_player()

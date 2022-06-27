@@ -4,11 +4,11 @@ from collections import deque
 
 class ScorchSpecialCard(SpecialCard):
 
-    def place_card(self, board, player, opponent, opponent_board, row, target):
-        self.battlecry(board, player, opponent, opponent_board, row, target)
-        player.remove_card_from_hand(self.card_id)
+    def place_card(self, board, opponent_board, row, target):
+        self.battlecry(board, opponent_board, row, target)
+        board.player.remove_card_from_hand(self.card_id)
 
-    def battlecry(self, board, player, opponent, opponent_board, row, target):
+    def battlecry(self, board, opponent_board, row, target):
         max_strength = 0
 
         for b in [board, opponent_board]:
@@ -37,4 +37,4 @@ class ScorchSpecialCard(SpecialCard):
         while len(stack) > 0:
             index = stack.pop()
             card = row[index]
-            card.destroy(board, board.player)
+            card.destroy(board)

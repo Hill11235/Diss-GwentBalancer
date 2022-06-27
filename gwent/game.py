@@ -34,7 +34,7 @@ class GameState:
                 else:
                     chosen_card = active_player.hand[choice - 1]
                     rows = chosen_card.get_row(self.board_list[self.starter])
-                    targets = chosen_card.get_targets(self.player_list[self.starter], self.board_list[self.starter])
+                    targets = chosen_card.get_targets(self.board_list[self.starter])
                     chosen_target = None
 
                     if len(rows) > 1:
@@ -53,8 +53,6 @@ class GameState:
                         chosen_target = targets[target_index]
 
                     chosen_card.place_card(self.board_list[self.starter],
-                                           active_player,
-                                           self.player_list[(self.starter + 1) % 2],
                                            self.board_list[(self.starter + 1) % 2],
                                            chosen_row,
                                            chosen_target)

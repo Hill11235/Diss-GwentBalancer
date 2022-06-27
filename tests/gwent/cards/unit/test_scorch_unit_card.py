@@ -31,7 +31,7 @@ class TestScorchUnitCard(TestCase):
         self.board2.rows[0].append(self.unitCard2)
         self.assertTrue(len(self.board2.rows[0]), 2)
 
-        self.scorchio.place_card(self.board1, self.player1, self.player2, self.board2, self.scorchio.row, None)
+        self.scorchio.place_card(self.board1, self.board2, self.scorchio.row, None)
         self.assertTrue(len(self.board1.rows[0]), 1)
         self.assertTrue(len(self.board2.rows[0]), 1)
         self.assertTrue(self.player2.graveyard.__contains__(self.unitCard1))
@@ -42,7 +42,7 @@ class TestScorchUnitCard(TestCase):
         self.board2.rows[0].append(self.unitCard2)
         self.assertTrue(len(self.board2.rows[0]), 2)
 
-        self.scorchio.place_card(self.board1, self.player1, self.player2, self.board2, self.scorchio.row, None)
+        self.scorchio.place_card(self.board1, self.board2, self.scorchio.row, None)
         self.assertTrue(len(self.board1.rows[0]), 1)
         self.assertTrue(len(self.board2.rows[0]), 1)
         self.assertTrue(self.player2.graveyard.__contains__(self.unitCard2))
@@ -56,7 +56,7 @@ class TestScorchUnitCard(TestCase):
         self.assertTrue(len(self.board2.rows[0]), 3)
 
         self.player1.graveyard.append(self.scorchio)
-        self.med1.place_card(self.board1, self.player1, self.player2, self.board2, self.med1.row, self.scorchio)
+        self.med1.place_card(self.board1, self.board2, self.med1.row, self.scorchio)
         self.assertTrue(len(self.board1.rows[0]), 2)
         self.assertTrue(len(self.board2.rows[0]), 1)
         self.assertTrue(self.player2.graveyard.__contains__(self.unitCard1))
@@ -91,9 +91,9 @@ class TestScorchUnitCard(TestCase):
 
         self.assertTrue(self.board2.rows[0].__contains__(self.unitCard2))
 
-        frost.place_card(self.board1, self.player1, self.player2, self.board2, 0, None)
+        frost.place_card(self.board1, self.board2, 0, None)
 
-        self.scorchio.place_card(self.board1, self.player1, self.player2, self.board2, self.scorchio.row, None)
+        self.scorchio.place_card(self.board1, self.board2, self.scorchio.row, None)
 
         self.assertTrue(self.board2.rows[0].__contains__(self.unitHero))
         self.assertFalse(self.board2.rows[0].__contains__(self.unitCard1))

@@ -24,12 +24,12 @@ class TestSpyCard(TestCase):
 
     def test_battlecry(self):
         hand_size_before = len(self.player1.hand)
-        self.spy.battlecry(self.board1, self.player1, self.player2, self.board2, self.spy.row, None)
+        self.spy.battlecry(self.board1, self.board2, self.spy.row, None)
         self.assertEqual(len(self.player1.hand), hand_size_before + 2)
 
     def test_place_card(self):
         hand_size_before = len(self.player1.hand)
-        self.spy.place_card(self.board1, self.player1, self.player2, self.board2, self.spy.row, None)
+        self.spy.place_card(self.board1, self.board2, self.spy.row, None)
         self.assertTrue(self.board2.rows[0].__contains__(self.spy))
         self.assertFalse(self.board1.rows[0].__contains__(self.spy))
         self.assertEqual(len(self.player1.hand), hand_size_before + 2)
@@ -37,7 +37,7 @@ class TestSpyCard(TestCase):
     def test_medic_use(self):
         self.player1.graveyard.append(self.spy)
         hand_size_before = len(self.player1.hand)
-        self.med1.place_card(self.board1, self.player1, self.player2, self.board2, self.med1.row, self.spy)
+        self.med1.place_card(self.board1, self.board2, self.med1.row, self.spy)
 
         self.assertTrue(self.board2.rows[0].__contains__(self.spy))
         self.assertFalse(self.board1.rows[0].__contains__(self.spy))
@@ -47,13 +47,13 @@ class TestSpyCard(TestCase):
         decoy = DecoyCard("5", "dec", "Northern", 0, -1, False, False)
 
         self.board1.rows[0].append(self.spy)
-        decoy.place_card(self.board1, self.player1, self.player2, self.board2, self.spy.row, self.spy)
+        decoy.place_card(self.board1, self.board2, self.spy.row, self.spy)
 
         self.assertTrue(self.board1.rows[0].__contains__(decoy))
         self.assertFalse(self.board1.rows[0].__contains__(self.spy))
         self.assertTrue(self.player1.hand.__contains__(self.spy))
 
-        self.spy.place_card(self.board1, self.player1, self.player2, self.board2, self.spy.row, None)
+        self.spy.place_card(self.board1, self.board2, self.spy.row, None)
         self.assertEqual(len(self.player1.hand), 12)
         self.assertTrue(self.board2.rows[0].__contains__(self.spy))
 
@@ -65,7 +65,7 @@ class TestSpyCard(TestCase):
         self.assertEqual(len(self.player1.deck), 0)
 
         self.player1.hand.append(self.spy)
-        self.spy.place_card(self.board1, self.player1, self.player2, self.board2, self.spy.row, None)
+        self.spy.place_card(self.board1, self.board2, self.spy.row, None)
         self.assertTrue(self.board2.rows[self.spy.row].__contains__(self.spy))
         self.assertEqual(len(self.player1.hand), 0)
         self.assertEqual(len(self.player1.deck), 0)

@@ -30,21 +30,21 @@ class TestClearWeatherCard(TestCase):
 
     def test_place_card(self):
         self.player1.hand.append(self.clear)
-        self.frost.place_card(self.board1, self.player1, self.player2, self.board2, 0, None)
+        self.frost.place_card(self.board1, self.board2, 0, None)
         self.assertTrue(self.board1.rows[0].__contains__(self.frost))
         self.assertTrue(self.board2.rows[0].__contains__(self.frost))
 
-        self.clear.place_card(self.board1, self.player1, self.player2, self.board2, 0, None)
+        self.clear.place_card(self.board1, self.board2, 0, None)
         self.assertFalse(self.board1.rows[0].__contains__(self.frost))
         self.assertFalse(self.board2.rows[0].__contains__(self.frost))
         self.assertFalse(self.player1.hand.__contains__(self.clear))
 
     def test_battlecry(self):
-        self.frost.place_card(self.board1, self.player1, self.player2, self.board2, 0, None)
-        self.fog.place_card(self.board1, self.player1, self.player2, self.board2, 1, None)
-        self.rain.place_card(self.board1, self.player1, self.player2, self.board2, 2, None)
+        self.frost.place_card(self.board1, self.board2, 0, None)
+        self.fog.place_card(self.board1, self.board2, 1, None)
+        self.rain.place_card(self.board1, self.board2, 2, None)
 
-        self.clear.battlecry(self.board1, self.player1, self.player2, self.board2, 0, None)
+        self.clear.battlecry(self.board1, self.board2, 0, None)
 
         self.assertFalse(self.board1.rows[0].__contains__(self.frost))
         self.assertFalse(self.board2.rows[0].__contains__(self.frost))

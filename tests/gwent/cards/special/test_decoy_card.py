@@ -27,7 +27,7 @@ class TestDecoyCard(TestCase):
         self.board1.rows[0].append(self.unitHero)
         self.board1.rows[1].append(self.unitCard2)
 
-        targets = self.decoy.get_targets(self.player1, self.board1)
+        targets = self.decoy.get_targets(self.board1)
 
         self.assertTrue(targets.__contains__(self.unitCard1))
         self.assertTrue(targets.__contains__(self.unitCard2))
@@ -37,7 +37,7 @@ class TestDecoyCard(TestCase):
     def test_place_card(self):
         self.board1.rows[0].append(self.unitCard1)
 
-        self.decoy.place_card(self.board1, self.player1, None, None, self.unitCard1.row, self.unitCard1)
+        self.decoy.place_card(self.board1, None, self.unitCard1.row, self.unitCard1)
         self.assertTrue(self.player1.hand.__contains__(self.unitCard1))
         self.assertTrue(self.board1.rows[0].__contains__(self.decoy))
         self.assertFalse(self.player1.graveyard.__contains__(self.unitCard1))
@@ -45,6 +45,6 @@ class TestDecoyCard(TestCase):
 
     def test_decoy_alone(self):
         self.assertEqual(len(self.player1.hand), 10)
-        self.decoy.place_card(self.board1, self.player1, None, None, 0, None)
+        self.decoy.place_card(self.board1, None, 0, None)
         self.assertTrue(self.board1.rows[0].__contains__(self.decoy))
         self.assertEqual(len(self.player1.hand), 10)

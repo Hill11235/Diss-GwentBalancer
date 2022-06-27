@@ -31,8 +31,8 @@ class TestUnitCard(TestCase):
         self.player1.hand.append(self.unitHero)
         self.assertEqual(len(self.player1.hand), 12)
 
-        self.unitCard.place_card(self.board1, self.player1, None, None, 0, None)
-        self.unitHero.place_card(self.board1, self.player1, None, None, 0, None)
+        self.unitCard.place_card(self.board1, None, 0, None)
+        self.unitHero.place_card(self.board1, None, 0, None)
 
         for cards in self.player1.hand:
             self.assertNotEqual(cards.card_id, self.unitCard.card_id)
@@ -41,23 +41,23 @@ class TestUnitCard(TestCase):
         self.assertEqual(len(self.board1.rows[0]), 2)
 
     def test_get_active_strength(self):
-        self.morale.place_card(self.board1, self.player1, None, None, 0, None)
-        self.unitCard.place_card(self.board1, self.player1, None, None, 0, None)
-        self.horn.place_card(self.board1, self.player1, None, None, 0, None)
-        self.unitHero.place_card(self.board1, self.player1, None, None, 0, None)
+        self.morale.place_card(self.board1, None, 0, None)
+        self.unitCard.place_card(self.board1, None, 0, None)
+        self.horn.place_card(self.board1, None, 0, None)
+        self.unitHero.place_card(self.board1, None, 0, None)
         self.assertEqual(self.unitCard.get_active_strength(self.board1), 18)
         self.assertEqual(self.unitHero.get_active_strength(self.board1), 10)
         self.assertEqual(self.morale.get_active_strength(self.board1), 2)
         self.assertEqual(self.horn.get_active_strength(self.board1), 3)
 
     def test_get_horn_buff(self):
-        self.horn.place_card(self.board1, self.player1, None, None, 0, None)
-        self.unitCard.place_card(self.board1, self.player1, None, None, 0, None)
+        self.horn.place_card(self.board1, None, 0, None)
+        self.unitCard.place_card(self.board1, None, 0, None)
         self.assertEqual(self.unitCard.get_horn_buff(self.board1), 2)
 
     def test_get_morale_buff(self):
-        self.morale.place_card(self.board1, self.player1, None, None, 0, None)
-        self.unitCard.place_card(self.board1, self.player1, None, None, 0, None)
+        self.morale.place_card(self.board1, None, 0, None)
+        self.unitCard.place_card(self.board1, None, 0, None)
         self.assertEqual(self.unitCard.get_morale_buff(self.board1), 1)
         self.assertEqual(self.morale.get_morale_buff(self.board1), 0)
 

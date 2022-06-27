@@ -27,9 +27,9 @@ class TestSpecialCard(TestCase):
         self.player1.hand.append(self.decoy)
         self.assertEqual(len(self.player1.hand), 13)
 
-        self.spec1.place_card(self.board1, self.player1, None, None, 0, None)
-        self.spec2.place_card(self.board1, self.player1, None, None, 0, None)
-        self.decoy.place_card(self.board1, self.player1, None, None, 0, None)
+        self.spec1.place_card(self.board1, None, 0, None)
+        self.spec2.place_card(self.board1, None, 0, None)
+        self.decoy.place_card(self.board1, None, 0, None)
 
         self.assertFalse(self.player1.hand.__contains__(self.spec1))
         self.assertFalse(self.player1.hand.__contains__(self.spec2))

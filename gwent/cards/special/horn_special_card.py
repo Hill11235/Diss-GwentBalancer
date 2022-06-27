@@ -7,9 +7,9 @@ class HornSpecialCard(SpecialCard):
         super().__init__(card_id, name, faction, row, strength, hero, agile)
         self.horn_special = True
 
-    def place_card(self, board, player, opponent, opponent_board, row, target):
+    def place_card(self, board, opponent_board, row, target):
         self.row = row
-        player.remove_card_from_hand(self.card_id)
+        board.player.remove_card_from_hand(self.card_id)
         possible_rows = self.get_row(board)
 
         if row in possible_rows:

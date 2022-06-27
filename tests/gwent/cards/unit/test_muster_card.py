@@ -31,7 +31,7 @@ class TestMusterCard(TestCase):
         self.player1.deck.append(self.must3)
 
         # checks that all instances have been played to the correct rows and have been removed from the hand and deck.
-        self.must1.place_card(self.board1, self.player1, None, None, self.must1.row, None)
+        self.must1.place_card(self.board1, None, self.must1.row, None)
         self.assertTrue(self.board1.rows[0].__contains__(self.must1))
         self.assertTrue(self.board1.rows[0].__contains__(self.must2))
         self.assertTrue(self.board1.rows[1].__contains__(self.must3))
@@ -50,7 +50,7 @@ class TestMusterCard(TestCase):
         self.player1.graveyard.append(self.must4)
         self.player1.graveyard.append(self.must3)
 
-        self.must1.place_card(self.board1, self.player1, None, None, self.must1.row, None)
+        self.must1.place_card(self.board1, None, self.must1.row, None)
         self.assertTrue(self.board1.rows[0].__contains__(self.must1))
         self.assertTrue(self.player1.graveyard.__contains__(self.must2))
         self.assertTrue(self.player1.graveyard.__contains__(self.must3))
@@ -66,7 +66,7 @@ class TestMusterCard(TestCase):
         self.player1.hand.append(self.must4)
         self.player1.deck.append(self.must3)
 
-        self.med1.place_card(self.board1, self.player1, None, None, self.med1.row, self.must1)
+        self.med1.place_card(self.board1, None, self.med1.row, self.must1)
         self.assertTrue(self.board1.rows[0].__contains__(self.must1))
         self.assertTrue(self.board1.rows[0].__contains__(self.must2))
         self.assertTrue(self.board1.rows[1].__contains__(self.must3))

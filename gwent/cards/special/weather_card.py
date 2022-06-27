@@ -7,7 +7,7 @@ class WeatherCard(SpecialCard):
         super().__init__(card_id, name, faction, row, strength, hero, agile)
         self.weather = True
 
-    def place_card(self, board, player, opponent, opponent_board, row, target):
-        player.remove_card_from_hand(self.card_id)
+    def place_card(self, board, opponent_board, row, target):
+        board.player.remove_card_from_hand(self.card_id)
         for b in [board, opponent_board]:
             b.rows[self.row].append(self)

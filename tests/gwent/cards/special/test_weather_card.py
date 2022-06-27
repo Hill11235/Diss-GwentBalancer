@@ -31,12 +31,12 @@ class TestWeatherCard(TestCase):
         self.assertTrue(self.frost.weather)
 
     def test_place_card(self):
-        self.frost.place_card(self.board1, self.player1, self.player2, self.board2, 0, None)
+        self.frost.place_card(self.board1, self.board2, 0, None)
         self.assertTrue(self.board1.rows[0].__contains__(self.frost))
         self.assertTrue(self.board2.rows[0].__contains__(self.frost))
 
     def test_frost(self):
-        self.frost.place_card(self.board1, self.player1, self.player2, self.board2, 0, None)
+        self.frost.place_card(self.board1, self.board2, 0, None)
         self.board1.rows[0].append(self.unitCard1)
         self.board1.rows[0].append(self.unitHero)
         self.board2.rows[0].append(self.unitCard3)

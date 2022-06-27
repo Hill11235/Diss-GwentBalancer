@@ -3,7 +3,7 @@ from gwent.cards.special.special_card import SpecialCard
 
 class DecoyCard(SpecialCard):
 
-    def get_targets(self, player, board):
+    def get_targets(self, board):
         targets = []
 
         for row in board.rows:
@@ -13,14 +13,14 @@ class DecoyCard(SpecialCard):
 
         return targets
 
-    def place_card(self, board, player, opponent, opponent_board, row, target):
-        targets = self.get_targets(player, board)
-        player.remove_card_from_hand(self.card_id)
+    def place_card(self, board, opponent_board, row, target):
+        targets = self.get_targets(board)
+        board.player.remove_card_from_hand(self.card_id)
 
         if target in targets and target.hero is False and target.unit:
             self.row = target.row
-            player.hand.append(target)
-            target.destroy(board, player, decoy=True)
+            board.player.hand.append(target)
+            target.destroy(board, decoy=True)
         else:
             self.row = row
 

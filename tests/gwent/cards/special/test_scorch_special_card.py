@@ -30,7 +30,7 @@ class TestScorchSpecialCard(TestCase):
         self.board1.rows[0].append(self.unitHero)
         self.board2.rows[1].append(unito)
 
-        self.scorchio.place_card(self.board1, self.player1, self.player2, self.board2, None, None)
+        self.scorchio.place_card(self.board1, self.board2, None, None)
         self.assertTrue(self.player1.graveyard.__contains__(self.unitCard1))
         self.assertFalse(self.player1.graveyard.__contains__(self.unitHero))
         self.assertTrue(self.player2.graveyard.__contains__(unito))
@@ -42,7 +42,7 @@ class TestScorchSpecialCard(TestCase):
         self.board1.rows[0].append(self.unitHero)
         self.board2.rows[1].append(unito)
 
-        self.scorchio.battlecry(self.board1, self.player1, self.player2, self.board2, None, None)
+        self.scorchio.battlecry(self.board1, self.board2, None, None)
         self.assertTrue(self.player1.graveyard.__contains__(self.unitCard1))
         self.assertFalse(self.player1.graveyard.__contains__(self.unitHero))
         self.assertTrue(self.player2.graveyard.__contains__(unito))
@@ -75,7 +75,7 @@ class TestScorchSpecialCard(TestCase):
         self.board2.rows[2].append(unitCard6)
         self.board2.rows[2].append(unitCard7)
 
-        self.scorchio.battlecry(self.board1, self.player1, self.player2, self.board2, None, None)
+        self.scorchio.battlecry(self.board1, self.board2, None, None)
 
         self.assertFalse(self.board1.rows[0].__contains__(self.unitCard1))
         self.assertFalse(self.board1.rows[0].__contains__(self.unitCard2))

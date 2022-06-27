@@ -42,22 +42,22 @@ class Card:
         return self.strength
 
     # TODO Refactor to reduce number of arguments (remove player args and get these via boards?)
-    def place_card(self, board, player, opponent, opponent_board, row, target):
+    def place_card(self, board, opponent_board, row, target):
         pass
 
     def get_row(self, board):
         return [self.row]
 
-    def get_targets(self, player, board):
+    def get_targets(self, board):
         return None
 
-    def destroy(self, board, player, decoy=False):
+    def destroy(self, board, decoy=False):
         # Remove from row in board (board attribute)
         board.rows[self.row].remove(self)
 
         # add to graveyard if not a decoy card (player attribute)
         if not decoy:
-            player.graveyard.append(self)
+            board.player.graveyard.append(self)
 
     def get_data(self):
         card_data = {

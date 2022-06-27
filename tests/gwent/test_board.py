@@ -27,8 +27,8 @@ class BoardTest(unittest.TestCase):
         card1 = UnitCard("1", "dummy1", "Monster", 0, 8, False, False)
         card2 = UnitCard("2", "dummy2", "Northern", 1, 5, True, False)
 
-        card1.place_card(self.board1, self.player1, self.player2, self.board2, card1.row, None)
-        card2.place_card(self.board2, self.player2, self.player1, self.board1, card2.row, None)
+        card1.place_card(self.board1, self.board2, card1.row, None)
+        card2.place_card(self.board2,  self.board1, card2.row, None)
         self.assertEqual(self.board1.score(), [8, 0, 0])
         self.assertEqual(self.board2.score(), [0, 5, 0])
 
@@ -36,8 +36,8 @@ class BoardTest(unittest.TestCase):
         card1 = UnitCard("1", "dummy1", "Monster", 0, 8, False, False)
         card2 = UnitCard("2", "dummy2", "Northern", 1, 5, True, False)
 
-        card1.place_card(self.board1, self.player1, self.player2, self.board2, card1.row, None)
-        card2.place_card(self.board2, self.player2, self.player1, self.board1, card2.row, None)
+        card1.place_card(self.board1, self.board2, card1.row, None)
+        card2.place_card(self.board2, self.board1, card2.row, None)
         self.assertEqual(self.board1.score(), [8, 0, 0])
         self.assertEqual(self.board2.score(), [0, 5, 0])
 
@@ -59,7 +59,7 @@ class BoardTest(unittest.TestCase):
         self.player1.hand.append(muster2)
         self.player1.hand.append(muster3)
 
-        muster1.place_card(self.board1, self.player1, self.player2, self.board2, 0, None)
+        muster1.place_card(self.board1, self.board2, 0, None)
         self.assertTrue(self.board1.rows[0].__contains__(muster1))
         self.assertTrue(self.board1.rows[0].__contains__(muster2))
         self.assertTrue(self.board1.rows[0].__contains__(muster3))
@@ -74,7 +74,7 @@ class BoardTest(unittest.TestCase):
         card1 = UnitCard("1", "dummy1", "Monster", 0, 8, False, False)
         card2 = UnitCard("2", "dummy2", "Northern", 1, 5, True, False)
 
-        card1.place_card(self.board1, self.player1, self.player2, self.board2, card1.row, None)
-        card2.place_card(self.board2, self.player2, self.player1, self.board1, card2.row, None)
+        card1.place_card(self.board1, self.board2, card1.row, None)
+        card2.place_card(self.board2, self.board1, card2.row, None)
 
         self.assertEqual(self.board1.get_data().get('total_score'), [8, 0, 0])

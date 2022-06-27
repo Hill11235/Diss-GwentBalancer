@@ -43,7 +43,6 @@ class PlayerTest(unittest.TestCase):
         self.assertEqual(self.player2.lives, 1)
 
     def test_get_player_data(self):
-        # TODO look into one spy card being shown
         player_dict = self.player2.get_player_data()
         self.assertEqual(len(player_dict), 8)
         self.assertEqual(player_dict.get("faction"), "Monster")

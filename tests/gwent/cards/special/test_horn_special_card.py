@@ -27,7 +27,7 @@ class TestHornSpecialCard(TestCase):
 
     def test_place_card(self):
         self.player1.hand.append(self.horn)
-        self.horn.place_card(self.board1, self.player1, None, None, 0, None)
+        self.horn.place_card(self.board1, None, 0, None)
         self.assertTrue(self.board1.rows[0].__contains__(self.horn))
         self.assertFalse(self.player1.hand.__contains__(self.horn))
 
@@ -41,7 +41,7 @@ class TestHornSpecialCard(TestCase):
         self.board1.rows[1].append(horn2)
         self.board1.rows[2].append(horn3)
 
-        self.horn.place_card(self.board1, self.player1, None, None, None, 0)
+        self.horn.place_card(self.board1, None, None, 0)
         self.assertEqual(len(self.board1.rows[0]), 1)
         self.assertFalse(self.board1.rows[0].__contains__(self.horn))
 

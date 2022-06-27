@@ -15,7 +15,7 @@ class CardTest(unittest.TestCase):
         self.assertEqual(self.card.get_row(None), [0])
 
     def test_get_targets(self):
-        self.assertIsNone(self.card.get_targets(None, None))
+        self.assertIsNone(self.card.get_targets(None))
 
     def test_destroy(self):
         test_decks = "data/test_decks.csv"
@@ -31,12 +31,12 @@ class CardTest(unittest.TestCase):
         board1 = Board(player1)
         board1.rows[0].append(self.card)
 
-        self.card.destroy(board1, player1)
+        self.card.destroy(board1)
         self.assertTrue(player1.graveyard.__contains__(self.card))
         player1.graveyard.clear()
 
         board1.rows[0].append(self.card)
-        self.card.destroy(board1, player1, True)
+        self.card.destroy(board1, True)
         self.assertFalse(player1.graveyard.__contains__(self.card))
 
     def test_get_data(self):

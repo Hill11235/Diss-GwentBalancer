@@ -1,4 +1,5 @@
 from gwent.cards.special.special_card import SpecialCard
+from collections import deque
 
 
 class ClearWeatherCard(SpecialCard):
@@ -10,6 +11,20 @@ class ClearWeatherCard(SpecialCard):
     def battlecry(self, board, opponent_board, row, target):
         for b in [board, opponent_board]:
             for row in b.rows:
-                for card in row:
-                    if card.weather:
-                        card.destroy(b, b.player)
+                self.clear_row(b, row)
+
+    def clear_row(self, board, row):
+        # given a row, create a stack with all indices of clear weather cards
+        stack = deque()
+        index = 0
+
+        for card in row:
+            if card.weather:
+                stack.append(index)
+            index += 1
+
+        # use stack to destroy all necessary cards
+        while len(stack) > 0:
+            index = stack.pop()
+            card = row[index]
+            card.destroy(board)

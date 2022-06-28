@@ -54,3 +54,22 @@ class TestClearWeatherCard(TestCase):
         self.assertFalse(self.board2.rows[1].__contains__(self.fog))
         self.assertFalse(self.board1.rows[2].__contains__(self.rain))
         self.assertFalse(self.board2.rows[2].__contains__(self.rain))
+
+    def test_multiple_weather(self):
+        frost1 = WeatherCard("1", "frost1", "Monster", 0, -1, False, False)
+        frost2 = WeatherCard("1", "frost1", "Monster", 0, -1, False, False)
+        frost3 = WeatherCard("1", "frost1", "Monster", 0, -1, False, False)
+        frost4 = WeatherCard("1", "frost1", "Monster", 0, -1, False, False)
+
+        self.board1.rows[0].append(frost1)
+        self.board1.rows[0].append(frost2)
+        self.board1.rows[0].append(frost3)
+        self.board1.rows[0].append(frost4)
+        self.assertEqual(len(self.board1.rows[0]), 4)
+
+        self.clear.battlecry(self.board1, self.board2, 0, None)
+        self.assertEqual(len(self.board1.rows[0]), 0)
+        self.assertFalse(self.board1.rows[0].__contains__(frost1))
+        self.assertFalse(self.board1.rows[0].__contains__(frost2))
+        self.assertFalse(self.board1.rows[0].__contains__(frost3))
+        self.assertFalse(self.board1.rows[0].__contains__(frost4))

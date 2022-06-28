@@ -1,9 +1,11 @@
 class Node:
 
-    def __init__(self):
-        # holds a game state
-        # number of visits to this node
-        # number of wins this node has
+    def __init__(self, game, parent):
+        self.state = game
+        self.parent = parent
+        self.number_visits = 0
+        self.linked_wins = 0
+        self.previous_action = 0
         # upper confidence bound 1 of node
         pass
 

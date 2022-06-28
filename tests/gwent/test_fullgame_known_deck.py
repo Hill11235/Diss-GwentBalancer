@@ -4,7 +4,7 @@ from gwent import *
 from gwent.data.card_db import CardDB
 
 
-class FullGameKnownDecksTest(unittest.TestCase):
+class FullGameKnownDeckTest(unittest.TestCase):
 
     def setUp(self):
         test_decks = "data/test_decks.csv"
@@ -42,10 +42,6 @@ class FullGameKnownDecksTest(unittest.TestCase):
 
         dicto = game.get_game_data()
         self.assertEqual(dicto.get('score'), [10, 0, 15, 17, 17, 101])
-
-    def test_nilf_vs_scoiatael(self):
-        # TODO add nilf scoiatael game
-        pass
 
     def mons_v_north_sort_hand(self):
         monster_order = ["frightener", "arachas2", "earth_elemental", "arachas1", "arachas3",

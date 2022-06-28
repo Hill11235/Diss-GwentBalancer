@@ -35,3 +35,8 @@ class DeckTest(unittest.TestCase):
         self.assertEqual(len(monster_cards), 40)
         self.assertEqual(len(neutral_cards), 29)
         self.assertEqual(len(scoiatael_cards), 37)
+
+    def test_get_all_cards(self):
+        copy = self.card_db.get_all_cards()
+        for i in range(len(self.card_db.all_cards)):
+            self.assertEqual(self.card_db.all_cards[i].card_id, copy[i].card_id)

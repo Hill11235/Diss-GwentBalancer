@@ -1,5 +1,6 @@
 import os
 import csv
+import copy
 from gwent.cards import *
 
 constructor_dic = {
@@ -47,3 +48,6 @@ class CardDB:
                         'agile' in cards['ability'].split(',')
                     )
                     self.all_cards.append(new_card)
+
+    def get_all_cards(self):
+        return copy.deepcopy(self.all_cards)

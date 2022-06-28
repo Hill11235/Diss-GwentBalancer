@@ -1,7 +1,6 @@
 import os
 import csv
 import random
-import copy
 from gwent.cards import *
 
 constructor_dic = {
@@ -29,15 +28,14 @@ class Deck:
         random.seed(seed)
         self.faction = faction
         self.size = size
-        self.all_cards = card_db.all_cards
+        self.all_cards = card_db.get_all_cards()
         self.deck = []
 
         self.create_deck(faction, size)
 
     def create_deck(self, faction, size):
         # create a deck list based on the faction, deck size, and random seed information provided
-        card_list = copy.deepcopy(self.all_cards)
-        applicable_cards = self.get_faction_cards(card_list, faction)
+        applicable_cards = self.get_faction_cards(self.all_cards, faction)
         self.deck = random.sample(applicable_cards, size)
 
     def create_deck_using_list(self, deck_list_path):
@@ -66,7 +64,6 @@ class Deck:
         return relevant_cards
 
     def get_card_by_id(self, card_id):
-        card_list = copy.deepcopy(self.all_cards)
-        for c in card_list:
+        for c in self.all_cards:
             if c.card_id == card_id:
                 return c

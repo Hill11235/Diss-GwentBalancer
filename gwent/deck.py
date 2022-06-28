@@ -23,38 +23,16 @@ constructor_dic = {
 }
 
 
-# TODO potentially split into reader and deck classes?
 class Deck:
 
-    def __init__(self, file_path, faction, size, seed):
+    def __init__(self, card_db, faction, size, seed):
         random.seed(seed)
-        self.file_path = file_path
         self.faction = faction
         self.size = size
-        self.all_cards = []
+        self.all_cards = card_db.all_cards
         self.deck = []
 
-        self.read_card_information()
         self.create_deck(faction, size)
-
-    def read_card_information(self):
-        # read in csv file provided and create and store cards in list
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-
-        with open(os.path.join(dir_path, self.file_path), encoding='utf-8-sig') as file:
-            card_data = csv.DictReader(file)
-            for cards in card_data:
-                for i in range(int(cards['Quantity'])):
-                    new_card = constructor_dic[cards['ability'].split(',')[0]](
-                        cards['card_id'],
-                        cards['name'],
-                        cards['faction'],
-                        int(cards['type']),
-                        int(cards['power']),
-                        'hero' in cards['ability'].split(','),
-                        'agile' in cards['ability'].split(',')
-                    )
-                    self.all_cards.append(new_card)
 
     def create_deck(self, faction, size):
         # create a deck list based on the faction, deck size, and random seed information provided
@@ -92,6 +70,3 @@ class Deck:
         for c in card_list:
             if c.card_id == card_id:
                 return c
-
-    def get_deck(self):
-        return self.deck

@@ -1,0 +1,37 @@
+import unittest
+from gwent.data.card_db import CardDB
+from gwent.cards.unit.medic_card import MedicCard
+
+
+class DeckTest(unittest.TestCase):
+
+    def setUp(self):
+        file_name = "card_data.csv"
+        self.card_db = CardDB(file_name)
+
+    def test_all_card_size(self):
+        self.assertEqual(len(self.card_db.all_cards), 179)
+
+    def test_hero_card(self):
+        for card in self.card_db.all_cards:
+            if card.card_id == "yen":
+                self.assertTrue(card.hero)
+                self.assertTrue(isinstance(card, MedicCard))
+                self.assertEqual(card.strength, 7)
+
+    def test_all_card_faction(self):
+        for card in self.card_db.all_cards:
+            self.assertIn(card.faction, ["nilfgaardian", "neutral", "northern", "scoiatael", "monster"])
+
+    def test_faction_count(self):
+        northern_cards = [card for card in self.card_db.all_cards if card.faction == "northern"]
+        nilf_cards = [card for card in self.card_db.all_cards if card.faction == "nilfgaardian"]
+        monster_cards = [card for card in self.card_db.all_cards if card.faction == "monster"]
+        neutral_cards = [card for card in self.card_db.all_cards if card.faction == "neutral"]
+        scoiatael_cards = [card for card in self.card_db.all_cards if card.faction == "scoiatael"]
+
+        self.assertEqual(len(northern_cards), 36)
+        self.assertEqual(len(nilf_cards), 37)
+        self.assertEqual(len(monster_cards), 40)
+        self.assertEqual(len(neutral_cards), 29)
+        self.assertEqual(len(scoiatael_cards), 37)

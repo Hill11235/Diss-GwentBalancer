@@ -1,18 +1,20 @@
 import unittest
 from unittest import mock
 from gwent import *
+from gwent.data.card_db import CardDB
 
 
 class FullGameKnownDecksTest(unittest.TestCase):
 
     def setUp(self):
         test_decks = "data/test_decks.csv"
-        file_name = "data/card_data.csv"
+        file_name = "card_data.csv"
         faction = "Nilfgaardian"
         size = 22
         seed = 123
 
-        self.deck = Deck(file_name, faction, size, seed)
+        self.card_db = CardDB(file_name)
+        self.deck = Deck(self.card_db, faction, size, seed)
         self.monster, self.nilf, self.northern, self.scoiatael = self.deck.create_deck_using_list(test_decks)
 
         self.playerNilf = Player("p1", "Nilfgaardian", self.nilf)
@@ -41,7 +43,8 @@ class FullGameKnownDecksTest(unittest.TestCase):
         dicto = game.get_game_data()
         self.assertEqual(dicto.get('score'), [10, 0, 15, 17, 17, 101])
 
-    def test_monster_vs_scoiatael(self):
+    def test_nilf_vs_scoiatael(self):
+        # TODO add nilf scoiatael game
         pass
 
     def mons_v_north_sort_hand(self):

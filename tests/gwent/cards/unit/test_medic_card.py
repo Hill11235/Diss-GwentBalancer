@@ -1,5 +1,6 @@
 from unittest import TestCase
 from gwent.cards import *
+from gwent.data.card_db import CardDB
 from gwent import *
 
 
@@ -12,12 +13,13 @@ class TestMedicCard(TestCase):
         self.med2 = MedicCard("4", "med2", "Northern", 1, 4, False, False)
 
         test_decks = "data/test_decks.csv"
-        file_name = "data/card_data.csv"
+        file_name = "card_data.csv"
         faction = "Nilfgaardian"
         size = 22
         seed = 123
 
-        self.deck = Deck(file_name, faction, size, seed)
+        self.card_db = CardDB(file_name)
+        self.deck = Deck(self.card_db, faction, size, seed)
         monster, nilf, northern, scoiatael = self.deck.create_deck_using_list(test_decks)
         self.player1 = Player("p1", "Nilfgaardian", nilf)
         self.board1 = Board(self.player1)

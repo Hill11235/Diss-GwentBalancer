@@ -1,7 +1,7 @@
 import random
 
 
-class GameState:
+class PvpGame:
 
     def __init__(self, board1, board2):
         self.board1 = board1

@@ -36,7 +36,7 @@ class FullGameKnownDeckTest(unittest.TestCase):
         mocked_input.side_effect = ['4', '5', '3', '6', '0', '1', '0', '0',
                                     '4', '5', '2', '2', '0', '0',
                                     '1', '1', '5', '2', '1', '1', '0', '1', '1', '4', '0', '1', '2', '0', '1', '0']
-        game = GameState(self.board2, self.board3)
+        game = PvpGame(self.board2, self.board3)
         game.starter = 0
         game.game_loop()
 

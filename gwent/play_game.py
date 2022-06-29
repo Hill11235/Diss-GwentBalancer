@@ -1,4 +1,4 @@
-from gwent.game import GameState
+from gwent.pvp_game import PvpGame
 from gwent.player import Player
 from gwent.deck import Deck
 from gwent.board import Board
@@ -27,7 +27,7 @@ class TestGame:
         board3 = Board(player_north)
         board4 = Board(player_scoiatael)
 
-        game = GameState(board1, board4)
+        game = PvpGame(board1, board4)
         game.starter = 0
 
         game.game_loop()

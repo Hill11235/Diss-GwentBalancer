@@ -20,7 +20,7 @@ class GameStateTest(unittest.TestCase):
         self.player2 = Player("p2", "Monster", self.monster)
         self.board1 = Board(self.player1)
         self.board2 = Board(self.player2)
-        self.game = GameState(self.board1, self.board2)
+        self.game = PvpGame(self.board1, self.board2)
 
     def test_initial_setup(self):
         self.assertEqual(self.board1.score(), [0, 0, 0])

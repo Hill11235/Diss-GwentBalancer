@@ -4,10 +4,8 @@ class Node:
         self.state = game
         self.parent = parent
         self.number_visits = 0
-        self.linked_wins = 0
-        self.previous_action = 0
-        # upper confidence bound 1 of node
-        pass
+        self.wins = 0
+        self.children = []
 
     def is_terminal(self):
         return len(self.get_all_children()) == 0

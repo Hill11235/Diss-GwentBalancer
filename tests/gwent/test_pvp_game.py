@@ -3,7 +3,7 @@ from gwent import *
 from gwent.data.card_db import CardDB
 
 
-class GameStateTest(unittest.TestCase):
+class PvpGameTest(unittest.TestCase):
 
     def setUp(self):
         test_decks = "data/test_decks.csv"

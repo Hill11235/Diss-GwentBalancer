@@ -11,7 +11,20 @@ class MCTS:
 
     def run_search(self, node, time_limit=0.1):
         # run search until time limit is exceeded
-        pass
+
+        # check if root, if root then expand and run search below:
+        # TODO incase in terminal check
+
+        while not node.is_leaf() and not node.is_terminal():
+            node = self.selection(node)
+
+        if node.number_visits != 0:
+            node.get_all_children()
+            node = node.children[0]
+
+        winner = self.simulate(node)
+        self.backpropagate(node, winner)
+
 
     def get_best_play(self):
         # based on search statistics, make best play
@@ -19,8 +32,8 @@ class MCTS:
 
     # TODO implement and test
     def selection(self, node):
-
-        pass
+        children = node.children
+        return max(children, key=lambda value: self.get_ucb1(value))
 
     # TODO implement and test
     def expand(self, node):

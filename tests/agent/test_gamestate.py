@@ -25,13 +25,47 @@ class TestGameState(TestCase):
         self.game = GameState(self.board1, self.board2)
 
     def test_get_all_children(self):
-        self.fail()
+
+        pass
 
     def test_generate_options(self):
-        self.fail()
+        self.game.starter = 0
+        self.player1.hand.clear()
+
+        medic = MedicCard("2", "medic", "Monster", 0, 6, False, False)
+        card = UnitCard("1", "random", "Monster", 0, 5, False, True)
+        self.player1.hand.append(medic)
+        self.player1.hand.append(card)
+
+        # add two standard unit cards to graveyard
+        unit1 = UnitCard("3", "random", "Monster", 0, 3, False, False)
+        unit4 = UnitCard("3", "random", "Monster", 0, 3, False, False)
+        self.player1.graveyard.append(unit1)
+        self.player1.graveyard.append(unit4)
+
+        # check the options
+        options = self.game.generate_options()
+        self.assertEqual(len(options), 5)
+
+        # TODO check individual entries
 
     def test_get_placement_permutations(self):
-        self.fail()
+        self.game.starter = 0
+        self.player1.hand.clear()
+
+        medic = MedicCard("2", "medic", "Monster", 0, 6, False, True)
+        self.player1.hand.append(medic)
+
+        unit1 = UnitCard("3", "random", "Monster", 0, 3, False, False)
+        unit4 = UnitCard("3", "random", "Monster", 0, 3, False, False)
+        self.player1.graveyard.append(unit1)
+        self.player1.graveyard.append(unit4)
+
+        perm = self.game.get_placement_permutations(0, medic.get_row(self.board1), medic.get_targets(self.board1))
+        self.assertEqual(len(perm), 4)
+
+        # TODO check individual entries
+
 
     def test_make_play_pass(self):
         # test pass

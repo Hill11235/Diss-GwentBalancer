@@ -16,7 +16,6 @@ class Node:
     def is_terminal(self):
         return self.state.check_game_complete()
 
-    # TODO test
     def get_all_children(self):
         children = []
 
@@ -30,5 +29,7 @@ class Node:
 
     # TODO test (consider when this will be called and see if it needs to be changed)
     def get_random_child(self):
-        return random.choice(self.children)
+        if len(self.children) > 0:
+            return random.choice(self.children)
+        return None
 

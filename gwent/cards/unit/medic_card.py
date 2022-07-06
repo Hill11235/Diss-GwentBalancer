@@ -13,9 +13,7 @@ class MedicCard(UnitCard):
             return None
 
     def battlecry(self, board, opponent_board, row, target):
-        targets = self.get_targets(board)
-
-        if target is not None and target in targets and target.hero is False and target.unit:
+        if target is not None and target.hero is False and target.unit:
             chosen_card = target
             board.player.graveyard.remove(chosen_card)
 

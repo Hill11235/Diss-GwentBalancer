@@ -24,9 +24,36 @@ class TestGameState(TestCase):
         self.board2 = Board(self.player2)
         self.game = GameState(self.board1, self.board2)
 
-    def test_get_all_children(self):
+    def test_get_all_children_complete(self):
+        self.player1.lives = 0
+        self.assertIsNone(self.game.get_all_children())
 
-        pass
+    def test_get_all_children_incomplete(self):
+        self.game.starter = 0
+        self.player1.hand.clear()
+        medic = MedicCard("2", "medic", "Monster", 0, 6, False, False)
+        card = UnitCard("1", "random1", "Monster", 0, 5, False, True)
+        self.player1.hand.append(medic)
+        self.player1.hand.append(card)
+
+        unit1 = UnitCard("3", "random2", "Monster", 0, 3, False, False)
+        unit4 = UnitCard("3", "random3", "Monster", 0, 3, False, False)
+        self.player1.graveyard.append(unit1)
+        self.player1.graveyard.append(unit4)
+
+        children = self.game.get_all_children()
+        self.assertEqual(len(children), 5)
+        self.assertTrue(children[0].player1.passed)
+
+        self.assertTrue(children[1].board1.rows[0][0].name == "medic")
+        self.assertTrue(children[1].board1.rows[0][1].name == "random2")
+
+        self.assertTrue(children[2].board1.rows[0][0].name == "medic")
+        self.assertTrue(children[2].board1.rows[0][1].name == "random3")
+
+        self.assertTrue(children[3].board1.rows[0][0].name == "random1")
+
+        self.assertTrue(children[4].board1.rows[1][0].name == "random1")
 
     def test_generate_options(self):
         self.game.starter = 0
@@ -46,8 +73,7 @@ class TestGameState(TestCase):
         # check the options
         options = self.game.generate_options()
         self.assertEqual(len(options), 5)
-
-        # TODO check individual entries
+        self.assertEqual(options, [[0, None, None], [1, 0, 0], [1, 0, 1], [2, 0, None], [2, 1, None]])
 
     def test_get_placement_permutations(self):
         self.game.starter = 0
@@ -63,9 +89,7 @@ class TestGameState(TestCase):
 
         perm = self.game.get_placement_permutations(0, medic.get_row(self.board1), medic.get_targets(self.board1))
         self.assertEqual(len(perm), 4)
-
-        # TODO check individual entries
-
+        self.assertEqual(perm, [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1]])
 
     def test_make_play_pass(self):
         # test pass
@@ -80,8 +104,6 @@ class TestGameState(TestCase):
         card = UnitCard("1", "random", "Monster", 0, 5, False, False)
         self.player1.hand.append(card)
         updated_game = self.game.make_play(1, 0, None)
-        print(updated_game.board1.get_data())
-        print(updated_game.board1.rows[0])
 
         self.assertFalse(self.player1.passed)
         self.assertEqual(len(updated_game.board1.rows[0]), 1)

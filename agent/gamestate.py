@@ -62,11 +62,15 @@ class GameState:
     def make_play(self, index, row, target):
         new_gamestate = deepcopy(self)
         active_player = new_gamestate.player_list[new_gamestate.starter]
+        active_board = new_gamestate.board_list[new_gamestate.starter]
 
         if index == 0:
             active_player.pass_round()
         else:
             card = active_player.hand[index - 1]
+            if target is not None:
+                targets = card.get_targets(active_board)
+                target = targets[target]
             card.place_card(new_gamestate.board_list[new_gamestate.starter],
                             new_gamestate.board_list[(new_gamestate.starter + 1) % 2],
                             row,

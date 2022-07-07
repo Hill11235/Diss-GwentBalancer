@@ -5,7 +5,6 @@ import copy
 class MCTS:
 
     def __init__(self):
-        
         # exploration parameter
         self.exp_constant = math.sqrt(2)
 
@@ -40,7 +39,6 @@ class MCTS:
 
         pass
 
-    # TODO test
     def simulate(self, node):
         # given a node, randomly simulate until the end of the game and return the winner
         gamestate = copy.deepcopy(node.state)
@@ -48,9 +46,8 @@ class MCTS:
         while not gamestate.check_game_complete():
             gamestate.make_random_play()
 
-        return gamestate.get_final_result()
+        return gamestate.get_result()
 
-    # TODO test
     def backpropagate(self, node, result):
 
         while node is not None:
@@ -59,7 +56,6 @@ class MCTS:
                 node.wins += 1
             node = node.parent
 
-    # TODO test
     def get_ucb1(self, node):
         if node.number_visits == 0:
             return None

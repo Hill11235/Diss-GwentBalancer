@@ -86,7 +86,7 @@ class GameState:
     def make_random_play(self):
         active_player = self.player_list[self.starter]
         active_board = self.board_list[self.starter]
-        index = random.randint(0, len(active_player.hand) + 1)
+        index = random.randint(0, len(active_player.hand))
 
         if index == 0:
             active_player.pass_round()
@@ -94,7 +94,10 @@ class GameState:
             active_card = active_player.hand[index - 1]
             rows = active_card.get_row(active_board)
             targets = active_card.get_targets(active_board)
-            targets = random.choice(targets) if targets is not None else None
+            if targets is not None and targets != []:
+                targets = random.choice(targets)
+            else:
+                targets = None
             if len(rows) > 0:
                 row = random.choice(rows)
             else:

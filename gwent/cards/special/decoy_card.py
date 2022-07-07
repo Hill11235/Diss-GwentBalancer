@@ -22,6 +22,6 @@ class DecoyCard(SpecialCard):
             board.player.hand.append(target)
             target.destroy(board, decoy=True)
         else:
-            self.row = row
+            self.row = 0
 
         board.rows[self.row].append(self)

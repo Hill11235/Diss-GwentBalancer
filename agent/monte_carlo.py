@@ -1,4 +1,5 @@
 import math
+import time
 import copy
 
 
@@ -8,36 +9,47 @@ class MCTS:
         # exploration parameter
         self.exp_constant = math.sqrt(2)
 
+    # TODO test
     def run_search(self, node, time_limit=0.1):
-        # run search until time limit is exceeded
+        start_time = time.time()
+        elapsed_time = time.time() - start_time
+        root = node
 
-        # check if root, if root then expand and run search below:
-        # TODO incase in terminal check
-
-        while not node.is_leaf() and not node.is_terminal():
-            node = self.selection(node)
-
-        if node.number_visits != 0:
+        if node.parent is None:
             node.get_all_children()
-            node = node.children[0]
 
-        winner = self.simulate(node)
-        self.backpropagate(node, winner)
+        while elapsed_time < time_limit:
 
+            node = self.traverse(root)
+            # problem in line below, finding points with nochildren
+            if not node.is_terminal():
+                node.get_all_children()
+            winner = self.simulate(node)
+            self.backpropagate(node, winner)
+            elapsed_time = time.time() - start_time
 
-    def get_best_play(self):
-        # based on search statistics, make best play
-        pass
+        return self.get_best_child(root)
 
-    # TODO implement and test
-    def selection(self, node):
+    # TODO test
+    def traverse(self, node):
+        # while node has children, repeatedly choose child with highest UCB1
+        while node.children is not None and node.children != []:
+            node = self.get_best_child(node)
+
+        return node
+
+    def get_best_child(self, node):
         children = node.children
-        return max(children, key=lambda value: self.get_ucb1(value))
+        max_ucb = 0
+        index = 0
 
-    # TODO implement and test
-    def expand(self, node):
+        for i in range(len(children)):
+            ucb = self.get_ucb1(children[i])
+            if ucb > max_ucb:
+                index = i
+                max_ucb = ucb
 
-        pass
+        return children[index]
 
     def simulate(self, node):
         # given a node, randomly simulate until the end of the game and return the winner
@@ -57,8 +69,8 @@ class MCTS:
             node = node.parent
 
     def get_ucb1(self, node):
-        if node.number_visits == 0:
-            return None
+        if node.number_visits == 0 or node.parent.number_visits == 0:
+            return 100000000
         exploitation_term = (node.wins / node.number_visits)
         exploration_term = self.exp_constant * (math.sqrt(math.log(node.parent.number_visits) / node.number_visits))
         return exploitation_term + exploration_term

@@ -11,7 +11,7 @@ class TestMCTS(TestCase):
         file_name = "card_data.csv"
         faction = "Nilfgaardian"
         size = 22
-        seed = 123
+        seed = 1234
 
         self.card_db = CardDB(file_name)
         self.deck = Deck(self.card_db, faction, size, seed)
@@ -25,17 +25,46 @@ class TestMCTS(TestCase):
         self.node = Node(self.game, None)
         self.mcts = MCTS()
 
-    def test_run_search(self):
-        self.fail()
 
-    def test_get_best_play(self):
-        self.fail()
+    def test_full_searched_game(self):
+        nd = self.node
+        draws = 0
+        p1 = 0
+        p2 = 0
+
+        for i in range(200):
+            result = self.run_game(nd)
+            if result is None:
+                draws += 1
+            elif result == 0:
+                p1 += 1
+            else:
+                p2 += 1
+
+        print("p1 wins: ", p1)
+        print("p2 wins: ", p2)
+        print("draws: ", draws)
+
+    def run_game(self, node):
+        while not node.is_terminal():
+            node = self.mcts.run_search(node)
+        return node.state.get_result()
+
+
+    def test_run_search(self):
+        node = self.mcts.run_search(self.node, 2)
 
     def test_selection(self):
-        self.fail()
+        self.game.starter = 0
 
-    def test_expand(self):
-        self.fail()
+        nd1 = Node(self.game, None)
+        nd1.number_visits = 10
+        nd2 = nd1.get_all_children()[3]
+        nd2.wins = 37
+        nd2.number_visits = 40
+
+        nd = self.mcts.get_best_child(nd1)
+        self.assertEqual(nd2, nd)
 
     def test_simulate(self):
         for i in range(100):
@@ -56,7 +85,7 @@ class TestMCTS(TestCase):
         self.assertEqual(self.node.wins, 1)
 
     def test_get_ucb1(self):
-        self.assertIsNone(self.mcts.get_ucb1(self.node))
+        self.assertEqual(self.mcts.get_ucb1(self.node), 0)
         node2 = Node(self.game, self.node)
         self.node.number_visits = 5
         node2.number_visits = 3

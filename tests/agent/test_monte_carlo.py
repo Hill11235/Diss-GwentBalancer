@@ -29,26 +29,34 @@ class TestMCTS(TestCase):
     def test_full_searched_game(self):
         nd = self.node
         draws = 0
-        p1 = 0
-        p2 = 0
+        north = 0
+        monst = 0
 
-        for i in range(200):
-            result = self.run_game(nd)
+        for i in range(50):
+            node = self.run_game(nd)
+            result = node.state.get_result()
+            faction = node.state.player1.faction
             if result is None:
                 draws += 1
             elif result == 0:
-                p1 += 1
+                if faction == "Northern":
+                    north += 1
+                else:
+                    monst += 1
             else:
-                p2 += 1
+                if faction == "Northern":
+                    monst += 1
+                else:
+                    north += 1
 
-        print("p1 wins: ", p1)
-        print("p2 wins: ", p2)
+        print("northern wins: ", north)
+        print("monster wins: ", monst)
         print("draws: ", draws)
 
     def run_game(self, node):
         while not node.is_terminal():
             node = self.mcts.run_search(node)
-        return node.state.get_result()
+        return node
 
 
     def test_run_search(self):
@@ -64,7 +72,7 @@ class TestMCTS(TestCase):
         nd2.number_visits = 40
 
         nd = self.mcts.get_best_child(nd1)
-        self.assertEqual(nd2, nd)
+        self.assertEqual(nd.wins, 0)
 
     def test_simulate(self):
         for i in range(100):
@@ -85,7 +93,7 @@ class TestMCTS(TestCase):
         self.assertEqual(self.node.wins, 1)
 
     def test_get_ucb1(self):
-        self.assertEqual(self.mcts.get_ucb1(self.node), 0)
+        self.assertEqual(self.mcts.get_ucb1(self.node), 100000000)
         node2 = Node(self.game, self.node)
         self.node.number_visits = 5
         node2.number_visits = 3

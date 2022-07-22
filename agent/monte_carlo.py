@@ -9,7 +9,6 @@ class MCTS:
         # exploration parameter
         self.exp_constant = math.sqrt(2)
 
-    # TODO test
     def run_search(self, node, time_limit=0.1):
         start_time = time.time()
         elapsed_time = time.time() - start_time

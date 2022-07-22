@@ -16,7 +16,6 @@ class GameState:
         self.board_list = [self.board1, self.board2]
         self.starter = random.randint(0, 1)
         self.scores = []
-        self.turn_count = 0
 
     def get_all_children(self):
         if self.check_game_complete():
@@ -77,7 +76,6 @@ class GameState:
                             row,
                             target)
 
-        self.turn_count += 1
         new_gamestate.alternate_player()
 
         if new_gamestate.round_over():
@@ -109,7 +107,6 @@ class GameState:
                                    row,
                                    targets)
 
-        self.turn_count += 1
         self.alternate_player()
         if self.round_over():
             self.end_of_round()
@@ -187,7 +184,6 @@ class GameState:
             "score": self.scores,
             "winning_faction": self.get_winning_faction(),
             "result": self.get_result(),
-            "turn_count": self.turn_count,
             "player1": self.player1.get_player_data(),
             "player2": self.player2.get_player_data()
         }

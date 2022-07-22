@@ -25,7 +25,6 @@ class TestMCTS(TestCase):
         self.node = Node(self.game, None)
         self.mcts = MCTS()
 
-
     def test_full_searched_game(self):
         nd = self.node
         draws = 0
@@ -51,12 +50,17 @@ class TestMCTS(TestCase):
             node = self.mcts.run_search(node)
         return node
 
-
     def test_run_search(self):
         node = self.mcts.run_search(self.node, 2)
-        self.assertTrue(node.state.turn_count > 0)
 
-    def test_selection(self):
+    def test_traverse(self):
+        self.assertEqual(self.mcts.traverse(self.node), self.node)
+
+        self.node.get_all_children()
+        nd = self.mcts.traverse(self.node)
+        self.assertEqual(nd.parent, self.node)
+
+    def test_get_best_child(self):
         self.game.starter = 0
 
         nd1 = Node(self.game, None)

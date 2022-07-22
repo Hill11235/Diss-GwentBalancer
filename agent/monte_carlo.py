@@ -20,7 +20,6 @@ class MCTS:
         while elapsed_time < time_limit:
 
             node = self.traverse(root)
-            # problem in line below, finding points with nochildren
             if not node.is_terminal():
                 node.get_all_children()
             winner = self.simulate(node)
@@ -29,7 +28,6 @@ class MCTS:
 
         return self.get_best_child(root)
 
-    # TODO test
     def traverse(self, node):
         # while node has children, repeatedly choose child with highest UCB1
         while node.children is not None and node.children != []:

@@ -37,6 +37,16 @@ class Deck:
         # create a deck list based on the faction, deck size, and random seed information provided
         applicable_cards = self.get_faction_cards(self.all_cards, faction)
         self.deck = random.sample(applicable_cards, size)
+        return self.deck
+
+    def create_four_random_decks(self):
+
+        monster_deck = self.create_deck("monster", self.size)
+        nilf_deck = self.create_deck("nilfgaardian", self.size)
+        northern_deck = self.create_deck("northern", self.size)
+        scoiatael_deck = self.create_deck("scoiatael", self.size)
+
+        return monster_deck, nilf_deck, northern_deck, scoiatael_deck
 
     def create_deck_using_list(self, deck_list_path):
         dir_path = os.path.dirname(os.path.realpath(__file__))

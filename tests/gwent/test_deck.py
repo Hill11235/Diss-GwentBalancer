@@ -1,6 +1,5 @@
 import unittest
 from gwent.deck import Deck
-from gwent.cards.unit.medic_card import MedicCard
 from gwent.data.card_db import CardDB
 
 
@@ -52,3 +51,30 @@ class DeckTest(unittest.TestCase):
 
         for cards in nilf_deck:
             self.assertEqual(cards.card_id, "vattier_de_rideaux")
+
+    def test_create_four_random_decks(self):
+
+        monster_deck, nilf_deck, northern_deck, scoiatael_deck = self.nilf_deck.create_four_random_decks()
+
+        self.assertEqual(len(monster_deck), 22)
+        self.assertEqual(len(nilf_deck), 22)
+        self.assertEqual(len(northern_deck), 22)
+        self.assertEqual(len(scoiatael_deck), 22)
+
+        for i in range(22):
+            self.assertTrue(scoiatael_deck[i].faction == "scoiatael" or scoiatael_deck[i].faction == "neutral")
+            self.assertTrue(monster_deck[i].faction == "monster" or monster_deck[i].faction == "neutral")
+            self.assertTrue(nilf_deck[i].faction == "nilfgaardian" or nilf_deck[i].faction == "neutral")
+            self.assertTrue(northern_deck[i].faction == "northern" or northern_deck[i].faction == "neutral")
+
+    def test_random_deck_similarity(self):
+        monster_deck, nilf_deck, northern_deck, scoiatael_deck = self.nilf_deck.create_four_random_decks()
+        monster_deck1, nilf_deck1, northern_deck1, scoiatael_deck1 = self.nilf_deck.create_four_random_decks()
+
+        sim_check = True
+
+        for i in range(len(monster_deck)):
+            if monster_deck[i].card_id != monster_deck1[i].card_id:
+                sim_check = False
+
+        self.assertFalse(sim_check)

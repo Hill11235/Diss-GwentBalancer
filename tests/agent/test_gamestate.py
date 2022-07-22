@@ -191,12 +191,17 @@ class TestGameState(TestCase):
 
     def test_get_game_data(self):
         game_dict = self.game.get_game_data()
-        self.assertEqual(len(game_dict), 3)
+        self.assertEqual(len(game_dict), 6)
         self.assertEqual(game_dict.get('score'), [])
 
         self.game.scores.append(7)
         self.game.scores.append(3)
 
         game_dict = self.game.get_game_data()
-        self.assertEqual(len(game_dict), 3)
+        self.assertEqual(len(game_dict), 6)
         self.assertEqual(game_dict.get('score'), [7, 3])
+        self.assertEqual(game_dict.get('turn_count'), 0)
+
+    def test_get_winning_faction(self):
+        self.game.starter = 0
+        self.assertEqual(self.game.get_winning_faction(), "Monster")

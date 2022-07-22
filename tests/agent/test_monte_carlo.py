@@ -32,22 +32,15 @@ class TestMCTS(TestCase):
         north = 0
         monst = 0
 
-        for i in range(50):
+        for i in range(10):
             node = self.run_game(nd)
-            result = node.state.get_result()
-            faction = node.state.player1.faction
-            if result is None:
+            faction = node.state.get_winning_faction()
+            if faction == "draw":
                 draws += 1
-            elif result == 0:
-                if faction == "Northern":
-                    north += 1
-                else:
-                    monst += 1
+            elif faction == "Northern":
+                north += 1
             else:
-                if faction == "Northern":
-                    monst += 1
-                else:
-                    north += 1
+                monst += 1
 
         print("northern wins: ", north)
         print("monster wins: ", monst)
@@ -61,6 +54,7 @@ class TestMCTS(TestCase):
 
     def test_run_search(self):
         node = self.mcts.run_search(self.node, 2)
+        self.assertTrue(node.state.turn_count > 0)
 
     def test_selection(self):
         self.game.starter = 0

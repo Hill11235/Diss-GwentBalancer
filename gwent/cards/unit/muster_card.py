@@ -4,18 +4,18 @@ from gwent.cards.unit.unit_card import UnitCard
 class MusterCard(UnitCard):
 
     def battlecry(self, board, opponent_board, row, target):
-        explored = [self.card_id]
+        self.card_search(board, opponent_board, target, board.player.deck)
+        self.card_search(board, opponent_board, target, board.player.hand)
 
-        for card in board.player.deck:
-            if card.name == self.name and card.card_id not in explored:
-                explored.append(card.card_id)
-                card.place_card(board, opponent_board, card.get_row(board)[0], target)
+    def card_search(self, board, opponent_board, target, container):
+        index = 10000
 
-        board.player.deck = [card for card in board.player.deck if not card.name == self.name]
+        for i in range(len(container)):
+            card = container[i]
+            if card.name == self.name:
+                index = i
+                break
 
-        for card in board.player.hand:
-            if card.name == self.name and card.card_id not in explored:
-                explored.append(card.card_id)
-                card.place_card(board, opponent_board, card.get_row(board)[0], target)
-
-        board.player.hand = [card for card in board.player.hand if not card.name == self.name]
+        if index < 10000:
+            active_card = container.pop(index)
+            active_card.place_card(board, opponent_board, active_card.get_row(board)[0], target)

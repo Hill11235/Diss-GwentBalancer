@@ -51,8 +51,13 @@ class Card:
         return None
 
     def destroy(self, board, decoy=False):
-        # Remove from row in board (board attribute)
-        board.rows[self.row].remove(self)
+        if self.agile:
+            if board.rows[0].__contains__(self):
+                board.rows[0].remove(self)
+            elif board.rows[1].__contains__(self):
+                board.rows[1].remove(self)
+        else:
+            board.rows[self.row].remove(self)
 
         # add to graveyard if not a decoy card (player attribute)
         if not decoy:

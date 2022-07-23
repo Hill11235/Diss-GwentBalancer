@@ -18,25 +18,27 @@ class SimulationCycle:
         # set up rotating seed? ASK CHRIS
 
     def simulate(self):
+        output = []
+
         for i in range(self.iters):
-            self.run_cycle()
 
-    def run_game(self, node):
-        while not node.is_terminal():
-            node = self.mcts.run_search(node)
-        return node.state.get_game_data()
+            nd_m_v_ni, nd_m_v_no, nd_m_v_s, nd_ni_v_no, nd_ni_v_s, nd_no_v_s = self.create_root_nodes()
+            node_list = [nd_m_v_ni, nd_m_v_no, nd_m_v_s, nd_ni_v_no, nd_ni_v_s, nd_no_v_s]
 
-    def write_to_json(self, file, game_data):
+            for nd in node_list:
+                game_data = self.run_game(nd)
+                output.append(game_data)
+
+        self.write_to_json("output.json", output)
+
+    def run_game(self, nd):
+        while not nd.is_terminal():
+            nd = self.mcts.run_search(nd)
+        return nd.state.get_game_data()
+
+    def write_to_json(self, file, game_list):
         with open(file, 'w') as res:
-            json.dump(game_data, res)
-
-    def run_cycle(self):
-        nd_m_v_ni, nd_m_v_no, nd_m_v_s, nd_ni_v_no, nd_ni_v_s, nd_no_v_s = self.create_root_nodes()
-        node_list = [nd_m_v_ni, nd_m_v_no, nd_m_v_s, nd_ni_v_no, nd_ni_v_s, nd_no_v_s]
-
-        for nd in node_list:
-            game_data = self.run_game(nd)
-            self.write_to_json("output.json", game_data)
+            json.dump(game_list, res)
 
     def create_root_nodes(self):
         board_monster, board_nilf, board_northern, board_scoiatael = self.create_boards()

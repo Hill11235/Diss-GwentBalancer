@@ -1,4 +1,5 @@
 import json
+import pandas as pd
 
 
 class JsonReader:
@@ -7,10 +8,23 @@ class JsonReader:
         with open(json_file) as f:
             self.data_list = json.load(f)
 
-    def get_faction_stats(self):
-        # parse file and get the number of wins for each faction, use to derive win rate for each faction
-        # NEED BOTH PARTICIPATING FACTIONS
-        pass
+    def get_faction_stats(self, iteration):
+        factions_df = pd.DataFrame(0,
+                                   columns=["iteration", "games", "wins", "win_rate"],
+                                   index=["nilfgaardian", "monster", "northern", "scoiatael"])
+
+        factions_df["iteration"] = iteration
+
+        for game in self.data_list:
+            winner = game.get("result")
+            factions = [game.get("p1_faction"), game.get("p2_faction")]
+            factions_df.loc[factions[0], "games"] += 1
+            factions_df.loc[factions[1], "games"] += 1
+            if winner is not None:
+                factions_df.loc[factions[int(winner)], "wins"] += 1
+
+        factions_df["win_rate"] = factions_df["wins"] / factions_df["games"]
+        return factions_df
 
     def get_card_stats(self):
         # parse and create dataframe for each card id, count games and wins for each. Calc win rate

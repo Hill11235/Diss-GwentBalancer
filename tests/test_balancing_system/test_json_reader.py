@@ -17,7 +17,10 @@ class TestJsonReader(TestCase):
         print(len(self.jrdr.data_list))
 
     def test_get_faction_stats(self):
-        self.fail()
+        df = self.jrdr.get_faction_stats(1)
+        self.assertEqual(df.shape, (4, 4))
+        self.assertEqual(sum(df['games']), df.loc["monster", "games"] * 4)
+        self.assertEqual(df.loc["monster", "iteration"], 1)
 
     def test_get_card_stats(self):
         self.fail()

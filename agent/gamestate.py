@@ -182,8 +182,9 @@ class GameState:
     def get_game_data(self):
         game_dict = {
             "score": self.scores,
-            "winning_faction": self.get_winning_faction(),
             "result": self.get_result(),
+            "p1_faction": self.player1.faction,
+            "p2_faction": self.player2.faction,
             "player1": self.player1.get_player_data(),
             "player2": self.player2.get_player_data()
         }

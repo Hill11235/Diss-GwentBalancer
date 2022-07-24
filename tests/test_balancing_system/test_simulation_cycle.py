@@ -6,7 +6,7 @@ class TestSimulationCycle(TestCase):
 
     def setUp(self):
         file_name = "card_data.csv"
-        self.cycle = SimulationCycle(file_name, 2)
+        self.cycle = SimulationCycle(file_name, 100, 0.6)
 
     def test_simulate(self):
         self.cycle.simulate()

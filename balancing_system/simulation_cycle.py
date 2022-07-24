@@ -7,10 +7,11 @@ from gwent.data.card_db import CardDB
 
 class SimulationCycle:
 
-    def __init__(self, card_file, iters=100):
+    def __init__(self, card_file, iters=100, time_limit=0.1):
         self.size = 22
         self.seed = 123
         self.iters = iters
+        self.time_limit = time_limit
         self.card_db = CardDB(card_file)
 
         self.deck = Deck(self.card_db, "Monster", self.size, self.seed)
@@ -33,7 +34,7 @@ class SimulationCycle:
 
     def run_game(self, nd):
         while not nd.is_terminal():
-            nd = self.mcts.run_search(nd)
+            nd = self.mcts.run_search(nd, self.time_limit)
         return nd.state.get_game_data()
 
     def write_to_json(self, file, game_list):

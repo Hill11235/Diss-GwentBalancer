@@ -18,5 +18,5 @@ class TestJsonReader(TestCase):
         self.assertEqual(df.shape[1], 6)
         self.jrdr.create_new_card_data_file(df)
 
-    def test_create_new_card_data_file(self):
-        self.fail()
+    def test_run_balance(self):
+        self.jrdr.run_balance(0, "stats/faction_stats.csv", "stats/card_stats.csv")

@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 
 
-# get stats, write stats, get adjustment, create new card file
 class JsonReader:
 
     def __init__(self, json_file, card_file, destination):
@@ -14,9 +13,14 @@ class JsonReader:
         self.card_file = card_file
         self.destination = destination
 
-    def create_updated_card_file(self):
+    def run_balance(self, iteration, faction_path, card_path):
+        faction_stats = self.get_faction_stats(iteration)
+        card_stats = self.get_card_stats(iteration)
 
-        pass
+        faction_stats.to_csv(faction_path, mode='a', header=not os.path.exists(faction_path), index_label="faction")
+        card_stats.to_csv(card_path, mode='a', header=not os.path.exists(card_path), index_label="card_id")
+
+        self.create_new_card_data_file(card_stats)
 
     def get_faction_stats(self, iteration):
         df = pd.DataFrame(0,
@@ -103,10 +107,6 @@ class JsonReader:
         for card in card_dict:
             if card not in card_list:
                 card_list.append(card)
-
-    def update_stats_file(self, df, output_path):
-        # take created stats dfs and add to stats files to track progression
-        df.to_csv(output_path, mode='a', header=not os.path.exists(output_path))
 
     def create_new_card_data_file(self, card_stats):
         if not os.path.exists(self.destination):

@@ -5,7 +5,7 @@ from balancing_system import *
 class TestJsonReader(TestCase):
 
     def setUp(self):
-        self.jrdr = JsonReader("output.json")
+        self.jrdr = JsonReader("stats/output.json", "./../../gwent/data/card_data.csv", "stats/card_data.csv")
 
     def test_get_faction_stats(self):
         df = self.jrdr.get_faction_stats(1)
@@ -15,7 +15,9 @@ class TestJsonReader(TestCase):
 
     def test_get_card_stats(self):
         df = self.jrdr.get_card_stats(1)
-        self.assertEqual(df.shape[1], 5)
+        self.assertEqual(df.shape[1], 6)
+        print(df.nlargest(10, 'adjustment'))
+        self.jrdr.create_new_card_data_file(df)
 
     def test_create_new_card_data_file(self):
         self.fail()

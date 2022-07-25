@@ -16,7 +16,6 @@ class TestJsonReader(TestCase):
     def test_get_card_stats(self):
         df = self.jrdr.get_card_stats(1)
         self.assertEqual(df.shape[1], 6)
-        print(df.nlargest(10, 'adjustment'))
         self.jrdr.create_new_card_data_file(df)
 
     def test_create_new_card_data_file(self):

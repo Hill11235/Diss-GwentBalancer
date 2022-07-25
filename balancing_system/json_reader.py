@@ -112,12 +112,9 @@ class JsonReader:
         if not os.path.exists(self.destination):
             shutil.copyfile(self.card_file, self.destination)
 
-        # TODO ensure that column names are constant with each iteration
-        card_df = pd.read_csv(self.destination).set_index('id')
+        card_df = pd.read_csv(self.destination).set_index('card_id')
         card_df = pd.concat([card_df, card_stats], axis=1)
         card_df['power'] += card_df['adjustment']
         card_df.drop(["iteration", "games", "wins", "win_rate", "avg_game_len", "adjustment"], axis=1, inplace=True)
-        # adjust strength using some built in pandas update
-        # merge, replace nas with 0, update strength, drop all stats columns, write
 
-        card_df.to_csv(self.destination)
+        card_df.to_csv(self.destination, index_label="card_id")

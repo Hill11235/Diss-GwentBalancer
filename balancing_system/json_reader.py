@@ -14,7 +14,7 @@ class JsonReader:
         self.destination = destination
 
     def run_balance(self, iteration, faction_path, card_path):
-        faction_stats = self.get_faction_stats(iteration)
+        faction_stats = self.get_faction_overview_stats(iteration)
         card_stats = self.get_card_stats(iteration)
 
         faction_stats.to_csv(faction_path, mode='a', header=not os.path.exists(faction_path), index_label="faction")
@@ -22,7 +22,7 @@ class JsonReader:
 
         self.create_new_card_data_file(card_stats)
 
-    def get_faction_stats(self, iteration):
+    def get_faction_overview_stats(self, iteration):
         df = pd.DataFrame(0,
                           columns=["iteration", "games", "wins", "win_rate", "avg_game_len"],
                           index=["nilfgaardian", "monster", "northern", "scoiatael"])
@@ -44,6 +44,15 @@ class JsonReader:
         df["avg_game_len"] *= (1 / df["games"])
         df["win_rate"] = df["wins"] / df["games"]
         return df
+
+    def get_faction_v_faction_stats(self, iteration):
+        # TODO implement
+        # create df for fact v fact, normal index,
+        # each row shows ["faction1", "faction2", "games", "wins", "win_rate", "avg_game_len"]
+        # add rows with empty stats
+        # loop through json, update df based on each game
+        # calc win rate and return df
+        pass
 
     def get_card_stats(self, iteration):
         card_list = self.get_unique_card_list()

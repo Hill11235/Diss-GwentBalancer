@@ -30,7 +30,7 @@ class SimulationCycle:
                 game_data = self.run_game(nd)
                 output.append(game_data)
 
-        self.write_to_json("stats/output.json", output)
+        self.write_to_json("stats/sim_output.json", output)
 
     def run_game(self, nd):
         while not nd.is_terminal():

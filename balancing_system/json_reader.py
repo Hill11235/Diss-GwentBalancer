@@ -13,12 +13,24 @@ class JsonReader:
         self.card_file = card_file
         self.destination = destination
 
-    def run_balance(self, iteration, faction_path, card_path):
+    def run_balance(self, iteration):
         faction_stats = self.get_faction_overview_stats(iteration)
         card_stats = self.get_card_stats(iteration)
+        game_duration_stats = self.get_game_duration_stats(iteration)
+        f_v_f_stats = self.get_faction_v_faction_stats(iteration)
 
-        faction_stats.to_csv(faction_path, mode='a', header=not os.path.exists(faction_path), index_label="faction")
-        card_stats.to_csv(card_path, mode='a', header=not os.path.exists(card_path), index_label="card_id")
+        faction_stats.to_csv("stats/faction_stats.csv",
+                             mode='a', header=not os.path.exists("stats/faction_stats.csv"),
+                             index_label="faction")
+        card_stats.to_csv("stats/card_stats.csv", mode='a',
+                          header=not os.path.exists("stats/card_stats.csv"),
+                          index_label="card_id")
+        game_duration_stats.to_csv("stats/game_duration_data.csv",
+                                   mode='a',
+                                   header=not os.path.exists("stats/game_duration_data.csv"))
+        f_v_f_stats.to_csv("stats/faction_v_faction.csv",
+                           mode='a',
+                           header=not os.path.exists("stats/faction_v_faction.csv"))
 
         self.create_new_card_data_file(card_stats)
 
@@ -34,10 +46,10 @@ class JsonReader:
             factions = [game.get("p1_faction"), game.get("p2_faction")]
             df.loc[factions[0], "games"] += 1
             df.loc[factions[1], "games"] += 1
-            df.loc[factions[0], "avg_game_len"] += len(game.get("score")) / 2 + game.get("player1").get(
+            game_len = len(game.get("score")) / 2 + game.get("player1").get("graveyard size") + game.get("player2").get(
                 "graveyard size")
-            df.loc[factions[1], "avg_game_len"] += len(game.get("score")) / 2 + game.get("player2").get(
-                "graveyard size")
+            df.loc[factions[0], "avg_game_len"] += game_len
+            df.loc[factions[1], "avg_game_len"] += game_len
             if winner is not None:
                 df.loc[factions[int(winner)], "wins"] += 1
 
@@ -46,13 +58,52 @@ class JsonReader:
         return df
 
     def get_faction_v_faction_stats(self, iteration):
-        # TODO implement
-        # create df for fact v fact, normal index,
-        # each row shows ["faction1", "faction2", "games", "wins", "win_rate", "avg_game_len"]
-        # add rows with empty stats
-        # loop through json, update df based on each game
-        # calc win rate and return df
-        pass
+        cols = ["iteration", "faction1", "faction2", "games", "wins", "win_rate", "avg_game_len"]
+        df = pd.DataFrame(columns=cols)
+        df = self.add_f_v_f_initial_rows(df, iteration)
+
+        for game in self.data_list:
+            f1 = game.get("p1_faction")
+            f2 = game.get("p2_faction")
+            df.loc[(df['faction1'] == f1) & (df['faction2'] == f2), "games"] += 1
+            if game.get('result') == 0:
+                df.loc[(df['faction1'] == f1) & (df['faction2'] == f2), "wins"] += 1
+            game_len = len(game.get("score")) / 2 + game.get("player1").get("graveyard size") + game.get("player2").get(
+                "graveyard size")
+            df.loc[(df['faction1'] == f1) & (df['faction2'] == f2), "avg_game_len"] += game_len
+
+        df['iteration'] = iteration
+        df["avg_game_len"] *= (1 / df["games"])
+        df["win_rate"] = df["wins"] / df["games"]
+
+        return df
+
+    def add_f_v_f_initial_rows(self, df, iteration):
+        d1 = [iteration, "monster", 'nilfgaardian', 0, 0, 0, 0]
+        d2 = [iteration, "monster", 'northern', 0, 0, 0, 0]
+        d3 = [iteration, "monster", 'scoiatael', 0, 0, 0, 0]
+        d4 = [iteration, "nilfgaardian", 'northern', 0, 0, 0, 0]
+        d5 = [iteration, "nilfgaardian", 'scoiatael', 0, 0, 0, 0]
+        d6 = [iteration, "northern", 'scoiatael', 0, 0, 0, 0]
+
+        for dicto in [d1, d2, d3, d4, d5, d6]:
+            df.loc[len(df)] = dicto
+        return df
+
+    def get_game_duration_stats(self, iteration):
+        df = pd.DataFrame(columns=["iteration", "faction", "game_duration"])
+
+        for game in self.data_list:
+            df = df.append(self.get_game_duration_info(iteration, game, 1), ignore_index=True)
+            df = df.append(self.get_game_duration_info(iteration, game, 2), ignore_index=True)
+
+        return df
+
+    def get_game_duration_info(self, iteration, game, player_number):
+        faction = game.get("p" + str(player_number) + "_faction")
+        game_len = len(game.get("score")) / 2 + game.get("player1").get("graveyard size") + game.get("player2").get(
+            "graveyard size")
+        return {"iteration": iteration, "faction": faction, "game_duration": game_len}
 
     def get_card_stats(self, iteration):
         card_list = self.get_unique_card_list()
@@ -65,15 +116,17 @@ class JsonReader:
         for game in self.data_list:
             winner = game.get("result")
             players = [game.get("player1"), game.get("player2")]
-            self.update_card_stats_for_player(df, players[0], len(game.get('score')), 0 == winner)
-            self.update_card_stats_for_player(df, players[1], len(game.get('score')), 1 == winner)
+            game_len = len(game.get("score")) / 2 + game.get("player1").get("graveyard size") + game.get("player2").get(
+                "graveyard size")
+            self.update_card_stats_for_player(df, players[0], game_len, 0 == winner)
+            self.update_card_stats_for_player(df, players[1], game_len, 1 == winner)
 
         df["avg_game_len"] *= (1 / df["games"])
         df["win_rate"] = df["wins"] / df["games"]
         df["adjustment"] = np.where((df["win_rate"] >= 0.75), -2,
                                     np.where(((df["win_rate"] > 0.6) & (df["win_rate"] < 0.75)), -1,
-                                    np.where(((df["win_rate"] > 0.25) & (df["win_rate"] < 0.4)), 1,
-                                    np.where((df["win_rate"] <= 0.25), 2, 0))))
+                                             np.where(((df["win_rate"] > 0.25) & (df["win_rate"] < 0.4)), 1,
+                                                      np.where((df["win_rate"] <= 0.25), 2, 0))))
 
         return df
 
@@ -81,7 +134,6 @@ class JsonReader:
         # need to run through both hand and graveyard
         hand = player_dict.get("hand")
         graveyard = player_dict.get("graveyard")
-        score_length = score_length / 2 + player_dict.get("hand size") + player_dict.get("graveyard size")
 
         self.parse_card_container(df, hand, score_length, winner)
         self.parse_card_container(df, graveyard, score_length, winner)

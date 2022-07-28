@@ -1,14 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
 
 
-# TODO parse card and faction stats and create and save different graphs
 class GraphicCreation:
-
-    def __init__(self, iteration):
-        self.iteration = iteration
 
     def create_matrix(self, metric, iteration=None):
         # TODO test when there are multiple iterations in the file

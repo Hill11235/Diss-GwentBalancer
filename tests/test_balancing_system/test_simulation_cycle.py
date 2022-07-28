@@ -12,13 +12,13 @@ class TestSimulationCycle(TestCase):
         self.cycle.simulate()
 
     def test_run_cycle(self):
-
+        # TODO complete test or delete
         pass
 
     def test_create_root_nodes(self):
-
+        # TODO complete test or delete
         pass
 
     def test_create_boards(self):
-
+        # TODO complete test or delete
         pass

@@ -44,7 +44,6 @@ class SimulationCycle:
     def create_root_nodes(self):
         board_monster, board_nilf, board_northern, board_scoiatael = self.create_boards()
 
-        # TODO consider whether deep copies needed
         monster_vs_nilf = GameState(copy.deepcopy(board_monster), copy.deepcopy(board_nilf))
         monster_vs_northern = GameState(copy.deepcopy(board_monster), copy.deepcopy(board_northern))
         monster_vs_scoiatael = GameState(copy.deepcopy(board_monster), copy.deepcopy(board_scoiatael))

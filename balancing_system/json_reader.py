@@ -65,12 +65,15 @@ class JsonReader:
         for game in self.data_list:
             f1 = game.get("p1_faction")
             f2 = game.get("p2_faction")
+            factions = [f1, f2]
+            result = game.get("result")
             df.loc[(df['faction1'] == f1) & (df['faction2'] == f2), "games"] += 1
-            if game.get('result') == 0:
-                df.loc[(df['faction1'] == f1) & (df['faction2'] == f2), "wins"] += 1
+            df.loc[(df['faction1'] == f2) & (df['faction2'] == f1), "games"] += 1
+            df.loc[(df['faction1'] == factions[result]) & (df['faction2'] == factions[(result + 1) % 2]), "wins"] += 1
             game_len = len(game.get("score")) / 2 + game.get("player1").get("graveyard size") + game.get("player2").get(
                 "graveyard size")
             df.loc[(df['faction1'] == f1) & (df['faction2'] == f2), "avg_game_len"] += game_len
+            df.loc[(df['faction1'] == f2) & (df['faction2'] == f1), "avg_game_len"] += game_len
 
         df['iteration'] = iteration
         df["avg_game_len"] *= (1 / df["games"])
@@ -82,11 +85,17 @@ class JsonReader:
         d1 = [iteration, "monster", 'nilfgaardian', 0, 0, 0, 0]
         d2 = [iteration, "monster", 'northern', 0, 0, 0, 0]
         d3 = [iteration, "monster", 'scoiatael', 0, 0, 0, 0]
-        d4 = [iteration, "nilfgaardian", 'northern', 0, 0, 0, 0]
-        d5 = [iteration, "nilfgaardian", 'scoiatael', 0, 0, 0, 0]
-        d6 = [iteration, "northern", 'scoiatael', 0, 0, 0, 0]
+        d4 = [iteration, "nilfgaardian", 'monster', 0, 0, 0, 0]
+        d5 = [iteration, "nilfgaardian", 'northern', 0, 0, 0, 0]
+        d6 = [iteration, "nilfgaardian", 'scoiatael', 0, 0, 0, 0]
+        d7 = [iteration, "northern", 'monster', 0, 0, 0, 0]
+        d8 = [iteration, "northern", 'nilfgaardian', 0, 0, 0, 0]
+        d9 = [iteration, "northern", 'scoiatael', 0, 0, 0, 0]
+        d10 = [iteration, "scoiatael", 'monster', 0, 0, 0, 0]
+        d11 = [iteration, "scoiatael", 'nilfgaardian', 0, 0, 0, 0]
+        d12 = [iteration, "scoiatael", 'northern', 0, 0, 0, 0]
 
-        for dicto in [d1, d2, d3, d4, d5, d6]:
+        for dicto in [d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12]:
             df.loc[len(df)] = dicto
         return df
 

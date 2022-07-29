@@ -1,3 +1,5 @@
+import glob
+import os
 from balancing_system import *
 
 
@@ -10,7 +12,7 @@ class Balancer:
         self.iters = iters
 
     def run_balancing(self):
-        # TODO add card_stats.csv removal from stats file
+        self.clear_stats_and_viz()
         initial_cycle = SimulationCycle(self.card_file, time_limit=self.time_limit)
         initial_cycle.simulate()
         initial_reader = JsonReader("stats/sim_output.json",
@@ -36,6 +38,20 @@ class Balancer:
         graphics.create_box_charts(self.iters - 1)
         graphics.get_extreme_card_summary("win_rate", self.iters - 1)
 
+    def clear_stats_and_viz(self):
+        parent_dir = os.path.dirname(__file__)
+        stats = "stats/*"
+        viz = "visualisations/*"
+        stats_path = glob.glob(os.path.join(parent_dir, stats))
+        viz_path = glob.glob(os.path.join(parent_dir, viz))
+
+        for f in stats_path:
+            os.remove(f)
+
+        for f in viz_path:
+            os.remove(f)
+
 
 if __name__ == '__main__':
-    Balancer("./../gwent/data/card_data.csv").run_balancing()
+    parent_dir = os.path.dirname(__file__)
+    Balancer(os.path.join(parent_dir, "./../gwent/data/card_data.csv"), iters=10).run_balancing()

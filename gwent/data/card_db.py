@@ -32,8 +32,9 @@ class CardDB:
 
     def read_card_information(self):
         # read in csv file provided and create and store cards in list
+        parent_dir = os.path.dirname(__file__)
 
-        with open(os.path.join(self.file_path), encoding='utf-8-sig') as file:
+        with open(os.path.join(parent_dir, "card_data.csv"), encoding='utf-8-sig') as file:
             card_data = csv.DictReader(file)
             for cards in card_data:
                 for i in range(int(cards['Quantity'])):

@@ -9,8 +9,8 @@ class TestJsonReader(TestCase):
         self.parent_dir = os.path.dirname(__file__)
         self.destination = "stats/card_data.csv"
         self.output = "stats/sim_output.json"
-        self.card_data = "./../gwent/data/card_data.csv"
-        self.iteration = 4
+        self.card_data = "./../../gwent/data/card_data.csv"
+        self.iteration = 0
         self.jrdr = JsonReader(os.path.join(self.parent_dir, self.output),
                                os.path.join(self.parent_dir, self.card_data),
                                os.path.join(self.parent_dir, self.destination))

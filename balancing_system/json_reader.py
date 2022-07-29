@@ -182,6 +182,7 @@ class JsonReader:
                 card_list.append(card)
 
     def create_new_card_data_file(self, card_stats):
+        # TODO does this need to be fixed?
         parent_dir = os.path.dirname(__file__)
         if not os.path.exists(self.destination):
             shutil.copyfile(self.card_file, self.destination)

@@ -1,4 +1,5 @@
 import unittest
+import os
 from gwent.deck import Deck
 from gwent.data.card_db import CardDB
 
@@ -6,12 +7,13 @@ from gwent.data.card_db import CardDB
 class DeckTest(unittest.TestCase):
 
     def setUp(self):
-        file_name = "card_data.csv"
+        parent_dir = os.path.dirname(__file__)
+        file_name = "./../../gwent/data/card_data.csv"
         self.faction = "Nilfgaardian"
         self.size = 22
         self.seed = 123
 
-        self.card_db = CardDB(file_name)
+        self.card_db = CardDB(os.path.join(parent_dir, file_name))
         self.nilf_deck = Deck(self.card_db, self.faction, self.size, self.seed)
 
     def test_generated_deck(self):

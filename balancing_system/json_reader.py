@@ -14,23 +14,24 @@ class JsonReader:
         self.destination = destination
 
     def run_balance(self, iteration):
+        parent_dir = os.path.dirname(__file__)
         faction_stats = self.get_faction_overview_stats(iteration)
         card_stats = self.get_card_stats(iteration)
         game_duration_stats = self.get_game_duration_stats(iteration)
         f_v_f_stats = self.get_faction_v_faction_stats(iteration)
 
-        faction_stats.to_csv("stats/faction_stats.csv",
-                             mode='a', header=not os.path.exists("stats/faction_stats.csv"),
+        faction_stats.to_csv(os.path.join(parent_dir, "stats/faction_stats.csv"),
+                             mode='a', header=not os.path.exists(os.path.join(parent_dir, "stats/faction_stats.csv")),
                              index_label="faction")
-        card_stats.to_csv("stats/card_stats.csv", mode='a',
-                          header=not os.path.exists("stats/card_stats.csv"),
+        card_stats.to_csv(os.path.join(parent_dir, "stats/card_stats.csv"), mode='a',
+                          header=not os.path.exists(os.path.join(parent_dir, "stats/card_stats.csv")),
                           index_label="card_id")
-        game_duration_stats.to_csv("stats/game_duration_data.csv",
+        game_duration_stats.to_csv(os.path.join(parent_dir, "stats/game_duration_data.csv"),
                                    mode='a',
-                                   header=not os.path.exists("stats/game_duration_data.csv"))
-        f_v_f_stats.to_csv("stats/faction_v_faction.csv",
+                                   header=not os.path.exists(os.path.join(parent_dir, "stats/game_duration_data.csv")))
+        f_v_f_stats.to_csv(os.path.join(parent_dir, "stats/faction_v_faction.csv"),
                            mode='a',
-                           header=not os.path.exists("stats/faction_v_faction.csv"))
+                           header=not os.path.exists(os.path.join(parent_dir, "stats/faction_v_faction.csv")))
 
         self.create_new_card_data_file(card_stats)
 
@@ -69,7 +70,9 @@ class JsonReader:
             result = game.get("result")
             df.loc[(df['faction1'] == f1) & (df['faction2'] == f2), "games"] += 1
             df.loc[(df['faction1'] == f2) & (df['faction2'] == f1), "games"] += 1
-            df.loc[(df['faction1'] == factions[result]) & (df['faction2'] == factions[(result + 1) % 2]), "wins"] += 1
+            if result is not None:
+                df.loc[
+                    (df['faction1'] == factions[result]) & (df['faction2'] == factions[(result + 1) % 2]), "wins"] += 1
             game_len = len(game.get("score")) / 2 + game.get("player1").get("graveyard size") + game.get("player2").get(
                 "graveyard size")
             df.loc[(df['faction1'] == f1) & (df['faction2'] == f2), "avg_game_len"] += game_len
@@ -179,11 +182,13 @@ class JsonReader:
                 card_list.append(card)
 
     def create_new_card_data_file(self, card_stats):
+        parent_dir = os.path.dirname(__file__)
         if not os.path.exists(self.destination):
             shutil.copyfile(self.card_file, self.destination)
 
         card_df = pd.read_csv(self.destination).set_index('card_id')
         card_df = pd.concat([card_df, card_stats], axis=1)
+        card_df['adjustment'] = card_df['adjustment'].fillna(0).astype(int)
         card_df['power'] += card_df['adjustment']
         card_df.drop(["iteration", "games", "wins", "win_rate", "avg_game_len", "adjustment"], axis=1, inplace=True)
 

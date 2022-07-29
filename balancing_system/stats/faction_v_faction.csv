@@ -1,7 +1,0 @@
-,iteration,faction1,faction2,games,wins,win_rate,avg_game_len
-0,4,monster,nilfgaardian,10,5,0.5,14.8
-1,4,monster,northern,10,6,0.6,18.400000000000002
-2,4,monster,scoiatael,10,8,0.8,14.600000000000001
-3,4,nilfgaardian,northern,10,4,0.4,13.8
-4,4,nilfgaardian,scoiatael,10,5,0.5,18.5
-5,4,northern,scoiatael,10,4,0.4,16.2

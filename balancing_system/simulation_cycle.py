@@ -1,3 +1,4 @@
+import os
 import json
 import copy
 from gwent import *
@@ -7,7 +8,7 @@ from gwent.data.card_db import CardDB
 
 class SimulationCycle:
 
-    def __init__(self, card_file, iters=100, time_limit=0.1):
+    def __init__(self, card_file, iters=10, time_limit=0.1):
         self.size = 22
         self.seed = 123
         self.iters = iters
@@ -30,7 +31,8 @@ class SimulationCycle:
                 game_data = self.run_game(nd)
                 output.append(game_data)
 
-        self.write_to_json("stats/sim_output.json", output)
+        parent_dir = os.path.dirname(__file__)
+        self.write_to_json(os.path.join(parent_dir, "stats/sim_output.json"), output)
 
     def run_game(self, nd):
         while not nd.is_terminal():

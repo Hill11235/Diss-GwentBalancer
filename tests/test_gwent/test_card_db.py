@@ -1,4 +1,5 @@
 import unittest
+import os
 from gwent.data.card_db import CardDB
 from gwent.cards.unit.medic_card import MedicCard
 
@@ -6,8 +7,9 @@ from gwent.cards.unit.medic_card import MedicCard
 class DeckTest(unittest.TestCase):
 
     def setUp(self):
-        file_name = "card_data.csv"
-        self.card_db = CardDB(file_name)
+        parent_dir = os.path.dirname(__file__)
+        file_name = "./../../gwent/data/card_data.csv"
+        self.card_db = CardDB(os.path.join(parent_dir, file_name))
 
     def test_all_card_size(self):
         self.assertEqual(len(self.card_db.all_cards), 179)

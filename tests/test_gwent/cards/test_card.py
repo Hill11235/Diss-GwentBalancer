@@ -1,3 +1,4 @@
+import os
 import unittest
 from gwent import *
 from gwent.data.card_db import CardDB
@@ -20,12 +21,13 @@ class CardTest(unittest.TestCase):
 
     def test_destroy(self):
         test_decks = "data/test_decks.csv"
-        file_name = "card_data.csv"
+        parent_dir = os.path.dirname(__file__)
+        file_name = "./../../../gwent/data/card_data.csv"
         faction = "Nilfgaardian"
         size = 22
         seed = 123
 
-        card_db = CardDB(file_name)
+        card_db = CardDB(os.path.join(parent_dir, file_name))
         deck = Deck(card_db, faction, size, seed)
         monster, nilf, northern, scoiatael = deck.create_deck_using_list(test_decks)
 
@@ -52,12 +54,13 @@ class CardTest(unittest.TestCase):
 
     def test_destroy_agile(self):
         test_decks = "data/test_decks.csv"
-        file_name = "card_data.csv"
+        parent_dir = os.path.dirname(__file__)
+        file_name = "./../../../gwent/data/card_data.csv"
         faction = "Nilfgaardian"
         size = 22
         seed = 123
 
-        card_db = CardDB(file_name)
+        card_db = CardDB(os.path.join(parent_dir, file_name))
         deck = Deck(card_db, faction, size, seed)
         monster, nilf, northern, scoiatael = deck.create_deck_using_list(test_decks)
         agile_card = UnitCard("ron", "ronald", "monster", 0, 5, False, True)

@@ -1,3 +1,4 @@
+import os
 from unittest import TestCase
 from gwent import *
 from gwent.cards import *
@@ -9,12 +10,13 @@ class TestGameState(TestCase):
 
     def setUp(self):
         test_decks = "data/test_decks.csv"
-        file_name = "card_data.csv"
+        parent_dir = os.path.dirname(__file__)
+        file_name = "./../../gwent/data/card_data.csv"
         faction = "Nilfgaardian"
         size = 22
         seed = 123
 
-        self.card_db = CardDB(file_name)
+        self.card_db = CardDB(os.path.join(parent_dir, file_name))
         self.deck = Deck(self.card_db, faction, size, seed)
         self.monster, self.nilf, self.northern, self.scoiatael = self.deck.create_deck_using_list(test_decks)
 

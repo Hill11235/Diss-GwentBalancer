@@ -4,9 +4,11 @@ from collections import deque
 SCORCH_LIMIT = 10
 
 
+# unit cards with the scorch effect.
 class ScorchUnitCard(UnitCard):
 
     def battlecry(self, board, opponent_board, row, target):
+        # scorch the highest strength cards in matching opposing row if total strength for that row exceeds the limit.
         max_strength = 0
         total_strength = 0
 

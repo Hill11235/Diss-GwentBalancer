@@ -1,6 +1,7 @@
 from gwent.cards.special.special_card import SpecialCard
 
 
+# horn special card.
 class HornSpecialCard(SpecialCard):
 
     def __init__(self, card_id, name, faction, row, strength, hero, agile):
@@ -8,6 +9,8 @@ class HornSpecialCard(SpecialCard):
         self.horn_special = True
 
     def place_card(self, board, opponent_board, row, target):
+        # remove from hand, if chosen row is contains no other special horn cards, add to that row.
+
         self.row = row
         board.player.remove_card_from_hand(self.card_id)
         possible_rows = self.get_row(board)
@@ -16,6 +19,9 @@ class HornSpecialCard(SpecialCard):
             board.rows[self.row].append(self)
 
     def get_row(self, board):
+        # only one special horn card allowed per row.
+        # return a list of all row indices where there is no horn special card.
+
         targets = []
 
         for i in range(len(board.rows)):

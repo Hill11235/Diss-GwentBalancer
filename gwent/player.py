@@ -1,6 +1,7 @@
 import random
 
 
+# represents each player, stores deck and hand, and has methods for each player action in a turn.
 class Player:
 
     def __init__(self, name, faction, deck):
@@ -16,15 +17,18 @@ class Player:
         self.graveyard = []
 
     def set_hand(self):
+        # draw ten starting cards into the player's hand.
         for i in range(10):
             self.draw_card()
 
     def draw_card(self):
+        # draws a random card from the player's deck into their hand.
         random_card_index = random.randint(0, len(self.deck) - 1)
         drawn_card = self.deck.pop(random_card_index)
         self.hand.append(drawn_card)
 
     def remove_card_from_hand(self, card_ident):
+        # takes a specified card and removes it from the player's hand.
         i = 0
         for cards in self.hand:
             if cards.card_id == card_ident:
@@ -34,16 +38,20 @@ class Player:
         return None
 
     def pass_round(self):
+        # allows the player to pass the round.
         self.passed = True
 
     def reset_round(self):
+        # resets the pass boolean.
         self.passed = False
 
     def lose_round(self):
+        # decrements the life variable.
         self.lives -= 1
         return self.lives
 
     def get_player_data(self):
+        # returns player data in a dictionary, with nested dictionaries for the player's hand and graveyard.
         hand_dict = {}
         for cards in self.hand:
             card_dict = cards.get_data()

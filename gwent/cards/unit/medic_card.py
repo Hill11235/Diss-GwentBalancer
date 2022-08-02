@@ -2,9 +2,12 @@ import random
 from gwent.cards.unit.unit_card import UnitCard
 
 
+# medic unit card.
 class MedicCard(UnitCard):
 
     def get_targets(self, board):
+        # returns the non-hero cards in the owner's graveyard that can be revived.
+
         revivable_units = [card for card in board.player.graveyard if card.unit and card.hero is False]
 
         if len(revivable_units) > 0:
@@ -13,6 +16,8 @@ class MedicCard(UnitCard):
             return None
 
     def battlecry(self, board, opponent_board, row, target):
+        # revive the chosen target if one is specified, and it is a non-hero unit card.
+
         if target is not None and target.hero is False and target.unit:
             chosen_card = target
             board.player.graveyard.remove(chosen_card)

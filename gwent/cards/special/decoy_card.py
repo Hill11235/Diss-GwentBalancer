@@ -1,9 +1,12 @@
 from gwent.cards.special.special_card import SpecialCard
 
 
+# decoy special card.
 class DecoyCard(SpecialCard):
 
     def get_targets(self, board):
+        # return a list of all non-hero unit cards on the player's board.
+
         targets = []
 
         for row in board.rows:
@@ -14,6 +17,8 @@ class DecoyCard(SpecialCard):
         return targets
 
     def place_card(self, board, opponent_board, row, target):
+        # place card and if a valid target is specified, return it to the player's hand.
+
         targets = self.get_targets(board)
         board.player.remove_card_from_hand(self.card_id)
 

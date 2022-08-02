@@ -1,27 +1,9 @@
 import os
 import csv
 import random
-from gwent.cards import *
-
-constructor_dic = {
-    'tight_bond': TightBondCard,
-    'spy': SpyCard,
-    'medic': MedicCard,
-    'morale_boost': MoraleBoostCard,
-    'scorch': ScorchUnitCard,
-    'muster': MusterCard,
-    'hero': UnitCard,
-    'commanders_horn': HornUnitCard,
-    'agile': UnitCard,
-    '': UnitCard,
-    'weather': WeatherCard,
-    'decoy': DecoyCard,
-    'scorch_card': ScorchSpecialCard,
-    'weather_clear': ClearWeatherCard,
-    'commanders_horn_card': HornSpecialCard,
-}
 
 
+# Deck class to store cards for each player.
 class Deck:
 
     def __init__(self, card_db, faction, size, seed):
@@ -34,13 +16,13 @@ class Deck:
         self.create_deck(faction, size)
 
     def create_deck(self, faction, size):
-        # create a deck list based on the faction, deck size, and random seed information provided
+        # create a deck list based on the faction, deck size, and random seed information provided.
         applicable_cards = self.get_faction_cards(self.all_cards, faction)
         self.deck = random.sample(applicable_cards, size)
         return self.deck
 
     def create_four_random_decks(self):
-
+        # creates and returns a random deck for each faction.
         monster_deck = self.create_deck("monster", self.size)
         nilf_deck = self.create_deck("nilfgaardian", self.size)
         northern_deck = self.create_deck("northern", self.size)
@@ -49,6 +31,7 @@ class Deck:
         return monster_deck, nilf_deck, northern_deck, scoiatael_deck
 
     def create_deck_using_list(self, deck_list_path):
+        # create a deck based on a provided csv of card ids.
         dir_path = os.path.dirname(os.path.realpath(__file__))
         monster_deck = []
         nilf_deck = []
@@ -66,6 +49,7 @@ class Deck:
         return monster_deck, nilf_deck, northern_deck, scoiatael_deck
 
     def get_faction_cards(self, cards, faction):
+        # return all neutral cards and cards of a given faction.
         relevant_cards = []
         for c in cards:
             if c.faction in [faction, 'neutral']:
@@ -74,6 +58,7 @@ class Deck:
         return relevant_cards
 
     def get_card_by_id(self, card_id):
+        # return a given card based on the provided card id.
         for c in self.all_cards:
             if c.card_id == card_id:
                 return c

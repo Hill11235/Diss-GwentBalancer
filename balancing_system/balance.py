@@ -10,14 +10,15 @@ class Balancer:
         self.card_file = card_file
         self.time_limit = time_limit
         self.iters = iters
+        self.parent_dir = os.path.dirname(__file__)
 
     def run_balancing(self):
         self.clear_stats_and_viz()
         initial_cycle = SimulationCycle(self.card_file, time_limit=self.time_limit)
         initial_cycle.simulate()
-        initial_reader = JsonReader("stats/sim_output.json",
-                                    "./../gwent/data/card_data.csv",
-                                    "stats/card_data.csv")
+        initial_reader = JsonReader(os.path.join(self.parent_dir, "stats/sim_output.json"),
+                                    os.path.join(self.parent_dir, "./../gwent/data/card_data.csv"),
+                                    os.path.join(self.parent_dir, "stats/card_data.csv"))
         initial_reader.run_balance(0)
 
         graphics = GraphicCreation()
@@ -26,11 +27,11 @@ class Balancer:
         graphics.get_extreme_card_summary("win_rate", 0)
 
         for i in range(1, self.iters):
-            cycle = SimulationCycle("stats/card_data.csv", time_limit=self.time_limit)
+            cycle = SimulationCycle(os.path.join(self.parent_dir, "stats/card_data.csv"), time_limit=self.time_limit)
             cycle.simulate()
-            reader = JsonReader("stats/sim_output.json",
-                                "stats/card_data.csv",
-                                "stats/card_data.csv")
+            reader = JsonReader(os.path.join(self.parent_dir, "stats/sim_output.json"),
+                                os.path.join(self.parent_dir, "stats/card_data.csv"),
+                                os.path.join(self.parent_dir, "stats/card_data.csv"))
             reader.run_balance(i)
 
         graphics.create_matrix("win_rate", self.iters - 1)
@@ -39,7 +40,6 @@ class Balancer:
         graphics.get_extreme_card_summary("win_rate", self.iters - 1)
 
     def clear_stats_and_viz(self):
-        parent_dir = os.path.dirname(__file__)
         stats = "stats/*"
         viz = "visualisations/*"
         stats_path = glob.glob(os.path.join(parent_dir, stats))

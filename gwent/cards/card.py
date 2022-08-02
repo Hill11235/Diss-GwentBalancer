@@ -1,28 +1,5 @@
+# represents a card, superclass for all other card classes.
 class Card:
-    """
-    Class used to represent an individual card in the game.
-
-    Attributes
-    __________
-
-    name : String
-        name of a given card
-    faction : String
-        name of a given card's faction, empty indicates neutral card
-    row : int
-        the row that this card can be added to.
-    strength : int
-        the card's strength
-    hero : boolean
-        indicates whether the card is a hero card or not
-    horn : boolean
-        indicates whether the card has a commander's horn effect
-
-    Methods
-    _______
-
-    TODO add methods once complete
-    """
 
     def __init__(self, card_id, name, faction, row, strength, hero, agile):
         self.card_id = card_id
@@ -39,18 +16,28 @@ class Card:
         self.unit = True
 
     def get_active_strength(self, board):
+        # return the strength of a given card given all possible effects.
+
         return self.strength
 
     def place_card(self, board, opponent_board, row, target):
+        # place a given card in a specified row, with a specified target.
+
         pass
 
     def get_row(self, board):
+        # return the row associated with this card as a list.
+
         return [self.row]
 
     def get_targets(self, board):
+        # return all available targets for this card.
+
         return None
 
     def destroy(self, board, decoy=False):
+        # removes this cards from the board, if not being removed as a result of a decoy then add to the graveyard.
+
         if self.agile:
             if board.rows[0].__contains__(self):
                 board.rows[0].remove(self)
@@ -59,11 +46,13 @@ class Card:
         else:
             board.rows[self.row].remove(self)
 
-        # add to graveyard if not a decoy card (player attribute)
+        # add to graveyard if not a decoy card.
         if not decoy:
             board.player.graveyard.append(self)
 
     def get_data(self):
+        # get card data in a dictionary.
+
         card_data = {
             'card_id': self.card_id,
             'name': self.name,

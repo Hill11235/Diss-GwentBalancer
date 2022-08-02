@@ -22,6 +22,7 @@ constructor_dic = {
 }
 
 
+# responsible for reading in card data and storing it in a list.
 class CardDB:
 
     def __init__(self, file_path):
@@ -31,7 +32,7 @@ class CardDB:
         self.read_card_information()
 
     def read_card_information(self):
-        # read in csv file provided and create and store cards in list
+        # read in csv file provided and create and store cards in list.
         parent_dir = os.path.dirname(__file__)
 
         with open(os.path.join(parent_dir, "card_data.csv"), encoding='utf-8-sig') as file:
@@ -50,4 +51,6 @@ class CardDB:
                     self.all_cards.append(new_card)
 
     def get_all_cards(self):
+        # return a copy of list of all cards.
+
         return copy.deepcopy(self.all_cards)

@@ -1,6 +1,7 @@
 import random
 
 
+# Game class used for command line version of the game.
 class PvpGame:
 
     def __init__(self, board1, board2):
@@ -14,6 +15,8 @@ class PvpGame:
         self.scores = []
 
     def game_loop(self):
+        # runs the game while each player has lives, offers each player their options each turn.
+
         first_player = self.player_list[self.starter]
         print("Starting player is ", first_player.name, ", faction: ", first_player.faction)
         round_counter = 0
@@ -69,6 +72,8 @@ class PvpGame:
         self.print_final_result()
 
     def end_of_round(self):
+        # resets the game, board, and player pass attributes at the end of each round.
+
         self.set_scores()
         self.update_lives()
         self.set_player_turn()
@@ -78,6 +83,8 @@ class PvpGame:
         self.player2.reset_round()
 
     def print_final_result(self):
+        # prints the final result of the game at the end of the game.
+
         print("Final score: ", self.scores)
         if self.player1.lives <= 0 and self.player2.lives <= 0:
             print("Draw")
@@ -87,6 +94,8 @@ class PvpGame:
             print(self.player2.name, " wins, playing ", self.player2.faction, " faction")
 
     def alternate_player(self):
+        # adjust who the active player is based on whether each player has passed or not.
+
         if not self.player1.passed and not self.player2.passed:
             self.starter = (self.starter + 1) % 2
         elif self.player1.passed and not self.player2.passed:
@@ -95,13 +104,19 @@ class PvpGame:
             self.starter = 0
 
     def check_game_complete(self):
+        # checks whether the game is over or not.
+
         return self.player1.lives <= 0 or self.player2.lives <= 0
 
     def get_num_options(self, player):
+        # get the number of available options for a given player.
+
         num_options = 1 + len(player.hand)
         return num_options
 
     def print_options(self):
+        # print the available options for the active player.
+
         active_player = self.player_list[self.starter]
         options = self.get_num_options(active_player)
 
@@ -110,9 +125,10 @@ class PvpGame:
             print(i, ": ", active_player.hand[i - 1].get_data())
 
     def set_player_turn(self):
+        # sets the player who starts the next round based on who won the previous round.
+
         index = len(self.scores) - 1
         if self.scores[index - 1] == self.scores[index]:
-            # need to add factional logic here if to be included
             self.starter = random.randint(0, 1)
         elif self.scores[index - 1] < self.scores[index]:
             self.starter = 1
@@ -120,15 +136,18 @@ class PvpGame:
             self.starter = 0
 
     def set_scores(self):
+        # set the scores based on the player's boards.
+
         self.scores.append(sum(self.board1.score()))
         self.scores.append(sum(self.board2.score()))
 
     def update_lives(self):
+        # update each player's lives at the end of the round.
+
         p1_score = self.scores[len(self.scores) - 2]
         p2_score = self.scores[len(self.scores) - 1]
 
         if p1_score == p2_score:
-            # need to add factional logic here if to be included
             self.player1.lose_round()
             self.player2.lose_round()
         elif p1_score > p2_score:
@@ -137,6 +156,8 @@ class PvpGame:
             self.player1.lose_round()
 
     def get_game_data(self):
+        # return the game data as a dictionary.
+
         game_dict = {
             "score": self.scores,
             "player1": self.player1.get_player_data(),

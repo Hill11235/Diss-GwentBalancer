@@ -2,13 +2,18 @@ from gwent.cards.special.special_card import SpecialCard
 from collections import deque
 
 
+# clear weather special card.
 class ClearWeatherCard(SpecialCard):
 
     def place_card(self, board, opponent_board, row, target):
+        # card is played and doesn't get added to the board.
+
         board.player.remove_card_from_hand(self.card_id)
         self.battlecry(board, opponent_board, row, target)
 
     def battlecry(self, board, opponent_board, row, target):
+        # clear all weather cards from the board.
+
         for b in [board, opponent_board]:
             for row in b.rows:
                 self.clear_row(b, row)

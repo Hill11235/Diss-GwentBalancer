@@ -2,13 +2,17 @@ from gwent.cards.special.special_card import SpecialCard
 from collections import deque
 
 
+# scorch special card.
 class ScorchSpecialCard(SpecialCard):
 
     def place_card(self, board, opponent_board, row, target):
+        # call battlecry and remove from hand, card is not placed on the board.
+
         self.battlecry(board, opponent_board, row, target)
         board.player.remove_card_from_hand(self.card_id)
 
     def battlecry(self, board, opponent_board, row, target):
+        # finds the maximum strength card(s) on both boards and destroy them.
         max_strength = 0
 
         for b in [board, opponent_board]:

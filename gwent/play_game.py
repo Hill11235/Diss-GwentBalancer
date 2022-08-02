@@ -5,9 +5,11 @@ from gwent.board import Board
 from gwent.data.card_db import CardDB
 
 
+# Allows users to play the game via the command line.
 class TestGame:
 
-    def func(self):
+    def play_game(self):
+        # create decks and initiates game.
         test_decks = "data/test_decks.csv"
         file_name = "card_data.csv"
         faction = "Nilfgaardian"
@@ -34,4 +36,4 @@ class TestGame:
 
 
 if __name__ == '__main__':
-    TestGame().func()
+    TestGame().play_game()

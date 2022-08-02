@@ -3,6 +3,7 @@ import time
 import copy
 
 
+# search class.
 class MCTS:
 
     def __init__(self):
@@ -10,6 +11,7 @@ class MCTS:
         self.exp_constant = math.sqrt(2)
 
     def run_search(self, node, time_limit=0.1):
+        # run MCTS search for provided time limit, then return child node with the best UCB1 score.
         start_time = time.time()
         elapsed_time = time.time() - start_time
         root = node
@@ -29,13 +31,14 @@ class MCTS:
         return self.get_best_child(root)
 
     def traverse(self, node):
-        # while node has children, repeatedly choose child with highest UCB1
+        # while node has children, repeatedly choose child with highest UCB1.
         while node.children is not None and node.children != []:
             node = self.get_best_child(node)
 
         return node
 
     def get_best_child(self, node):
+        # return the child node with the highest UCB1 score.
         children = node.children
         max_ucb = 0
         index = 0
@@ -49,7 +52,7 @@ class MCTS:
         return children[index]
 
     def simulate(self, node):
-        # given a node, randomly simulate until the end of the game and return the winner
+        # given a node, randomly simulate until the end of the game and return the winner.
         gamestate = copy.deepcopy(node.state)
 
         while not gamestate.check_game_complete():
@@ -58,6 +61,7 @@ class MCTS:
         return gamestate.get_result()
 
     def backpropagate(self, node, result):
+        # repeatedly run through parent nodes, update visited attribute and winner attribute based on active player.
 
         while node is not None:
             node.number_visits += 1
@@ -66,6 +70,8 @@ class MCTS:
             node = node.parent
 
     def get_ucb1(self, node):
+        # return the UCB1 score for a given node.
+
         if node.number_visits == 0 or node.parent.number_visits == 0:
             return 100000000
         exploitation_term = (node.wins / node.number_visits)

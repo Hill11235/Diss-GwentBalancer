@@ -41,8 +41,3 @@ class TestNode(TestCase):
         self.game.starter = 0
         children = self.node1.get_all_children()
         self.assertEqual(len(children), 11)
-
-    def test_get_random_child(self):
-        self.assertIsNone(self.node1.get_random_child())
-        children = self.node1.get_all_children()
-        self.assertTrue(children.__contains__(self.node1.get_random_child()))

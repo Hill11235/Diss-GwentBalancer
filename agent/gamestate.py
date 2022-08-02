@@ -1,10 +1,9 @@
 import random
 from copy import deepcopy
 from itertools import product
-from gwent import *
 
 
-# TODO refactor to include Game class and have this and pvp_game inherit
+# search and node based game class.
 class GameState:
 
     def __init__(self, board1, board2):
@@ -18,6 +17,8 @@ class GameState:
         self.scores = []
 
     def get_all_children(self):
+        # return a list of all gamestates that can be reached from this one with one action.
+
         if self.check_game_complete():
             return None
         children = []
@@ -29,6 +30,8 @@ class GameState:
         return children
 
     def generate_options(self):
+        # get all options for plays, including index of card in hand, row number, and target number.
+
         active_player = self.player_list[self.starter]
         active_board = self.board_list[self.starter]
         options = [[0, None, None]]
@@ -42,6 +45,7 @@ class GameState:
         return options
 
     def get_placement_permutations(self, num, rows, targets):
+        # get list of different placement permutations for a given card.
         permutations = []
 
         if targets is None:
@@ -60,6 +64,8 @@ class GameState:
         return permutations
 
     def make_play(self, index, row, target):
+        # make play, either passing or playing a card, and return a new game state.
+
         new_gamestate = deepcopy(self)
         active_player = new_gamestate.player_list[new_gamestate.starter]
         active_board = new_gamestate.board_list[new_gamestate.starter]
@@ -84,6 +90,8 @@ class GameState:
         return new_gamestate
 
     def make_random_play(self):
+        # make a random play, and return a new game state.
+
         active_player = self.player_list[self.starter]
         active_board = self.board_list[self.starter]
         index = random.randint(0, len(active_player.hand))
@@ -112,9 +120,13 @@ class GameState:
             self.end_of_round()
 
     def round_over(self):
+        # return boolean indicating whether the round over or not.
+
         return self.player1.passed and self.player2.passed
 
     def end_of_round(self):
+        # update gamestate at the end of each round.
+
         self.set_scores()
         self.update_lives()
         self.set_player_turn()
@@ -124,6 +136,8 @@ class GameState:
         self.player2.reset_round()
 
     def alternate_player(self):
+        # change the active player index based on who has passed.
+
         if not self.player1.passed and not self.player2.passed:
             self.starter = (self.starter + 1) % 2
         elif self.player1.passed and not self.player2.passed:
@@ -132,12 +146,15 @@ class GameState:
             self.starter = 0
 
     def check_game_complete(self):
+        # check whether the game is complete or not.
+
         return self.player1.lives <= 0 or self.player2.lives <= 0
 
     def set_player_turn(self):
+        # sets the player who starts the next round based on who won the previous round.
+
         index = len(self.scores) - 1
         if self.scores[index - 1] == self.scores[index]:
-            # need to add factional logic here if to be included
             self.starter = random.randint(0, 1)
         elif self.scores[index - 1] < self.scores[index]:
             self.starter = 1
@@ -145,15 +162,18 @@ class GameState:
             self.starter = 0
 
     def set_scores(self):
+        # set the scores based on the player's boards.
+
         self.scores.append(sum(self.board1.score()))
         self.scores.append(sum(self.board2.score()))
 
     def update_lives(self):
+        # update each player's lives at the end of the round.
+
         p1_score = self.scores[len(self.scores) - 2]
         p2_score = self.scores[len(self.scores) - 1]
 
         if p1_score == p2_score:
-            # need to add factional logic here if to be included
             self.player1.lose_round()
             self.player2.lose_round()
         elif p1_score > p2_score:
@@ -162,6 +182,8 @@ class GameState:
             self.player1.lose_round()
 
     def get_result(self):
+        # return the index of the winning player or none for a draw.
+
         if self.player1.lives == 0 and self.player2.lives == 0:
             return None
         elif self.player1.lives > self.player2.lives:
@@ -170,6 +192,8 @@ class GameState:
             return 1
 
     def get_winning_faction(self):
+        # return the faction of the winner if there is one.
+
         result = self.get_result()
         if result is None:
             winner = "draw"
@@ -180,6 +204,8 @@ class GameState:
         return winner
 
     def get_game_data(self):
+        # return the game data as a dictionary.
+
         game_dict = {
             "score": self.scores,
             "result": self.get_result(),

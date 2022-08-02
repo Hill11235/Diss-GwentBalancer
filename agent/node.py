@@ -1,6 +1,4 @@
-import random
-
-
+# node within search tree.
 class Node:
 
     def __init__(self, game, parent):
@@ -11,12 +9,17 @@ class Node:
         self.children = []
 
     def is_leaf(self):
+        # return boolean indicating whether this node has been expanded or not.
+
         return len(self.children) == 0
 
     def is_terminal(self):
+        # check whether the underlying game state is complete or not.
+
         return self.state.check_game_complete()
 
     def get_all_children(self):
+        # return a list of all possible child nodes and set children attribute.
         children = []
 
         child_games = self.state.get_all_children()
@@ -26,10 +29,3 @@ class Node:
 
         self.children = children
         return children
-
-    # TODO test (consider when this will be called and see if it needs to be changed)
-    def get_random_child(self):
-        if len(self.children) > 0:
-            return random.choice(self.children)
-        return None
-

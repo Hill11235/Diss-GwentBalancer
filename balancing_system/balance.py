@@ -3,7 +3,7 @@ import os
 from balancing_system import *
 
 
-# Class which brings all three sections together and runs balancing iterations
+# class which brings all three subsystems together and runs balancing iterations.
 class Balancer:
 
     def __init__(self, card_file, time_limit=0.1, iters=3):
@@ -13,6 +13,8 @@ class Balancer:
         self.parent_dir = os.path.dirname(__file__)
 
     def run_balancing(self):
+        # run the specified iterations of simulations and reading JSON files.
+
         self.clear_stats_and_viz()
         initial_cycle = SimulationCycle(self.card_file, time_limit=self.time_limit)
         initial_cycle.simulate()
@@ -40,6 +42,8 @@ class Balancer:
         graphics.get_extreme_card_summary("win_rate", self.iters - 1)
 
     def clear_stats_and_viz(self):
+        # clears viz and stats directories.
+
         stats = "stats/*"
         viz = "visualisations/*"
         stats_path = glob.glob(os.path.join(parent_dir, stats))

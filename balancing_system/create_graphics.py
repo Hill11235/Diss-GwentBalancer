@@ -4,10 +4,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
+# class for creation of tables and plots based on simulation data.
 class GraphicCreation:
 
     def create_matrix(self, metric, iteration=None):
-        # TODO test when there are multiple iterations in the file
+        # create a matrix showing win rates between factions.
+
         parent_dir = os.path.dirname(__file__)
         file_path = "stats/faction_v_faction.csv"
         df = pd.read_csv(os.path.join(parent_dir, file_path), index_col=0)
@@ -26,7 +28,8 @@ class GraphicCreation:
         plt.clf()
 
     def create_line_charts(self, metric):
-        # create line charts for each faction showing win rate and avg duration with each iteration
+        # create line charts for each faction showing win rate and avg duration with each iteration.
+
         parent_dir = os.path.dirname(__file__)
         file_path = "stats/faction_stats.csv"
         factions = pd.read_csv(os.path.join(parent_dir, file_path))
@@ -37,6 +40,8 @@ class GraphicCreation:
         self.plot_faction(factions, None, metric)
 
     def plot_faction(self, df, faction, metric):
+        # plot individual faction line chart.
+
         sns.set_style(style="white")
         parent_dir = os.path.dirname(__file__)
         if faction is None:
@@ -60,7 +65,8 @@ class GraphicCreation:
         plt.clf()
 
     def create_box_charts(self, iteration=None):
-        # TODO test when there are multiple iterations in the file
+        # create game duration by faction box plot.
+
         parent_dir = os.path.dirname(__file__)
         file_path = "stats/game_duration_data.csv"
         df = pd.read_csv(os.path.join(parent_dir, file_path), index_col=0)
@@ -76,6 +82,8 @@ class GraphicCreation:
         plt.clf()
 
     def get_extreme_card_summary(self, metric, iteration=None):
+        # produce dataframes showing 10 cards with the highest and lowest values of the specified metric.
+
         parent_dir = os.path.dirname(__file__)
         file_path = "stats/card_stats.csv"
         df = pd.read_csv(os.path.join(parent_dir, file_path), index_col=0)
@@ -90,6 +98,8 @@ class GraphicCreation:
         self.save_card_summary_as_table(df_low, "low", os.path.join(parent_dir, save_path))
 
     def save_card_summary_as_table(self, df, end, save_path):
+        # save provided summary dataframe as a table.
+
         df = self.format_df_for_table(df)
         save_path = save_path + "_" + end + ".png"
         fig, ax = plt.subplots()
@@ -101,6 +111,8 @@ class GraphicCreation:
         plt.clf()
 
     def format_df_for_table(self, df):
+        # format card summary table columns.
+
         df['card_id'] = df.index
         cols = list(df)
         cols.insert(0, cols.pop(cols.index('card_id')))

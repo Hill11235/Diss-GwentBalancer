@@ -6,6 +6,7 @@ from agent import *
 from gwent.data.card_db import CardDB
 
 
+# run series of game simulations and produce results in a JSON file.
 class SimulationCycle:
 
     def __init__(self, card_file, iters=10, time_limit=0.1):
@@ -17,9 +18,9 @@ class SimulationCycle:
 
         self.deck = Deck(self.card_db, "Monster", self.size, self.seed)
         self.mcts = MCTS()
-        # set up rotating seed? ASK CHRIS
 
     def simulate(self):
+        # create six pairwise faction combinations for each iteration and run to completion.
         output = []
 
         for i in range(self.iters):
@@ -35,15 +36,20 @@ class SimulationCycle:
         self.write_to_json(os.path.join(parent_dir, "stats/sim_output.json"), output)
 
     def run_game(self, nd):
+        # run search through a game and return final game data dictionary.
+
         while not nd.is_terminal():
             nd = self.mcts.run_search(nd, self.time_limit)
         return nd.state.get_game_data()
 
     def write_to_json(self, file, game_list):
+        # write list of game data to a json file.
+
         with open(file, 'w') as res:
             json.dump(game_list, res)
 
     def create_root_nodes(self):
+        # create six pairwise games and then create corresponding nodes.
         board_monster, board_nilf, board_northern, board_scoiatael = self.create_boards()
 
         monster_vs_nilf = GameState(copy.deepcopy(board_monster), copy.deepcopy(board_nilf))
@@ -63,6 +69,8 @@ class SimulationCycle:
         return node_mon_v_nilf, node_mon_v_nort, node_mon_v_scoi, node_nilf_v_nort, node_nilf_v_scoi, node_nort_v_scoi
 
     def create_boards(self):
+        # create four players and boards with random decks.
+
         monster_deck, nilf_deck, northern_deck, scoiatael_deck = self.deck.create_four_random_decks()
         player_monster = Player("p1", "monster", monster_deck)
         player_nilf = Player("p2", "nilfgaardian", nilf_deck)

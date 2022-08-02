@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 
 
+# parse simulation data and saved summary information as csv files.
 class JsonReader:
 
     def __init__(self, json_file, card_file, destination):
@@ -14,6 +15,8 @@ class JsonReader:
         self.destination = destination
 
     def run_balance(self, iteration):
+        # create summary tables, update source card file based on statistics, and save for use in next iteration.
+
         parent_dir = os.path.dirname(__file__)
         faction_stats = self.get_faction_overview_stats(iteration)
         card_stats = self.get_card_stats(iteration)
@@ -36,6 +39,8 @@ class JsonReader:
         self.create_new_card_data_file(card_stats)
 
     def get_faction_overview_stats(self, iteration):
+        # parse game data and create dataframe showing faction level performance.
+
         df = pd.DataFrame(0,
                           columns=["iteration", "games", "wins", "win_rate", "avg_game_len"],
                           index=["nilfgaardian", "monster", "northern", "scoiatael"])
@@ -59,6 +64,8 @@ class JsonReader:
         return df
 
     def get_faction_v_faction_stats(self, iteration):
+        # parse game data and create dataframe showing faction vs faction performance.
+
         cols = ["iteration", "faction1", "faction2", "games", "wins", "win_rate", "avg_game_len"]
         df = pd.DataFrame(columns=cols)
         df = self.add_f_v_f_initial_rows(df, iteration)
@@ -85,6 +92,8 @@ class JsonReader:
         return df
 
     def add_f_v_f_initial_rows(self, df, iteration):
+        # create initial format for faction vs faction table.
+
         d1 = [iteration, "monster", 'nilfgaardian', 0, 0, 0, 0]
         d2 = [iteration, "monster", 'northern', 0, 0, 0, 0]
         d3 = [iteration, "monster", 'scoiatael', 0, 0, 0, 0]
@@ -103,6 +112,7 @@ class JsonReader:
         return df
 
     def get_game_duration_stats(self, iteration):
+        # create a dataframe listing all game durations in a given iteration.
         df = pd.DataFrame(columns=["iteration", "faction", "game_duration"])
 
         for game in self.data_list:
@@ -112,12 +122,16 @@ class JsonReader:
         return df
 
     def get_game_duration_info(self, iteration, game, player_number):
+        # given a game dictionary, return a dictionary of game length.
+
         faction = game.get("p" + str(player_number) + "_faction")
         game_len = len(game.get("score")) / 2 + game.get("player1").get("graveyard size") + game.get("player2").get(
             "graveyard size")
         return {"iteration": iteration, "faction": faction, "game_duration": game_len}
 
     def get_card_stats(self, iteration):
+        # parse game data and create dataframe of summary card information.
+
         card_list = self.get_unique_card_list()
         df = pd.DataFrame(0,
                           index=card_list,
@@ -143,6 +157,8 @@ class JsonReader:
         return df
 
     def update_card_stats_for_player(self, df, player_dict, score_length, winner):
+        # for a given player, parse their card information and update the card stats dataframe.
+
         # need to run through both hand and graveyard
         hand = player_dict.get("hand")
         graveyard = player_dict.get("graveyard")
@@ -151,6 +167,8 @@ class JsonReader:
         self.parse_card_container(df, graveyard, score_length, winner)
 
     def parse_card_container(self, df, container, score_length, winner):
+        # parse hand or graveyard and update card stats dataframe.
+
         for card in container:
             df.loc[card, "games"] += 1
             df.loc[card, "avg_game_len"] += score_length
@@ -158,6 +176,7 @@ class JsonReader:
                 df.loc[card, "wins"] += 1
 
     def get_unique_card_list(self):
+        # return unique list of cards present in simulations.
         output = []
 
         for game in self.data_list:
@@ -177,13 +196,15 @@ class JsonReader:
         return output
 
     def add_cards_to_list(self, card_list, card_dict):
+        # parse dictionary and add card to list if not present.
+
         for card in card_dict:
             if card not in card_list:
                 card_list.append(card)
 
     def create_new_card_data_file(self, card_stats):
-        # TODO does this need to be fixed?
-        parent_dir = os.path.dirname(__file__)
+        # create new card data csv that can be used as final result or for future iterations.
+
         if not os.path.exists(self.destination):
             shutil.copyfile(self.card_file, self.destination)
 

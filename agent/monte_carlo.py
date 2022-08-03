@@ -6,10 +6,6 @@ import copy
 # search class.
 class MCTS:
 
-    def __init__(self):
-        # exploration parameter
-        self.exp_constant = math.sqrt(2)
-
     def run_search(self, node, time_limit=0.1):
         # run MCTS search for provided time limit, then return child node with the best UCB1 score.
         start_time = time.time()
@@ -28,7 +24,7 @@ class MCTS:
             self.backpropagate(node, winner)
             elapsed_time = time.time() - start_time
 
-        return self.get_best_child(root)
+        return self.get_best_child(root, 0)
 
     def traverse(self, node):
         # while node has children, repeatedly choose child with highest UCB1.
@@ -37,14 +33,14 @@ class MCTS:
 
         return node
 
-    def get_best_child(self, node):
+    def get_best_child(self, node, exp_const=math.sqrt(2)):
         # return the child node with the highest UCB1 score.
         children = node.children
         max_ucb = 0
         index = 0
 
         for i in range(len(children)):
-            ucb = self.get_ucb1(children[i])
+            ucb = self.get_ucb1(children[i], exp_const)
             if ucb > max_ucb:
                 index = i
                 max_ucb = ucb
@@ -69,11 +65,11 @@ class MCTS:
                 node.wins += 1
             node = node.parent
 
-    def get_ucb1(self, node):
+    def get_ucb1(self, node, exp_const=math.sqrt(2)):
         # return the UCB1 score for a given node.
 
         if node.number_visits == 0 or node.parent.number_visits == 0:
             return 100000000
         exploitation_term = (node.wins / node.number_visits)
-        exploration_term = self.exp_constant * (math.sqrt(math.log(node.parent.number_visits) / node.number_visits))
+        exploration_term = exp_const * (math.sqrt(math.log(node.parent.number_visits) / node.number_visits))
         return exploitation_term + exploration_term

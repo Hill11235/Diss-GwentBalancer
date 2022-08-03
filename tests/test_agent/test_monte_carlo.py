@@ -33,7 +33,7 @@ class TestMCTS(TestCase):
         north = 0
         monst = 0
 
-        for i in range(10):
+        for i in range(5):
             node = self.run_game(nd)
             faction = node.state.get_winning_faction()
             if faction == "draw":

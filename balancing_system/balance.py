@@ -58,4 +58,4 @@ class Balancer:
 
 if __name__ == '__main__':
     parent_dir = os.path.dirname(__file__)
-    Balancer(os.path.join(parent_dir, "./../gwent/data/card_data.csv"), iters=10).run_balancing()
+    Balancer(os.path.join(parent_dir, "./../gwent/data/card_data.csv"), time_limit=0.3, iters=15).run_balancing()

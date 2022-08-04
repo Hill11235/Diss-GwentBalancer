@@ -20,6 +20,7 @@ class MCTS:
             node = self.traverse(root)
             if not node.is_terminal():
                 node.get_all_children()
+                node = node.get_random_child()
             winner = self.simulate(node)
             self.backpropagate(node, winner)
             elapsed_time = time.time() - start_time

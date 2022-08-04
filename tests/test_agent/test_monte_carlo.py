@@ -100,3 +100,7 @@ class TestMCTS(TestCase):
 
         self.assertEqual(self.mcts.get_ucb1(node2), 1.03583715336408)
 
+    def test_get_random_child(self):
+        self.node.get_all_children()
+        child = self.node.get_random_child()
+        self.assertEqual(child.parent, self.node)

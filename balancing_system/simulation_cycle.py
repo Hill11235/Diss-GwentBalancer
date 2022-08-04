@@ -9,7 +9,7 @@ from gwent.data.card_db import CardDB
 # run series of game simulations and produce results in a JSON file.
 class SimulationCycle:
 
-    def __init__(self, card_file, iters=10, time_limit=0.1):
+    def __init__(self, card_file, iters=100, time_limit=0.1):
         self.size = 22
         self.seed = 123
         self.iters = iters

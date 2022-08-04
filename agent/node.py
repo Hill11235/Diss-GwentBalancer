@@ -1,3 +1,5 @@
+import random
+
 # node within search tree.
 class Node:
 
@@ -29,3 +31,7 @@ class Node:
 
         self.children = children
         return children
+
+    def get_random_child(self):
+        if len(self.children) > 0:
+            return random.choice(self.children)

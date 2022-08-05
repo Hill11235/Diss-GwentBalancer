@@ -116,8 +116,9 @@ class JsonReader:
         df = pd.DataFrame(columns=["iteration", "faction", "game_duration"])
 
         for game in self.data_list:
-            df = df.append(self.get_game_duration_info(iteration, game, 1), ignore_index=True)
-            df = df.append(self.get_game_duration_info(iteration, game, 2), ignore_index=True)
+            df1 = pd.DataFrame([self.get_game_duration_info(iteration, game, 1)])
+            df2 = pd.DataFrame([self.get_game_duration_info(iteration, game, 2)])
+            df = pd.concat([df, df1, df2])
 
         return df
 

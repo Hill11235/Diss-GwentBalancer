@@ -12,7 +12,7 @@ class DeckTest(unittest.TestCase):
         self.card_db = CardDB(os.path.join(parent_dir, file_name))
 
     def test_all_card_size(self):
-        self.assertEqual(len(self.card_db.all_cards), 179)
+        self.assertEqual(len(self.card_db.all_cards), 181)
 
     def test_hero_card(self):
         for card in self.card_db.all_cards:
@@ -35,7 +35,7 @@ class DeckTest(unittest.TestCase):
         self.assertEqual(len(northern_cards), 36)
         self.assertEqual(len(nilf_cards), 37)
         self.assertEqual(len(monster_cards), 40)
-        self.assertEqual(len(neutral_cards), 29)
+        self.assertEqual(len(neutral_cards), 31)
         self.assertEqual(len(scoiatael_cards), 37)
 
     def test_get_all_cards(self):

@@ -1,6 +1,7 @@
 import math
 import time
 import copy
+import random
 
 
 # search class.
@@ -38,15 +39,18 @@ class MCTS:
         # return the child node with the highest UCB1 score.
         children = node.children
         max_ucb = 0
-        index = 0
+        indices = []
 
         for i in range(len(children)):
             ucb = self.get_ucb1(children[i], exp_const)
             if ucb > max_ucb:
-                index = i
+                indices = []
+                indices.append(i)
                 max_ucb = ucb
+            elif ucb == max_ucb:
+                indices.append(i)
 
-        return children[index]
+        return children[random.choice(indices)]
 
     def simulate(self, node):
         # given a node, randomly simulate until the end of the game and return the winner.
@@ -62,8 +66,11 @@ class MCTS:
 
         while node is not None:
             node.number_visits += 1
-            if node.state.starter == result:
-                node.wins += 1
+            if node.parent is not None:
+                if node.state.starter != result and node.parent.state.starter == result:
+                    node.wins += 1
+                elif node.state.starter == result and node.parent.state.starter == result:
+                    node.wins += 1
             node = node.parent
 
     def get_ucb1(self, node, exp_const=math.sqrt(2)):

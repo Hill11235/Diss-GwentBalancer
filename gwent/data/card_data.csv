@@ -135,3 +135,5 @@ triss,Triss Merigold,7,hero,neutral,0,1
 vesemir,Vesemir,6,,neutral,0,1
 yen,Yennefer of Vengerberg,7,"medic,hero",neutral,1,1
 zoltan,Zoltan Chivay,5,,neutral,0,1
+OP_test,over powered tester,100,hero,neutral,0,3
+UP_test, under powered tester,-100,hero,neutral,0,3

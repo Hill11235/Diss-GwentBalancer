@@ -90,7 +90,7 @@ class TestMCTS(TestCase):
         self.assertEqual(self.node.number_visits, 1)
         self.assertEqual(node3.wins, 1)
         self.assertEqual(node2.wins, 1)
-        self.assertEqual(self.node.wins, 1)
+        self.assertEqual(self.node.wins, 0)
 
     def test_get_ucb1(self):
         self.assertEqual(self.mcts.get_ucb1(self.node), 100000000)

@@ -1,5 +1,8 @@
 import os
 import random
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from gwent import *
 from agent import *
@@ -35,9 +38,7 @@ class TestAgent:
             self.seed += 1
             random.seed(self.seed)
 
-        print("p1 wins with ", time_limit1, " search time: ", p1_win_count)
-        print("p2 wins with ", time_limit2, " search time: ", p2_win_count)
-        print("draws: ", draws)
+        return p1_win_count, p2_win_count, draws
 
     def run_game(self, nd, time_limit1, time_limit2):
         while not nd.is_terminal():
@@ -75,8 +76,36 @@ class TestAgent:
 
         return board_one, board_two
 
+    def create_df(self):
+        df = pd.DataFrame(columns=["time_limit", "wins", "draws", "win_rate"])
+        times = [0.001, 0.01, 0.1, 0.5, 1]
+        itrs = 100
+
+        for time in times:
+            p1_wins, p2_wins, draws = self.run_agent_comparison(time, 0.00001, iters=itrs)
+            df.loc[len(df)] = [time, p1_wins, draws, 0.0]
+            print(time, "complete")
+
+        df['win_rate'] = df['wins'] / 100
+        df.to_csv("agent_test.csv")
+
+    def plot_line_chart(self):
+        df = pd.read_csv("agent_test.csv", index_col=[0])
+        sns.set_style(style="white")
+        prnt_dir = os.path.dirname(__file__)
+        title = "Testing agent performance against random selection with different search times"
+        save_path = "agent_test.png"
+        faction_plot = sns.lineplot(x=df['time_limit'],
+                                    y=df['win_rate'],
+                                    data=df,
+                                    ci=None)
+        faction_plot.set(title=title)
+        plt.savefig(os.path.join(prnt_dir, save_path), bbox_inches='tight')
+        plt.clf()
+
 
 if __name__ == '__main__':
     parent_dir = os.path.dirname(__file__)
     comp = TestAgent(os.path.join(parent_dir, "./../gwent/data/card_data.csv"))
-    comp.run_agent_comparison(1, 0.00001)
+    comp.create_df()
+    comp.plot_line_chart()

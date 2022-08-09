@@ -17,7 +17,7 @@ class TestGame:
         seed = int(input("Please enter a positive integer to be used as a random seed: "))
         faction1 = input("Please choose the faction for player 1 by typing one of the below: "
                          "\nmonster\nnilfgaardian\nnorthern\nscoiatael\n\n")
-        faction2 = input("\nPlease choose the faction for player 2by typing one of the below: "
+        faction2 = input("\nPlease choose the faction for player 2 by typing one of the below: "
                          "\nmonster\nnilfgaardian\nnorthern\nscoiatael\n\n")
         print("")
         size = 22

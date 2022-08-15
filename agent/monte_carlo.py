@@ -37,6 +37,8 @@ class MCTS:
 
     def get_best_child(self, node, exp_const=math.sqrt(2)):
         # return the child node with the highest UCB1 score.
+        if node.children == []:
+            node.get_all_children()
         children = node.children
         max_ucb = 0
         indices = []

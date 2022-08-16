@@ -13,13 +13,13 @@ Navigate to the directory this README is in. Then run one of the below set up co
 
 Set up for linux and macOS:\
 `python3 -m venv envo`\
-`source activate envo/bin/activate`\
+`source envo/bin/activate`\
 `pip3 install pandas numpy matplotlib seaborn pyfiglet`\
 `export PYTHONPATH="{PYTHONPATH}:/path/to/project/root/directory"]`
 
 Set up for windows:\
 `python3 -m venv envo`\
-`source activate envo/bin/activate`\
+`source envo/bin/activate`\
 `pip3 install pandas numpy matplotlib seaborn pyfiglet`\
 `set PYTHONPATH=%PYTHONPATH%;C:\path\to\your\project\`
 

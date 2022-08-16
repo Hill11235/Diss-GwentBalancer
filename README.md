@@ -42,6 +42,9 @@ Parameters such as the search time and number of iterations can be amended in th
 `python3 agent/agent_test.py`
 
 
+### Run tests
+
+`python3 -m unittest discover -s tests`
 
 Alternatively run via your favourite IDE. This project was written and run using PyCharm.
 
